@@ -1,16 +1,22 @@
+NAME		=	minishell
+
+# Directories
 vpath %.c $(SRCS_DIR)
 vpath %.h $(INCL_DIR)
-
-NAME		=	minishell
 SRCS_DIR	=	srcs
-SRCS		=	main.c \
-				utils/exit_error.c
+INCL_DIR	=	includes
 OBJDIR		=	objs
-OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
+# Config
 CC			=	gcc
 FLAGS		=	-Wall -Wextra #-Werror # weg gehaald omdat het irritant is tijdens development
-INCL_DIR	=	includes
+
+# Srcs
+SRCS		=	main.c \
+				utils/exit_error.c
+OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+
+
 
 all:		$(NAME)
 
