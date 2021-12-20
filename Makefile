@@ -5,7 +5,7 @@ OBJDIR		=	objs
 OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 CC			=	gcc
-FLAGS		=	-Wall -Wextra #-Werror
+FLAGS		=	-Wall -Wextra #-Werror # weg gehaald omdat het irritant is tijdens development
 INCS		=	includes
 
 all:		$(NAME)
