@@ -14,7 +14,7 @@ char	*get_cmd(void)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		exit_error(2, "Malloc failure");
+		exit_error(2, "get_cmd", "Malloc failure");
 	write(1, &cwd, ft_strlen(cwd));
 	free(cwd);
 }

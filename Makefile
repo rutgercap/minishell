@@ -1,31 +1,34 @@
 NAME		=	minishell
 
 # Directories
-vpath %.c $(SRCS_DIR)
-vpath %.h $(INCL_DIR)
-SRCS_DIR	=	srcs
-INCL_DIR	=	includes
-OBJDIR		=	objs
+INCL_DIR	:=	includes
+SRCS_DIR	:=	srcs
+OBJDIR		:=	objs
+vpath 		%.c $(SRCS_DIR)
+vpath		%.c $(SRCS_DIR)/executor
+vpath		%.c $(SRCS_DIR)/get_cmd
+vpath		%.c $(SRCS_DIR)/parsing
+vpath		%.c $(SRCS_DIR)/utils
 
 # Config
-CC			=	gcc
-FLAGS		=	-Wall -Wextra #-Werror # weg gehaald omdat het irritant is tijdens development
+CC			:=	gcc
+FLAGS		:=	-Wall -Wextra #-Werror || annoying during development
 
 # Srcs
-SRCS		=	main.c \
-				utils/exit_error.c
-OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
-
+SRCS		:=	main.c \
+				exit_error.c \
+				ft_strlen.c
+OBJS		:=	$(SRCS:.c=.o)
 
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(OBJS) $(FLAGS) -o $(NAME)
+	$(CC) $(addprefix $(OBJDIR)/, $(OBJS)) $(FLAGS) -o $(NAME)
 
-$(OBJDIR)/%.o:  $(SRCDIR)/%.c
+%.o: %.c
 	mkdir -p $(OBJDIR)
-	$(CC) $(FLAGS) -c $< -o $@ -I$(INCL_DIR)
+	$(CC) $(FLAGS) -c $< -o $(addprefix $(OBJDIR)/, $@) -I$(INCL_DIR)
 
 run: all
 	./$(NAME)
