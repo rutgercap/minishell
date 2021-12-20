@@ -1,3 +1,5 @@
+#include <get_cmd.h>
+
 /*
 	print cwd and ask for command
 	read a line with readline function
