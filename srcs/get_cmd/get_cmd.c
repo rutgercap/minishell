@@ -8,8 +8,13 @@
 	returns command as string
 */
 
-void	get_cmd(void)
+char	*get_cmd(void)
 {
-	// readline
-	// if non-null, add to history
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		exit_error(2, "Malloc failure");
+	write(1, &cwd, ft_strlen(cwd));
+	free(cwd);
 }

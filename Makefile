@@ -1,12 +1,16 @@
+vpath %.c $(SRCS_DIR)
+vpath %.h $(INCL_DIR)
+
 NAME		=	minishell
-SRCDIR		=	srcs
-SRCS		=	main.c
+SRCS_DIR	=	srcs
+SRCS		=	main.c \
+				utils/exit_error.c
 OBJDIR		=	objs
 OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 CC			=	gcc
 FLAGS		=	-Wall -Wextra #-Werror # weg gehaald omdat het irritant is tijdens development
-INCS		=	includes
+INCL_DIR	=	includes
 
 all:		$(NAME)
 
@@ -15,7 +19,7 @@ $(NAME):	$(OBJS)
 
 $(OBJDIR)/%.o:  $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
-	$(CC) $(FLAGS) -c $< -o $@ -I$(INCS)
+	$(CC) $(FLAGS) -c $< -o $@ -I$(INCL_DIR)
 
 run: all
 	./$(NAME)

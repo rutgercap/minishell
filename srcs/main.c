@@ -1,7 +1,8 @@
 #include <minishell.h>
 
-int main(void)
+int main()
 {
+	exit_error(1, "main", "malloc failure");
 	while (true)
 	{
 		// get command
