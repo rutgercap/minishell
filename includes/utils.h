@@ -6,7 +6,7 @@
 /*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2021/12/21 09:54:24 by rutgercappe      ###   ########.fr       */
+/*   Updated: 2021/12/21 13:29:57 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ int			ft_strcheck(char const *s, int (*f)(int));
 
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 
+void		ft_strcpy(char *dst, const char *src, size_t dstsize);
+
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
-void		exit_error(int code, char *func, char *msg);
+void		exit_error(const int code, const char *func, const char *msg);
 
-void		exit_errno(char *func);
 
 #	endif

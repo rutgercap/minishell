@@ -5,8 +5,8 @@ INCL_DIR	:=	includes
 SRCS_DIR	:=	srcs
 OBJDIR		:=	objs
 vpath 		%.c $(SRCS_DIR)
+vpath 		%.c $(SRCS_DIR)/builtins
 vpath		%.c $(SRCS_DIR)/executor
-vpath		%.c $(SRCS_DIR)/get_cmd
 vpath		%.c $(SRCS_DIR)/parser
 vpath		%.c $(SRCS_DIR)/utils
 
@@ -16,10 +16,11 @@ FLAGS		:=	-Wall -Wextra #-Werror || annoying during development
 
 # Srcs
 SRCS		:=	main.c \
-				get_cmd.c \
+				sigactions.c \
 				exit_error.c \
-				exit_errno.c \
-				ft_strlen.c
+				ft_strlen.c \
+				ft_bzero.c \
+				ft_strcpy.c
 OBJS		:=	$(SRCS:.c=.o)
 
 

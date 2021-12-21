@@ -1,0 +1,13 @@
+builtin functions will be in this folder:
+echo
+	- with option -n
+cd
+	- only relative or absolute path
+pwd
+export
+unset
+env
+exit
+
+
+// signal handlers here?
