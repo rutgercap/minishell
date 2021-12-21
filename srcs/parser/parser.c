@@ -1,3 +1,5 @@
+#include "parser.h"
+
 /*
 	input: raw command as string
 	breaks up string into individual words and commands (lexing?)
@@ -5,3 +7,8 @@
 	parameter expansion : ${variable} -> value
 	output: command(s) as tokens
 */
+
+void	parsing(void)
+{
+
+}

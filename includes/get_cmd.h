@@ -2,12 +2,11 @@
 # define GET_CMD_H
 
 # include <utils.h>
-
-// readline
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <errno.h>
 
-char	*get_cmd(void);
+# define ERROR (ssize_t)-1
+
+int		get_cmd(char **dest);
 
 #endif

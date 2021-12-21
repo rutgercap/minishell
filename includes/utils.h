@@ -6,7 +6,7 @@
 /*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2021/12/20 12:38:05 by rutgercappe      ###   ########.fr       */
+/*   Updated: 2021/12/21 09:54:24 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <errno.h>
+# include <stdio.h>
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 
@@ -94,5 +96,7 @@ size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void		exit_error(int code, char *func, char *msg);
+
+void		exit_errno(char *func);
 
 #	endif

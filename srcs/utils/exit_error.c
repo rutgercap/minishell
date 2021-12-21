@@ -19,11 +19,11 @@ void	exit_error(int code, char *func, char *msg)
 {
 	if (func)
 	{
-		write(2, func, ft_strlen(func));
-		write(2, ": ", 2);
+		write(STDERR_FILENO, func, ft_strlen(func));
+		write(STDERR_FILENO, ": ", 2);
 	}
 	if (msg)
-		write(2, msg, ft_strlen(msg));
-	write(2, &"\n", 1);
+		write(STDERR_FILENO, msg, ft_strlen(msg));
+	write(STDERR_FILENO, &"\n", 1);
 	exit(code);
 }

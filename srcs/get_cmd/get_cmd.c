@@ -1,20 +1,32 @@
 #include <get_cmd.h>
 
 /*
-	print cwd and ask for command
+	print program name
 	read a line with readline function
 	if non-null -> add to history
 		- what if null?
 	returns command as string
 */
 
-char	*get_cmd(void)
+char	*prompt_user(void)
 {
-	char	*cwd;
+	char	*line;
+	size_t	len;
+	
+	line = NULL;
+	write(STDOUT_FILENO, &"minishell$ ", 12);
+	if (getline(&line, &len, stdin) == ERROR) {
+		exit_errno("Prompt user");
+	}
+	return (line);
+}
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		exit_error(2, "get_cmd", "Malloc failure");
-	write(1, &cwd, ft_strlen(cwd));
-	free(cwd);
+int	get_cmd(char **dest)
+{
+	char	*line;
+	
+	line = prompt_user();
+	// add to history
+	*dest = line;
+	return (EXIT_SUCCESS);
 }

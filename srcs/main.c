@@ -2,10 +2,13 @@
 
 int main()
 {
-	exit_error(1, "main", "malloc failure");
+	char	*cmd;
+	
 	while (true)
 	{
-		// get command
+		get_cmd(&cmd);
+		printf("%s", cmd);
+		break ;
 		// lex command
 		// parse command
 		// expand command
