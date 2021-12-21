@@ -4,6 +4,7 @@ int main()
 {
 	char	*cmd;
 	
+	// init signals ?
 	while (true)
 	{
 		get_cmd(&cmd);
