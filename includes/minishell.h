@@ -14,15 +14,19 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdlib.h>
 
 /*
 	defines and typedefs
 */
-typedef struct sigaction t_sigaction;
+
+# define CTRL_D 26
 
 /*
 	functions
 */
-void	init_sigactions(void);
+void	init_signals(void);
+
+void	mini_exit(void);
 
 #endif

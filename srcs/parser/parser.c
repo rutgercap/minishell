@@ -8,7 +8,7 @@
 	output: command(s) as tokens
 */
 
-void	parsing(void)
+void	parsing(char ***tokens, char *raw_cmd)
 {
-
+	
 }

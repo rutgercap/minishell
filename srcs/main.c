@@ -1,16 +1,13 @@
 #include <minishell.h>
 
-int	get_cmd(char **dest)
+static int	get_cmd(char **dest)
 {
 	char	*line;
-	size_t	len;
 
-	write(STDOUT_FILENO, &"\nminishell$ ", 13);
-	if (getline(&line, &len, stdin) == -1)
-		exit_error(errno, "Prompt user", NULL);
-	if (ft_strlen(line) != 0)
+	line = readline("minishell$ ");
+	if (line && ft_strlen(line) != 0)
 	{
-		// add_history(dest);
+		add_history(line);
 		*dest = line;
 		return (EXIT_SUCCESS);
 	}
@@ -18,21 +15,28 @@ int	get_cmd(char **dest)
 	return (EXIT_FAILURE);
 }
 
+static void	process_cmd(const char *raw_cmd)
+{
+	// char	**tokens;
+	
+	// parse_cmd(&tokens, raw_cmd);
+	// expand_cmd(&tokens);
+	// execute_cmds(tokens);
+	if (!ft_strncmp(raw_cmd, "exit", 4))
+		mini_exit();
+}
+
 int main(void)
 {
 	char	*cmd;
 	
-	// print minishell info?
-	init_sigactions();
-	cmd = NULL;
+	init_signals();
 	while (true)
 	{
+		cmd = NULL;
 		get_cmd(&cmd);
-		// lex command
-		printf("%s", cmd);
+		if (cmd && ft_strlen(cmd) != 0)
+			process_cmd(cmd);
 		free(cmd);
-		// parse command
-		// expand command
-		// execute command
 	}
 }

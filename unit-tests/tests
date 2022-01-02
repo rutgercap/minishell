@@ -42,6 +42,7 @@ ech
 <
 <
 <>
+><
 >
 <<<
 >>>
@@ -60,3 +61,4 @@ echo "test ${HOME} test""
 echo "test $${HOME}}"
 echo "test $"
 echo "test ${HME}"
+${HOME}

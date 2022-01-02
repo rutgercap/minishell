@@ -6,11 +6,11 @@
 	When used with errno, perror is used for error message.
 
 	Arguments:
-	code:	
+	(int)code:	
 		error code to exit with
-	func (nullable):	
+	(char *)func (nullable):	
 		function where the error was encountered
-	msg (nullable):	
+	(char *)msg (nullable):	
 		custom error message
 
 	example:
@@ -28,12 +28,11 @@ void	write_custom_msg(const char *func, const char *msg)
 {
 	if (func)
 	{
-		write(STDERR_FILENO, func, ft_strlen(func));
-		write(STDERR_FILENO, ": ", 2);
+		ft_putstr_fd(func, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (msg)
-		write(STDERR_FILENO, msg, ft_strlen(msg));
-	write(STDERR_FILENO, &"\n", 1);
+		ft_putendl_fd(msg, STDERR_FILENO);
 }
 
 void	exit_error(const int code, const char *func, const char *msg)

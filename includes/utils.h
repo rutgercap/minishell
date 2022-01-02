@@ -6,7 +6,7 @@
 /*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2021/12/21 13:29:57 by rutgercappe      ###   ########.fr       */
+/*   Updated: 2022/01/02 12:26:28 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ char		*ft_itoa(int n);
 
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-void		ft_putstr_fd(char *s, int fd);
+void		ft_putstr_fd(const char *s, int fd);
 
-void		ft_putendl_fd(char *s, int fd);
+void		ft_putendl_fd(const char *s, int fd);
 
 void		ft_putnbr_fd(int n, int fd);
 
