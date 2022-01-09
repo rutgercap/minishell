@@ -6,7 +6,7 @@
 /*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2022/01/02 12:26:28 by rutgercappe      ###   ########.fr       */
+/*   Updated: 2022/01/08 12:00:38 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ void		ft_strcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void		exit_error(const int code, const char *func, const char *msg);
-
 
 #	endif

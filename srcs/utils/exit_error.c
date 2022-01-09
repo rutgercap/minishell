@@ -1,4 +1,4 @@
-#include "utils.h"
+#include <utils.h>
 
 /*
 	Exit function to use when something goes wrong.

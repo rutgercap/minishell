@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-static int	get_cmd(char **dest)
+static int	get_line(char **dest)
 {
 	char	*line;
 
@@ -15,28 +15,32 @@ static int	get_cmd(char **dest)
 	return (EXIT_FAILURE);
 }
 
-static void	process_cmd(const char *raw_cmd)
+static void	process_cmd(const char *raw_line, char **env)
 {
-	// char	**tokens;
-	
-	// parse_cmd(&tokens, raw_cmd);
-	// expand_cmd(&tokens);
-	// execute_cmds(tokens);
-	if (!ft_strncmp(raw_cmd, "exit", 4))
+	(void)env;
+	// tokenize_line
+	// parse_tokens(&tokens, raw_cmd);
+	// expand_(&tokens);
+	// execute_cmds(AST);
+	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
+	// free tokens
 }
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-	char	*cmd;
+	char	*line;
 	
+	(void)argc;
+	(void)argv;
 	init_signals();
 	while (true)
 	{
-		cmd = NULL;
-		get_cmd(&cmd);
-		if (cmd && ft_strlen(cmd) != 0)
-			process_cmd(cmd);
-		free(cmd);
+		line = NULL;
+		get_line(&line);
+		if (line && ft_strlen(line))
+			process_cmd(line, env);
+		printf("%s\n", line);
+		free(line);
 	}
 }

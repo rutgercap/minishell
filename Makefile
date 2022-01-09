@@ -12,19 +12,26 @@ vpath 		%.c $(SRCS_DIR)/builtins
 vpath		%.c $(SRCS_DIR)/executor
 vpath		%.c $(SRCS_DIR)/parser
 vpath		%.c $(SRCS_DIR)/utils
+vpath		%.c $(SRCS_DIR)/lexer
+
 
 # Srcs
 SRCS		:=	main.c \
 				signals.c \
 				exit_error.c \
-				exit.c \
+				mini_exit.c \
 				ft_strlen.c \
 				ft_bzero.c \
 				ft_strcpy.c \
 				ft_putendl_fd.c \
 				ft_putstr_fd.c \
 				ft_putchar_fd.c \
-				ft_strncmp.c
+				ft_strncmp.c \
+				ft_isspace.c \
+				lexer.c \
+				tokenizer.c \
+				token_list_utils.c \
+				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
 # Config
@@ -51,9 +58,8 @@ drun: all
 clean:
 	@rm -rf $(OBJ_DIR)
 
-fclean:		clean
+fclean:	clean
 	@rm -f $(NAME)
-	@make clean -C $(RL_DIR)
 
 re:	fclean all
 

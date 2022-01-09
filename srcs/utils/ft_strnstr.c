@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strnstr.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2020/10/29 15:44:20 by rcappend      #+#    #+#                 */
-/*   Updated: 2021/10/25 12:06:31 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/29 15:44:20 by rcappend          #+#    #+#             */
+/*   Updated: 2022/01/08 12:00:24 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include <utils.h>
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

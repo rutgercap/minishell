@@ -9,11 +9,12 @@ void	sigint_handler(int signum)
 void	sigquit_handler(int signum)
 {
 	(void)signum; // stops compiler errors
-	ft_putchar_fd(CTRL_D, 1);
+	printf("ctrld\n");
+	mini_exit();
 }
 
 void	init_signals(void)
 {
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, sigquit_handler); // broken again ???
 }

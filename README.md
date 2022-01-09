@@ -3,8 +3,7 @@ Rebuilding a simple shell program
 
 ### To do
 
-- history
-- sigactions
+- Finish signals
 - lexing
 - parsing
 - execution of cmds
@@ -25,3 +24,17 @@ brew install readline
 1: miscellaneous (?)
 
 2: malloc failure
+
+
+#### Sources
+
+R:
+build linux parser:
+https://blog.devgenius.io/lets-build-a-linux-shell-part-i-954c95911501
+bash prompts:
+https://wiki.archlinux.org/title/Bash/Prompt_customization
+
+#### To check
+
+includes/exit.c: header maken voor builtins? alternatief is gewoon stdlib includen.
+lexer/tokenizer.c: ft_stchr gebruiken of aparte functies?

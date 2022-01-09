@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strcheck.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/11/04 11:19:00 by rcappend      #+#    #+#                 */
-/*   Updated: 2021/11/04 11:26:00 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strcheck.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 11:19:00 by rcappend          #+#    #+#             */
+/*   Updated: 2022/01/08 12:00:24 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include <utils.h>
 
 int	ft_strcheck(char const *s, int (*f)(int))
 {

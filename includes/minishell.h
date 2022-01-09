@@ -14,13 +14,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <stdlib.h>
 
 /*
 	defines and typedefs
 */
-
-# define CTRL_D 26
 
 /*
 	functions

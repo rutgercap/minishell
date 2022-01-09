@@ -6,11 +6,11 @@
 /*   By: rutgercappendijk <rutgercappendijk@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 16:24:34 by rcappend          #+#    #+#             */
-/*   Updated: 2022/01/02 12:25:52 by rutgercappe      ###   ########.fr       */
+/*   Updated: 2022/01/08 12:00:24 by rutgercappe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include <utils.h>
 
 void	ft_putstr_fd(const char *s, int fd)
 {

@@ -24,6 +24,7 @@ echo 'bla'
 echo 'bla
 	-> ctrl + d
 echo \'blabla'
+echo 'blabla\'
 echo \'blabla\'
 echo 'bla bla bla'
 echo 'blabla\n'

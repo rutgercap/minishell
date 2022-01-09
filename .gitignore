@@ -44,6 +44,12 @@ minishell
 *.idb
 *.pdb
 
+# IDE settings
+.vscode/
+
+# MacOS
+.DS_Store
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
