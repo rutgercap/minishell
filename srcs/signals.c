@@ -9,7 +9,7 @@ void	sigint_handler(int signum)
 void	sigquit_handler(int signum)
 {
 	(void)signum; // stops compiler errors
-	printf("ctrld\n");
+	printf("ctrl d\n");
 	mini_exit();
 }
 

@@ -1,32 +1,23 @@
 #include <tokens.h>
 
-// obsolete
-int	is_token_eof(t_token *token)
+void	append_to_text(t_token *token, char c)
 {
-	if (!token)
-	{
-		errno = ENODATA;
-		exit_error(errno, "is_token_eof", NULL);
-	}
-	if (token->len == TOKEN_EOF)
-		return (true);
-	return (false);
-}
+	char	*new;
 
-t_token	*init_token(t_token *last)
-{
-	t_token	*new;
-
-	new = ft_calloc(1, sizeof(new));
-	if (!new)
+	if (token->len + 1 % BUFF_SIZE == 1)
 	{
-		errno = ENOMEM;
-		exit_error(errno, "init_token", NULL);
+		new = ft_calloc(token->len + BUFF_SIZE + 1, 1);
+		if (!new)
+		{
+			errno = ENOMEM;
+			exit_error(errno, "append_to_text", NULL);
+		}
+		ft_strcpy(new, token->text, token->len);
+		free(token->text);
+		token->text = new;
 	}
-	new->next = last->next;
-	new->prev = last;
-	last->next = new;
-	return (new);
+	token->text[token->len] = c;
+	token->len++;
 }
 
 void	free_token_list(t_token **ref)
@@ -42,15 +33,14 @@ void	free_token_list(t_token **ref)
 	i = *ref;
 	while (i != NULL)
 	{
-		if (i->text)
-			free(i->text);
+		free(i->text);
 		next = i->next;
 		free(i);
 		i = next;
 	}
 }
 
-t_token	*init_token_list(void)
+t_token	*new_token(t_token *last, t_type type)
 {
 	t_token	*new;
 
@@ -58,8 +48,13 @@ t_token	*init_token_list(void)
 	if (!new)
 	{
 		errno = ENOMEM;
-		exit_error(errno, "init_token_list", NULL);
+		exit_error(errno, "init_token", NULL);
 	}
-	new->len = TOKEN_EOF;
+	if (last)
+	{
+		last->next = new;
+		new->prev = last;
+	}
+	new->type = type;
 	return (new);
 }

@@ -28,13 +28,17 @@ brew install readline
 
 #### Sources
 
-R:
 build linux parser:
 https://blog.devgenius.io/lets-build-a-linux-shell-part-i-954c95911501
+
 bash prompts:
 https://wiki.archlinux.org/title/Bash/Prompt_customization
+
+AST example:
+https://stackoverflow.com/questions/52666511/create-an-ast-from-bash-in-c/52667521
 
 #### To check
 
 includes/exit.c: header maken voor builtins? alternatief is gewoon stdlib includen.
 lexer/tokenizer.c: ft_stchr gebruiken of aparte functies?
+

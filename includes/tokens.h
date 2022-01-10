@@ -4,18 +4,19 @@
 # include <utils.h>
 # include <lexer.h>
 
-// Think it breaks if buff_size reduced to 1
+// breaks if reduced to 1
 # define BUFF_SIZE 32
-# define TOKEN_EOF -1
 
 typedef enum e_type {
-	word,
-	e_pipe,
-	red_oput,	// redirect output
-	red_iput,	// redirect input
-	red_oput_a,	// redirect output + append
-	red_iput_a	// not sure what this does
-} t_type;
+	WORD,
+	PIPE,
+	RED_OPUT,	// redirect output
+	RED_IPUT,	// redirect input
+	RED_OPUT_A,	// redirect output + append
+	RED_IPUT_A,	// not sure what this does
+	IGNORE_EOL,
+	TOKEN_EOF
+}	t_type;
 
 typedef struct s_token {
 	char	*text;
@@ -25,11 +26,11 @@ typedef struct s_token {
 	struct s_token	*prev;
 }	t_token;
 
-void	add_to_end(t_token **ref, t_token *new);
+void	append_to_text(t_token *token, char c);
 
-t_token	*init_token(t_token *next);
+t_token	*new_token(t_token *last, t_type type);
 
-t_token	*init_token_list(void);
+void	free_token_list(t_token **ref);
 
 t_token	*tokenize_cmd(char *line);
 

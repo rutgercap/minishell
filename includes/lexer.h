@@ -11,12 +11,14 @@ typedef struct s_cmd {
 	long	position;
 }	t_cmd;
 
-t_cmd	init_cmd(char *raw_line);
-
 char	next_char(t_cmd *cmd);
 
 int		skip_white_spaces(t_cmd *cmd);
 
 char	peek_char(t_cmd *cmd);
+
+void	special_character(t_token *token, t_cmd *cmd);
+
+t_cmd	init_cmd(char *raw_line);
 
 #endif

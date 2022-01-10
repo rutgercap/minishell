@@ -10,7 +10,6 @@ static int	input_check(const void *to_check, char *func)
 	return (EXIT_SUCCESS);
 }
 
-// not used currently
 char	peek_char(t_cmd *cmd)
 {
 	input_check(cmd, "peek_char");
@@ -31,7 +30,7 @@ char	next_char(t_cmd *cmd)
 int		skip_white_spaces(t_cmd *cmd)
 {
 	input_check(cmd, "skip_white_spaces");
-	while (ft_isspace(cmd->line[cmd->position]))
+	while (ft_isspace(peek_char(cmd)))
 		cmd->position++;
 	if (cmd->position >= cmd->len)
 		return (CMD_EOF);
