@@ -11,13 +11,23 @@ typedef struct s_cmd {
 	long	position;
 }	t_cmd;
 
+/*
+	utils
+*/
+int		input_check(const void *to_check, char *func);
+
+int		is_delimiter(char c);
+
+/*
+	main functions
+*/
 char	next_char(t_cmd *cmd);
+
+char	current_char(t_cmd *cmd);
 
 int		skip_white_spaces(t_cmd *cmd);
 
 char	peek_char(t_cmd *cmd);
-
-void	special_character(t_token *token, t_cmd *cmd);
 
 t_cmd	init_cmd(char *raw_line);
 

@@ -80,7 +80,6 @@ static void	do_test(char *line, int mode)
 	free_token_list(&tokens);
 }
 
-
 /*
 	add tests here.
 */

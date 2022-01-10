@@ -1,14 +1,4 @@
-#include "lexer.h"
-
-static int	input_check(const void *to_check, char *func)
-{
-	if (to_check == NULL)
-	{
-		errno = ENODATA;
-		exit_error(errno, func, NULL);
-	}
-	return (EXIT_SUCCESS);
-}
+#include <lexer.h>
 
 char	peek_char(t_cmd *cmd)
 {
@@ -22,6 +12,14 @@ char	next_char(t_cmd *cmd)
 {	
 	input_check(cmd, "next_char");
 	cmd->position++;
+	if (cmd->position >= cmd->len)
+		return (CMD_EOF);
+	return (cmd->line[cmd->position]);
+}
+
+char	current_char(t_cmd *cmd)
+{
+	input_check(cmd, "current_char");
 	if (cmd->position >= cmd->len)
 		return (CMD_EOF);
 	return (cmd->line[cmd->position]);

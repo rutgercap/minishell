@@ -8,7 +8,6 @@ Rebuilding a simple shell program
 - parsing
 - execution of cmds
 
-
 ### Required
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.

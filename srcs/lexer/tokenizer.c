@@ -1,52 +1,54 @@
 #include <tokens.h>
 
-static int	is_special_char(char c)
+static void	check_eof_token(t_token **token, t_cmd *cmd, \
+	t_char_func *func)
 {
-	return ((c == '|' || c == '>' || c == '<' || 
-		c == '\\' || c == '\"' || c == '\''));
-}
+	t_char_func	funky;
+	t_token		*i;
 
-static int	is_delimiter(char c)
-{
-	return ((c == CMD_EOF || c == ';' || c == '&') 
-		|| ft_isspace(c) || is_special_char(c));
-}
-
-static void	add_word(t_token *token, t_cmd *cmd)
-{
-	char	c;
-
-	token->type = WORD;
-	c = 0;
-	while (true)
+	funky = *func;
+	i = *token;
+	if (i->type != TOKEN_EOF)
 	{
-		c = next_char(cmd);
-		if (is_delimiter(c))
-			return ;
-		append_to_text(token, c);
+		i->next = new_token(i, TOKEN_EOF);
+		i = i->next;
 	}
+	if (func)
+		funky(i, cmd);
+	else
+		skip_white_spaces(cmd);
+}
+
+static void	process_char(t_token *token, t_cmd *cmd, char c)
+{
+	t_char_func	func;
+
+	func = NULL;
+	if (ft_isspace(c))
+		return (check_eof_token(&token, cmd, NULL));
+	else if (ft_strchr("|<>;", c))
+		func = check_pairs;
+	else if (c == '\\')
+		func = backslash_func;
+	else if (c == '\'' || c == '\"')
+		func = string_func;
+	if (func)
+		check_eof_token(&token, cmd, func);
+	else
+		word_func(token, cmd);
 }
 
 static void	make_tokens(t_token *token, t_cmd *cmd)
 {
-	t_token	*i;
 	char	c;
 
-	i = token;
 	c = 0;
 	while (true)
 	{
-		skip_white_spaces(cmd);
 		c = next_char(cmd);
 		if (c == CMD_EOF)
 			break ;
-		if (is_special_char(c))
-			special_character(token, cmd);
-		else
-		{
-			token->type = WORD;
-			append_to_text(token, c);
-		}
+		process_char(token, cmd, c);
 	}
 }
 
