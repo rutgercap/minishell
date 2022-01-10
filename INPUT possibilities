@@ -1,8 +1,0 @@
-### INPUT
-
-- commands that can be found in PATH (1)
-- additions to commands (1) formatted like -...
-- commands not be found in PATH like cd, echo (2)
-  * cd
-  * echo
-- errors
