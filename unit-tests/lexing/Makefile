@@ -34,14 +34,17 @@ $(NAME):	$(OBJS)
 	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -o $@
 
 run: all
-	./$(NAME)
-	clean
+	./$(NAME) > output
+	
+auto: all
+	./$(NAME) > output
+	diff output compare
 
 drun: all
 	lldb $(NAME)
 
 clean:
-	@rm -rf *.o
+	@rm -rf $(OBJS)
 
 fclean:	clean
 	@rm -f $(OBJS)
