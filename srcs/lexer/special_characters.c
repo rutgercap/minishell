@@ -18,42 +18,72 @@ void	backslash_func(t_token *token, t_cmd *cmd)
 	append_to_text(token, c);
 }
 
-void	string_func(t_token *token, t_cmd *cmd)
+void	arg_function(t_token *token, t_cmd *cmd)
 {
-	char	string_type;
 	char	c;
-
-	string_type = current_char(cmd);
-	if (string_type == '\'')
-		token->type = PURE_STRING;
-	else
-		token->type = STRING;
-	append_to_text(token, string_type);
+	
+	if (token->type != TOKEN_EOF)
+	{
+		add_eof_token(&token, cmd, arg_function);
+		return ;
+	}
+	next_char(cmd);
 	while (true)
 	{
 		c = next_char(cmd);
 		if (c == CMD_EOF)
+		{
+			token->next = new_token(token, IGNORE_EOL);
 			break ;
-		if (c == '\\')
+		}
+		else if (c == '\\')
 			backslash_func(token, cmd);
-		else
-			append_to_text(token, c);
-		if (c == string_type)
+		else if (c == '}')
 			break ;
+		append_to_text(token, c);
 	}
 }
 
-void	word_func(t_token *token, t_cmd *cmd)
+void	normal_string(t_token *token, t_cmd *cmd)
 {
 	char	c;
-	
-	c = current_char(cmd);
-	if (token->type == WORD)
-		append_to_text(token, c);
-	else
+
+	token->type = STRING;
+	while (true)
 	{
-		token->type = WORD;
+		c = next_char(cmd);
+		if (c == CMD_EOF)
+		{
+			token->next = new_token(token, IGNORE_EOL);
+			break ;
+		}
+		else if (c == '\\')
+			backslash_func(token, cmd);
+		else if (c == '$' && peek_char(cmd) == '{')
+			arg_function(token, cmd);
+		else if (c == '\"')
+			break ;
 		append_to_text(token, c);
+	}
+}
+
+void	pure_string(t_token *token, t_cmd *cmd)
+{
+	char	c;
+
+	token->type = PURE_STRING;
+	while (true)
+	{
+		c = next_char(cmd);
+		if (c == CMD_EOF)
+		{
+			token->next = new_token(token, IGNORE_EOL);
+			break ;
+		}
+		else if (c == '\\')
+			backslash_func(token, cmd);
+		if (c == '\'')
+			break ;
 	}
 }
 
@@ -84,8 +114,12 @@ void	check_redirect(t_token *token, t_cmd *cmd)
 		else
 			token->type = RED_IPUT;
 	}
-	if (c[1] == '>')
-		token->type = RED_OPUT_A;
-	else
-		token->type = RED_OPUT;
+	if (c[0] == '>')
+	{
+		if (c[1] == '>')
+			token->type = RED_OPUT_A;
+		else
+			token->type = RED_OPUT;
+	}
+		
 }

@@ -1,66 +1,100 @@
 #include <tokens.h>
 
-static void	check_eof_token(t_token **token, t_cmd *cmd,
+void	add_eof_token(t_token **token, t_cmd *cmd,
 	t_char_func *func)
 {
 	t_char_func	todo;
 	t_token		*i;
 
-	todo = *func;
 	i = *token;
 	if (i->type != TOKEN_EOF)
 	{
 		i->next = new_token(i, TOKEN_EOF);
 		i = i->next;
 	}
-	if (todo)
+	if (func)
+	{
+		todo = *func;
 		todo(i, cmd);
-	else
-		skip_white_spaces(cmd);
+	}
 }
 
-static void	process_char(t_token *token, t_cmd *cmd, char c)
+static int	special_char(t_token **token, t_cmd *cmd, char c)
 {
 	t_char_func	func;
-
+	
 	func = NULL;
 	if (ft_isspace(c))
-		return (check_eof_token(&token, cmd, NULL));
-	else if (c == '\\')
-		backslash_func(token, cmd);
+	{
+		skip_white_spaces(cmd);
+		add_eof_token(token, cmd, NULL);
+		return (EXIT_SUCCESS);
+	}
+	if (c == '\\')
+		func = backslash_func;
 	else if (c == '>' || c == '<')
 		func = check_redirect;
 	else if (c == ';' || c == '|')
-		func = check_redirect;
-	else if (c == '\'' || c == '\"')
-		func = string_func;
+		func = check_single;
+	else if (c == '\'')
+		func = pure_string;
+	else if (c == '\"')
+		func = normal_string;
+	else if (c == '$' && peek_char(cmd) == '{')
+		func = arg_function;
 	if (func)
-		check_eof_token(&token, cmd, &func);
+		add_eof_token(token, cmd, &func);
 	else
-		word_func(token, cmd);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static void	word_func(t_token **token, t_cmd *cmd)
+{
+	t_token	*i;
+	char	c;
+
+	i = *token;
+	c = current_char(cmd);
+	if (i->type == TOKEN_EOF)
+		i->type = WORD;
+	else if (i->type != WORD)
+	{
+		add_eof_token(token, cmd, NULL);
+		i = i->next;
+	}
+	append_to_text(i, c);
 }
 
 static void	make_tokens(t_token *token, t_cmd *cmd)
 {
-	char	c;
+	t_char_func	func;
+	char		c;
 
+	func = NULL;
 	c = 0;
 	while (true)
 	{
 		c = next_char(cmd);
 		if (c == CMD_EOF)
+		{
+			add_eof_token(&token, cmd, NULL);	
 			break ;
-		process_char(token, cmd, c);
+		}
+		if (special_char(&token, cmd, c))
+			word_func(&token, cmd);
+		while (token->next != NULL)
+			token = token->next;
 	}
 }
 
 t_token	*tokenize_cmd(char *line)
 {
-	t_token	*tokens_ref;
+	t_token	*tokens;
 	t_cmd	cmd;
 
-	tokens_ref = new_token(NULL, TOKEN_EOF);
+	tokens = new_token(NULL, TOKEN_EOF);
 	cmd = init_cmd(line);
-	make_tokens(tokens_ref, &cmd);
-	return (tokens_ref);
+	make_tokens(tokens, &cmd);
+	return (tokens);
 }

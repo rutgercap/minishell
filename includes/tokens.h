@@ -11,6 +11,7 @@ typedef enum e_type {
 	WORD,
 	PIPE,
 	DELIM,
+	ARG,
 	STRING,
 	PURE_STRING,
 	RED_OPUT,
@@ -20,11 +21,6 @@ typedef enum e_type {
 	IGNORE_EOL,
 	TOKEN_EOF
 }	t_type;
-
-typedef struct s_type_char_pair {
-	char	key[2];
-	t_type	type;
-}	t_type_chair_pair;
 
 typedef struct s_string {
 	char	*text;
@@ -43,18 +39,20 @@ typedef struct s_token {
 typedef void(*t_char_func)(t_token*, t_cmd*);
 
 /*
-	char processing
+	special characters
 */
-
-void	pipe_func(t_token *token, t_cmd *cmd);
 
 void	backslash_func(t_token *token, t_cmd *cmd);
 
-void	string_func(t_token *token, t_cmd *cmd);
+void	pure_string(t_token *token, t_cmd *cmd);
 
-void	word_func(t_token *token, t_cmd *cmd);
+void	normal_string(t_token *token, t_cmd *cmd);
 
 void	check_redirect(t_token *token, t_cmd *cmd);
+
+void	check_single(t_token *token, t_cmd *cmd);
+
+void	arg_function(t_token *token, t_cmd *cmd);
 
 /*
 	general
@@ -63,6 +61,9 @@ void	check_redirect(t_token *token, t_cmd *cmd);
 void	append_to_text(t_token *token, char c);
 
 t_token	*new_token(t_token *last, t_type type);
+
+void	add_eof_token(t_token **token, t_cmd *cmd,
+		t_char_func *func);
 
 void	free_token_list(t_token **ref);
 

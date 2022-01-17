@@ -1,7 +1,7 @@
 NAME		:=	minishell
 
 # Readline -- might be different on your machine
-RL_DIR		:=	/usr/local/opt/readline/lib
+RL_DIR		:=	/Users/rcappend/Documents/homebrew/Cellar/readline/8.1.1/lib
 
 # Directories
 INCL_DIR	:=	includes
@@ -13,7 +13,6 @@ vpath		%.c $(SRCS_DIR)/executor
 vpath		%.c $(SRCS_DIR)/parser
 vpath		%.c $(SRCS_DIR)/utils
 vpath		%.c $(SRCS_DIR)/lexer
-
 
 # Srcs
 SRCS		:=	main.c \

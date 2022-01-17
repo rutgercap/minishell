@@ -20,7 +20,7 @@ static void	write_type(t_type type, int mode)
 		ft_putendl_fd("red_iput", 1);
 		break;
 	case RED_OPUT_A:
-		ft_putendl_fd("red_iput_a", 1);
+		ft_putendl_fd("red_oput_a", 1);
 		break;
 	case RED_IPUT_A:
 		ft_putendl_fd("red_iput_a", 1);
@@ -35,10 +35,7 @@ static void	write_token(t_token *token, int mode)
 {
 	if (mode > 0)
 		ft_putstr_fd("text: ", 1);
-	if (!token->text)
-		ft_putendl_fd("null", 1);
-	else
-		ft_putendl_fd(token->text, 1);
+	ft_putendl_fd(token->text, 1);
 	if (mode > 0)
 	{
 		ft_putstr_fd("len: ", 1);
@@ -86,12 +83,21 @@ static void	do_test(char *line, int mode)
 static void	auto_tests(void)
 {
 	do_test("ls -l", 0);
-	// do_test("hi", 0);
-	// do_test("blabla", 0);
-	// do_test("sleep 3", 0);
-	// do_test("sleep a", 0);
-	// do_test("   sleep   ", 0);
-	// do_test("sleep 3 | sleep 3", 0);
+	do_test("hi", 0);
+	do_test("blabla", 0);
+	do_test("sleep 3", 0);
+	do_test("sleep a", 0);
+	do_test("   sleep   ", 0);
+	do_test("sleep 3 | sleep 3", 0);
+	do_test("", 0);
+	do_test(">", 0);
+	do_test(">>", 0);
+	do_test("<", 0);
+	do_test("<<", 0);
+	do_test("||", 0);
+	do_test("|", 0);
+	do_test("echo \"  hi  this is a test\"", 0);
+	do_test("echo \'  hi  this is a test\'", 0);
 }
 
 int main(int argc, char **argv)

@@ -63,3 +63,15 @@ echo "test $${HOME}}"
 echo "test $"
 echo "test ${HME}"
 ${HOME}
+${HOME
+echo "test %{HOME"
+
+
+----
+example "<<"
+----
+$ wc << EOF
+> one two three
+> four five
+> EOF
+ 2  5 24
