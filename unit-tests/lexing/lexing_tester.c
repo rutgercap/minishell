@@ -86,12 +86,12 @@ static void	do_test(char *line, int mode)
 static void	auto_tests(void)
 {
 	do_test("ls -l", 0);
-	do_test("hi", 0);
-	do_test("blabla", 0);
-	do_test("sleep 3", 0);
-	do_test("sleep a", 0);
-	do_test("   sleep   ", 0);
-	do_test("sleep 3 | sleep 3", 0);
+	// do_test("hi", 0);
+	// do_test("blabla", 0);
+	// do_test("sleep 3", 0);
+	// do_test("sleep a", 0);
+	// do_test("   sleep   ", 0);
+	// do_test("sleep 3 | sleep 3", 0);
 }
 
 int main(int argc, char **argv)

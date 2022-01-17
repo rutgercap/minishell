@@ -29,6 +29,8 @@ SRCS		:=	main.c \
 				ft_strncmp.c \
 				ft_isspace.c \
 				lexer.c \
+				lexer_utils.c \
+				special_characters.c \
 				tokenizer.c \
 				token_list_utils.c \
 				ft_calloc.c

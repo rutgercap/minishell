@@ -54,7 +54,7 @@ void	string_func(t_token *token, t_cmd *cmd);
 
 void	word_func(t_token *token, t_cmd *cmd);
 
-void	check_pairs(t_token *token, t_cmd *cmd);
+void	check_redirect(t_token *token, t_cmd *cmd);
 
 /*
 	general
