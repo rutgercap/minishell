@@ -65,6 +65,7 @@ echo "test ${HME}"
 ${HOME}
 ${HOME
 echo "test %{HOME"
+echo "test '
 
 
 ----
@@ -75,3 +76,10 @@ $ wc << EOF
 > four five
 > EOF
  2  5 24
+
+
+
+ echo "hi'''''${'''' \" '''' " }
+
+
+

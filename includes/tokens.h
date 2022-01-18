@@ -29,8 +29,9 @@ typedef struct s_string {
 }	t_string;
 
 typedef struct s_token {
-	char	*text;
 	t_type	type;
+	char	*text;
+	bool	finished;
 	long	len;
 	struct s_token	*next;
 	struct s_token	*prev;

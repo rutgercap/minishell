@@ -50,6 +50,7 @@ t_token	*new_token(t_token *last, t_type type)
 		errno = ENOMEM;
 		exit_error(errno, "init_token", NULL);
 	}
+	new->finished = false;
 	if (last)
 	{
 		last->next = new;

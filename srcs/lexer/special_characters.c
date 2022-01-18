@@ -39,7 +39,10 @@ void	arg_function(t_token *token, t_cmd *cmd)
 		else if (c == '\\')
 			backslash_func(token, cmd);
 		else if (c == '}')
+		{
+			token->finished = true;
 			break ;
+		}
 		append_to_text(token, c);
 	}
 }

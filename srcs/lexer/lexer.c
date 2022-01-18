@@ -40,8 +40,8 @@ t_cmd	init_cmd(char *raw_line)
 	t_cmd	cmd;
 
 	input_check(raw_line, "setup_cmd");
+	cmd.len = ft_strlen(raw_line);
 	cmd.line = raw_line;
-	cmd.len = ft_strlen(cmd.line);
 	cmd.position = -1;
 	return (cmd);
 }
