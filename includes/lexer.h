@@ -12,13 +12,6 @@ typedef struct s_cmd {
 }	t_cmd;
 
 /*
-	utils
-*/
-int		input_check(const void *to_check, char *func);
-
-int		is_delimiter(char c);
-
-/*
 	main functions
 */
 char	next_char(t_cmd *cmd);

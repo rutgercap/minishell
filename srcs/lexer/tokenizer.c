@@ -2,28 +2,29 @@
 
 static void	string(t_token *token, t_cmd *cmd)
 {
+	char	end;
 	char	c;
 
-	c = current_char(cmd);
-	if (c == '\'')
+	end = current_char(cmd);
+	if (end == '\'')
 		token->type = PURE_STRING;
 	else
 		token->type = STRING;
 	while (true)
 	{
 		c = next_char(cmd);
-		append_to_text(token, c);
-		if (c == '\'')
+		if (c == end)
 			break ;
 		else if (c == CMD_EOF)
 		{
 			errno = EINVAL;
 			exit_error(errno, "string", NULL);
 		}
+		append_to_text(token, c);
 	}
 }
 
-static void	word_func(t_token *token, t_cmd *cmd)
+static void	word(t_token *token, t_cmd *cmd)
 {
 	char	c;
 
@@ -53,9 +54,9 @@ static int	process_char(t_token *token, t_cmd *cmd, char c)
 	else if (c == '|')
 		append_to_tokens(token, PIPE);
 	else if (c == '\'' || c == '\"')
-		append_to_tokens(token, STRING);
+		string(token, cmd);
 	else
-		word_func(token, cmd);
+		word(token, cmd);
 }
 
 static void	make_tokens(t_token *token, t_cmd *cmd)

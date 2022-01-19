@@ -2,7 +2,6 @@
 
 char	peek_char(t_cmd *cmd)
 {
-	input_check(cmd, "peek_char");
 	if (cmd->position + 1 >= cmd->len)
 		return (CMD_EOF);
 	return (cmd->line[cmd->position + 1]);
@@ -10,7 +9,6 @@ char	peek_char(t_cmd *cmd)
 
 char	next_char(t_cmd *cmd)
 {	
-	input_check(cmd, "next_char");
 	cmd->position++;
 	if (cmd->position >= cmd->len)
 		return (CMD_EOF);
@@ -19,7 +17,6 @@ char	next_char(t_cmd *cmd)
 
 char	current_char(t_cmd *cmd)
 {
-	input_check(cmd, "current_char");
 	if (cmd->position >= cmd->len)
 		return (CMD_EOF);
 	return (cmd->line[cmd->position]);
@@ -27,7 +24,6 @@ char	current_char(t_cmd *cmd)
 
 int		skip_white_spaces(t_cmd *cmd)
 {
-	input_check(cmd, "skip_white_spaces");
 	while (ft_isspace(peek_char(cmd)))
 		cmd->position++;
 	if (cmd->position >= cmd->len)
@@ -39,7 +35,6 @@ t_cmd	init_cmd(char *raw_line)
 {
 	t_cmd	cmd;
 
-	input_check(raw_line, "setup_cmd");
 	cmd.len = ft_strlen(raw_line);
 	cmd.line = raw_line;
 	cmd.position = -1;

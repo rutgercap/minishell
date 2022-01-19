@@ -28,7 +28,6 @@ typedef struct s_token {
 /*
 	general
 */
-
 void	append_to_text(t_token *token, char c);
 
 t_token	*new_token(t_token *last, t_type type);
