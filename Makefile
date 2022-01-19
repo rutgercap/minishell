@@ -12,7 +12,7 @@ vpath 		%.c $(SRCS_DIR)/builtins
 vpath		%.c $(SRCS_DIR)/executor
 vpath		%.c $(SRCS_DIR)/parser
 vpath		%.c $(SRCS_DIR)/utils
-vpath		%.c $(SRCS_DIR)/lexer
+vpath		%.c $(SRCS_DIR)/tokenizer
 
 # Srcs
 SRCS		:=	main.c \
@@ -30,9 +30,9 @@ SRCS		:=	main.c \
 				ft_putchar_fd.c \
 				ft_strncmp.c \
 				ft_isspace.c \
-				lexer.c \
 				tokenizer.c \
-				token_list_utils.c \
+				process_char.c \
+				process_char_utils.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 

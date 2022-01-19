@@ -1,5 +1,25 @@
 #include <tokens.h>
 
+static void	append_to_text(t_token *token, char c)
+{
+	char	*new;
+
+	if (token->len + 1 % BUFF_SIZE == 1)
+	{
+		new = ft_calloc(token->len + BUFF_SIZE + 1, 1);
+		if (!new)
+		{
+			errno = ENOMEM;
+			exit_error(errno, "append_to_text", NULL);
+		}
+		ft_strcpy(new, token->text, token->len);
+		free(token->text);
+		token->text = new;
+	}
+	token->text[token->len] = c;
+	token->len++;
+}
+
 static void	string(t_token *token, t_line *line)
 {
 	char	end;
@@ -39,7 +59,7 @@ static void	word(t_token *token, t_line *line)
 	append_to_text(token, c);
 }
 
-static void	process_char(t_token *token, t_line *line, char c)
+void	process_char(t_token *token, t_line *line, char c)
 {	
 	if (ft_isspace(c))
 	{
@@ -57,34 +77,4 @@ static void	process_char(t_token *token, t_line *line, char c)
 		string(token, line);
 	else
 		word(token, line);
-}
-
-static void	make_tokens(t_token *token, t_line *line)
-{
-	char		c;
-
-	c = 0;
-	while (true)
-	{
-		c = next_char(line);
-		if (c == CMD_EOF)
-		{
-			append_to_tokens(token, TOKEN_EOF);
-			break ;
-		}
-		process_char(token, line, c);
-		while (token->next != NULL)
-			token = token->next;
-	}
-}
-
-t_token	*tokenize_cmd(char *raw_line)
-{
-	t_token	*tokens;
-	t_line	line;
-
-	tokens = new_token(NULL, TOKEN_EOF);
-	line = init_line(raw_line);
-	make_tokens(tokens, &line);
-	return (tokens);
 }

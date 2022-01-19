@@ -1,4 +1,4 @@
-#include <lexer.h>
+#include <tokens.h>
 
 char	peek_char(t_line *line)
 {
@@ -29,14 +29,4 @@ int		skip_white_spaces(t_line *line)
 	if (line->position >= line->len)
 		return (CMD_EOF);
 	return (EXIT_SUCCESS);
-}
-
-t_line	init_line(char *raw_line)
-{
-	t_line	line;
-
-	line.len = ft_strlen(raw_line);
-	line.text = raw_line;
-	line.position = -1;
-	return (line);
 }
