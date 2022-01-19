@@ -37,8 +37,8 @@ static void	string(t_token *token, t_line *line)
 			break ;
 		else if (c == CMD_EOF)
 		{
-			errno = EINVAL;
-			exit_error(errno, "string", NULL);
+			token->next = new_token(token, ERROR);
+			break ;
 		}
 		append_to_text(token, c);
 	}
