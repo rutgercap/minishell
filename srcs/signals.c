@@ -1,5 +1,6 @@
 #include <minishell.h>
 
+// dont forget to free history after sigint
 void	sigint_handler(int signum)
 {
 	(void)signum;	// stops compiler errors

@@ -1,5 +1,15 @@
 #include <minishell.h>
 
+static char	*get_line(void)
+{
+	char	*line;
+
+	line = readline("minishell$ ");
+	if (line && ft_strlen(line))
+		add_history(line);
+	return (line);
+}
+
 static void	process_cmd(const char *raw_line, char **env)
 {
 	(void)env;
@@ -21,8 +31,7 @@ int main(int argc, char **argv, char **env)
 	init_signals();
 	while (true)
 	{
-		line = NULL;
-		get_line(&line);
+		line = get_line();
 		if (line && ft_strlen(line))
 			process_cmd(line, env);
 		printf("%s\n", line);

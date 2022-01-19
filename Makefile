@@ -16,11 +16,15 @@ vpath		%.c $(SRCS_DIR)/lexer
 
 # Srcs
 SRCS		:=	main.c \
+				get_line.c \
 				signals.c \
 				exit_error.c \
 				mini_exit.c \
 				ft_strlen.c \
 				ft_bzero.c \
+				ft_strjoin.c \
+				ft_memcpy.c \
+				ft_strdup.c \
 				ft_strcpy.c \
 				ft_putendl_fd.c \
 				ft_putstr_fd.c \

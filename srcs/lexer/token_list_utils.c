@@ -50,7 +50,6 @@ t_token	*new_token(t_token *last, t_type type)
 		errno = ENOMEM;
 		exit_error(errno, "init_token", NULL);
 	}
-	new->finished = false;
 	if (last)
 	{
 		last->next = new;
@@ -58,4 +57,12 @@ t_token	*new_token(t_token *last, t_type type)
 	}
 	new->type = type;
 	return (new);
+}
+
+void	append_to_tokens(t_token *last, t_type type)
+{	
+	if (last->type == TOKEN_EOF)
+		last->type = type;
+	else
+		last->next = new_token(last, type);
 }

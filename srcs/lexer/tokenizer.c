@@ -1,88 +1,77 @@
 #include <tokens.h>
 
-void	add_eof_token(t_token **token, t_cmd *cmd,
-	t_char_func *func)
+static void	string(t_token *token, t_cmd *cmd)
 {
-	t_char_func	todo;
-	t_token		*i;
+	char	c;
 
-	i = *token;
-	if (i->type != TOKEN_EOF)
+	c = current_char(cmd);
+	if (c == '\'')
+		token->type = PURE_STRING;
+	else
+		token->type = STRING;
+	while (true)
 	{
-		i->next = new_token(i, TOKEN_EOF);
-		i = i->next;
-	}
-	if (func)
-	{
-		todo = *func;
-		todo(i, cmd);
+		c = next_char(cmd);
+		append_to_text(token, c);
+		if (c == '\'')
+			break ;
+		else if (c == CMD_EOF)
+		{
+			errno = EINVAL;
+			exit_error(errno, "string", NULL);
+		}
 	}
 }
 
-static int	special_char(t_token **token, t_cmd *cmd, char c)
+static void	word_func(t_token *token, t_cmd *cmd)
 {
-	t_char_func	func;
-	
-	func = NULL;
+	char	c;
+
+	c = current_char(cmd);
+	if (token->type == TOKEN_EOF)
+		token->type = WORD;
+	else if (token->type != WORD)
+	{
+		token->next = new_token(token, WORD);
+		token = token->next;
+	}
+	append_to_text(token, c);
+}
+
+static int	process_char(t_token *token, t_cmd *cmd, char c)
+{	
 	if (ft_isspace(c))
 	{
 		skip_white_spaces(cmd);
-		add_eof_token(token, cmd, NULL);
+		append_to_tokens(token, TOKEN_EOF);
 		return (EXIT_SUCCESS);
 	}
-	if (c == '\\')
-		func = backslash_func;
-	else if (c == '>' || c == '<')
-		func = check_redirect;
-	else if (c == ';' || c == '|')
-		func = check_single;
-	else if (c == '\'')
-		func = pure_string;
-	else if (c == '\"')
-		func = normal_string;
-	else if (c == '$' && peek_char(cmd) == '{')
-		func = arg_function;
-	if (func)
-		add_eof_token(token, cmd, &func);
+	else if (c == '>')
+		append_to_tokens(token, RED_OPUT);
+	else if (c == '<')
+		append_to_tokens(token, RED_IPUT);
+	else if (c == '|')
+		append_to_tokens(token, PIPE);
+	else if (c == '\'' || c == '\"')
+		append_to_tokens(token, STRING);
 	else
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-static void	word_func(t_token **token, t_cmd *cmd)
-{
-	t_token	*i;
-	char	c;
-
-	i = *token;
-	c = current_char(cmd);
-	if (i->type == TOKEN_EOF)
-		i->type = WORD;
-	else if (i->type != WORD)
-	{
-		add_eof_token(token, cmd, NULL);
-		i = i->next;
-	}
-	append_to_text(i, c);
+		word_func(token, cmd);
 }
 
 static void	make_tokens(t_token *token, t_cmd *cmd)
 {
-	t_char_func	func;
 	char		c;
 
-	func = NULL;
 	c = 0;
 	while (true)
 	{
 		c = next_char(cmd);
 		if (c == CMD_EOF)
 		{
-			add_eof_token(&token, cmd, NULL);	
+			append_to_tokens(token, TOKEN_EOF);
 			break ;
 		}
-		if (special_char(&token, cmd, c))
-			word_func(&token, cmd);
+		process_char(token, cmd, c);
 		while (token->next != NULL)
 			token = token->next;
 	}
