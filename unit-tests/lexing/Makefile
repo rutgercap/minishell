@@ -6,8 +6,6 @@ INCL_DIR	:=	../../includes
 # Srcs
 SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/lexer/lexer.c \
-				$(SRCS_DIR)/lexer/lexer_utils.c \
-				$(SRCS_DIR)/lexer/special_characters.c \
 				$(SRCS_DIR)/lexer/token_list_utils.c \
 				$(SRCS_DIR)/lexer/tokenizer.c \
 				$(SRCS_DIR)/utils/exit_error.c \

@@ -42,15 +42,31 @@ word
 ----------------
 red_oput
 ----------------
-red_oput_a
+red_oput
+
+red_oput
 ----------------
 red_iput
 ----------------
-red_iput_a
+red_iput
+
+red_iput
 ----------------
 pipe
 
 pipe
 ----------------
 pipe
+----------------
+echo
+word
+
+  hi  this is a test
+string
+----------------
+echo
+word
+
+  hi  this is a test
+pstring
 ----------------

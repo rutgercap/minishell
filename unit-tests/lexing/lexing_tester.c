@@ -13,17 +13,17 @@ static void	write_type(t_type type, int mode)
 	case PIPE:
 		ft_putendl_fd("pipe", 1);
 		break;
+	case PURE_STRING:
+		ft_putendl_fd("pstring", 1);
+		break;
+	case STRING:
+		ft_putendl_fd("string", 1);
+		break;
 	case RED_OPUT:
 		ft_putendl_fd("red_oput", 1);
 		break;
 	case RED_IPUT:
 		ft_putendl_fd("red_iput", 1);
-		break;
-	case RED_OPUT_A:
-		ft_putendl_fd("red_oput_a", 1);
-		break;
-	case RED_IPUT_A:
-		ft_putendl_fd("red_iput_a", 1);
 		break;
 	default:
 		ft_putendl_fd("error", 1);
@@ -68,7 +68,7 @@ static void	write_all_tokens(t_token *tokens, int mode)
 	ft_putendl_fd("----------------", 1);
 }
 
-static void	do_test(char *line, int mode)
+static void	test(char *line, int mode)
 {
 	t_token	*tokens;
 
@@ -82,28 +82,28 @@ static void	do_test(char *line, int mode)
 */
 static void	auto_tests(void)
 {
-	do_test("ls -l", 0);
-	do_test("hi", 0);
-	do_test("blabla", 0);
-	do_test("sleep 3", 0);
-	do_test("sleep a", 0);
-	do_test("   sleep   ", 0);
-	do_test("sleep 3 | sleep 3", 0);
-	do_test("", 0);
-	do_test(">", 0);
-	do_test(">>", 0);
-	do_test("<", 0);
-	do_test("<<", 0);
-	do_test("||", 0);
-	do_test("|", 0);
-	do_test("echo \"  hi  this is a test\"", 0);
-	do_test("echo \'  hi  this is a test\'", 0);
+	test("ls -l", 0);
+	test("hi", 0);
+	test("blabla", 0);
+	test("sleep 3", 0);
+	test("sleep a", 0);
+	test("   sleep   ", 0);
+	test("sleep 3 | sleep 3", 0);
+	test("", 0);
+	test(">", 0);
+	test(">>", 0);
+	test("<", 0);
+	test("<<", 0);
+	test("||", 0);
+	test("|", 0);
+	test("echo \"  hi  this is a test\"", 0);
+	test("echo \'  hi  this is a test\'", 0);
 }
 
 int main(int argc, char **argv)
 {	
 	if (argc > 1)
-		do_test(argv[1], argc);
+		test(argv[1], argc);
 	else
 		auto_tests();
 }
