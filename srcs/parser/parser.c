@@ -10,5 +10,6 @@
 
 void	parsing(char ***tokens, char *raw_cmd)
 {
-	
+	(void)tokens;
+		
 }

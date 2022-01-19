@@ -39,13 +39,13 @@ static void	word(t_token *token, t_cmd *cmd)
 	append_to_text(token, c);
 }
 
-static int	process_char(t_token *token, t_cmd *cmd, char c)
+static void	process_char(t_token *token, t_cmd *cmd, char c)
 {	
 	if (ft_isspace(c))
 	{
 		skip_white_spaces(cmd);
 		append_to_tokens(token, TOKEN_EOF);
-		return (EXIT_SUCCESS);
+		return ;
 	}
 	else if (c == '>')
 		append_to_tokens(token, RED_OPUT);

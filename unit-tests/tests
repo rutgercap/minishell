@@ -83,3 +83,6 @@ $ wc << EOF
 
 
 
+parser:
+
+sequence | sequence | sequence

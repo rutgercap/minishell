@@ -12,8 +12,10 @@ static char	*get_line(void)
 
 static void	process_cmd(const char *raw_line, char **env)
 {
+	t_token	*tokens;
+	
 	(void)env;
-	// tokenize_line
+	tokens = tokenize_cmd(raw_line);
 	// parse_tokens(&tokens, raw_cmd);
 	// expand_(&tokens);
 	// execute_cmds(AST);
