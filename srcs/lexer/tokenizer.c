@@ -1,18 +1,18 @@
 #include <tokens.h>
 
-static void	string(t_token *token, t_cmd *cmd)
+static void	string(t_token *token, t_line *line)
 {
 	char	end;
 	char	c;
 
-	end = current_char(cmd);
+	end = current_char(line);
 	if (end == '\'')
 		token->type = PURE_STRING;
 	else
 		token->type = STRING;
 	while (true)
 	{
-		c = next_char(cmd);
+		c = next_char(line);
 		if (c == end)
 			break ;
 		else if (c == CMD_EOF)
@@ -24,11 +24,11 @@ static void	string(t_token *token, t_cmd *cmd)
 	}
 }
 
-static void	word(t_token *token, t_cmd *cmd)
+static void	word(t_token *token, t_line *line)
 {
 	char	c;
 
-	c = current_char(cmd);
+	c = current_char(line);
 	if (token->type == TOKEN_EOF)
 		token->type = WORD;
 	else if (token->type != WORD)
@@ -39,11 +39,11 @@ static void	word(t_token *token, t_cmd *cmd)
 	append_to_text(token, c);
 }
 
-static void	process_char(t_token *token, t_cmd *cmd, char c)
+static void	process_char(t_token *token, t_line *line, char c)
 {	
 	if (ft_isspace(c))
 	{
-		skip_white_spaces(cmd);
+		skip_white_spaces(line);
 		append_to_tokens(token, TOKEN_EOF);
 		return ;
 	}
@@ -54,37 +54,37 @@ static void	process_char(t_token *token, t_cmd *cmd, char c)
 	else if (c == '|')
 		append_to_tokens(token, PIPE);
 	else if (c == '\'' || c == '\"')
-		string(token, cmd);
+		string(token, line);
 	else
-		word(token, cmd);
+		word(token, line);
 }
 
-static void	make_tokens(t_token *token, t_cmd *cmd)
+static void	make_tokens(t_token *token, t_line *line)
 {
 	char		c;
 
 	c = 0;
 	while (true)
 	{
-		c = next_char(cmd);
+		c = next_char(line);
 		if (c == CMD_EOF)
 		{
 			append_to_tokens(token, TOKEN_EOF);
 			break ;
 		}
-		process_char(token, cmd, c);
+		process_char(token, line, c);
 		while (token->next != NULL)
 			token = token->next;
 	}
 }
 
-t_token	*tokenize_cmd(char *line)
+t_token	*tokenize_cmd(char *raw_line)
 {
 	t_token	*tokens;
-	t_cmd	cmd;
+	t_line	line;
 
 	tokens = new_token(NULL, TOKEN_EOF);
-	cmd = init_cmd(line);
-	make_tokens(tokens, &cmd);
+	line = init_line(raw_line);
+	make_tokens(tokens, &line);
 	return (tokens);
 }

@@ -16,7 +16,6 @@ static void	process_cmd(const char *raw_line, char **env)
 	
 	(void)env;
 	tokens = tokenize_cmd(raw_line);
-	// parse_tokens(&tokens, raw_cmd);
 	// expand_(&tokens);
 	// execute_cmds(AST);
 	if (!ft_strncmp(raw_line, "exit", 4))
