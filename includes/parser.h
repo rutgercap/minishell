@@ -3,4 +3,8 @@
 
 # include <utils.h>
 
+typedef struct t_cmd {
+
+}   t_cmd;
+
 #endif

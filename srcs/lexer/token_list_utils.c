@@ -27,7 +27,7 @@ void	free_token_list(t_token **ref)
 	
 	if (!ref || !*ref)
 	{
-		errno = ENOMEM;
+		errno = ENODATA;
 		exit_error(errno, "free_token_list", NULL);
 	}
 	i = *ref;

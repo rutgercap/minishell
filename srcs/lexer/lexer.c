@@ -1,42 +1,42 @@
 #include <lexer.h>
 
-char	peek_char(t_cmd *cmd)
+char	peek_char(t_line *line)
 {
-	if (cmd->position + 1 >= cmd->len)
+	if (line->position + 1 >= line->len)
 		return (CMD_EOF);
-	return (cmd->line[cmd->position + 1]);
+	return (line->text[line->position + 1]);
 }
 
-char	next_char(t_cmd *cmd)
+char	next_char(t_line *line)
 {	
-	cmd->position++;
-	if (cmd->position >= cmd->len)
+	line->position++;
+	if (line->position >= line->len)
 		return (CMD_EOF);
-	return (cmd->line[cmd->position]);
+	return (line->text[line->position]);
 }
 
-char	current_char(t_cmd *cmd)
+char	current_char(t_line *line)
 {
-	if (cmd->position >= cmd->len)
+	if (line->position >= line->len)
 		return (CMD_EOF);
-	return (cmd->line[cmd->position]);
+	return (line->text[line->position]);
 }
 
-int		skip_white_spaces(t_cmd *cmd)
+int		skip_white_spaces(t_line *line)
 {
-	while (ft_isspace(peek_char(cmd)))
-		cmd->position++;
-	if (cmd->position >= cmd->len)
+	while (ft_isspace(peek_char(line)))
+		line->position++;
+	if (line->position >= line->len)
 		return (CMD_EOF);
 	return (EXIT_SUCCESS);
 }
 
-t_cmd	init_cmd(char *raw_line)
+t_line	init_line(char *raw_line)
 {
-	t_cmd	cmd;
+	t_line	line;
 
-	cmd.len = ft_strlen(raw_line);
-	cmd.line = raw_line;
-	cmd.position = -1;
-	return (cmd);
+	line.len = ft_strlen(raw_line);
+	line.text = raw_line;
+	line.position = -1;
+	return (line);
 }

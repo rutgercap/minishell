@@ -16,7 +16,6 @@ vpath		%.c $(SRCS_DIR)/lexer
 
 # Srcs
 SRCS		:=	main.c \
-				get_line.c \
 				signals.c \
 				exit_error.c \
 				mini_exit.c \
@@ -32,8 +31,6 @@ SRCS		:=	main.c \
 				ft_strncmp.c \
 				ft_isspace.c \
 				lexer.c \
-				lexer_utils.c \
-				special_characters.c \
 				tokenizer.c \
 				token_list_utils.c \
 				ft_calloc.c

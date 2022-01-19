@@ -12,9 +12,10 @@ static char	*get_line(void)
 
 static void	process_cmd(const char *raw_line, char **env)
 {
+	t_token	*tokens;
+	
 	(void)env;
-	// tokenize_line
-	// parse_tokens(&tokens, raw_cmd);
+	tokens = tokenize_cmd(raw_line);
 	// expand_(&tokens);
 	// execute_cmds(AST);
 	if (!ft_strncmp(raw_line, "exit", 4))
