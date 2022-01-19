@@ -67,22 +67,7 @@ ${HOME
 echo "test %{HOME"
 echo "test '
 
-
-----
-example "<<"
-----
-$ wc << EOF
-> one two three
-> four five
-> EOF
- 2  5 24
-
-
-
- echo "hi'''''${'''' \" '''' " }
-
-
-
-parser:
-
-sequence | sequence | sequence
+---
+redirects
+---
+3>1 4>2 &<2

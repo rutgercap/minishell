@@ -5,9 +5,9 @@ INCL_DIR	:=	../../includes
 
 # Srcs
 SRCS		:=	lexing_tester.c \
-				$(SRCS_DIR)/lexer/lexer.c \
-				$(SRCS_DIR)/lexer/token_list_utils.c \
-				$(SRCS_DIR)/lexer/tokenizer.c \
+				$(SRCS_DIR)/tokenizer/tokenizer.c \
+				$(SRCS_DIR)/tokenizer/process_char.c \
+				$(SRCS_DIR)/tokenizer/process_char_utils.c \
 				$(SRCS_DIR)/utils/exit_error.c \
 				$(SRCS_DIR)/utils/ft_calloc.c \
 				$(SRCS_DIR)/utils/ft_isspace.c \
@@ -17,6 +17,10 @@ SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/utils/ft_putendl_fd.c \
 				$(SRCS_DIR)/utils/ft_putstr_fd.c \
 				$(SRCS_DIR)/utils/ft_putchar_fd.c \
+				$(SRCS_DIR)/utils/ft_strtrim.c \
+				$(SRCS_DIR)/utils/ft_strchr.c \
+				$(SRCS_DIR)/utils/ft_substr.c \
+				$(SRCS_DIR)/utils/ft_memcpy.c \
 				$(SRCS_DIR)/utils/ft_putnbr_fd.c
 OBJS		:=	$(SRCS:.c=.o)
 

@@ -25,6 +25,9 @@ static void	write_type(t_type type, int mode)
 	case RED_IPUT:
 		ft_putendl_fd("red_iput", 1);
 		break;
+	case SPACE:
+		ft_putendl_fd("space", 1);
+		break;
 	default:
 		ft_putendl_fd("error", 1);
 		break;
@@ -61,8 +64,6 @@ static void	write_all_tokens(t_token *tokens, int mode)
 		}
 		write_token(curr, mode);
 		curr = curr->next;
-		if (curr->type != TOKEN_EOF)
-			ft_putchar_fd('\n', 1);
 		i++;
 	}
 	ft_putendl_fd("----------------", 1);
@@ -72,9 +73,9 @@ static void	test(char *line, int mode)
 {
 	t_token	*tokens;
 
-	tokens = tokenize_cmd(line);
+	tokens = tokenizer(line);
 	write_all_tokens(tokens, mode);
-	free_token_list(&tokens);
+	free_tokens(&tokens);
 }
 
 /*
@@ -100,6 +101,7 @@ static void	auto_tests(void)
 	test("echo \'  hi  this is a test\'", 0);
 	test("         ", 0);
 	test("      echo   ", 0);
+	test("      echo   3>1", 0);
 }
 
 int main(int argc, char **argv)

@@ -25,6 +25,11 @@ static void	string(t_token *token, t_line *line)
 	char	end;
 	char	c;
 
+	if (token->type != TOKEN_EOF)
+	{
+		token->next = new_token(token, TOKEN_EOF);
+		token = token->next;
+	}
 	end = current_char(line);
 	if (end == '\'')
 		token->type = PURE_STRING;
@@ -64,7 +69,7 @@ void	process_char(t_token *token, t_line *line, char c)
 	if (ft_isspace(c))
 	{
 		skip_white_spaces(line);
-		append_to_tokens(token, TOKEN_EOF);
+		append_to_tokens(token, SPACE);
 		return ;
 	}
 	else if (c == '>')

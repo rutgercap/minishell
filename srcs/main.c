@@ -3,6 +3,7 @@
 static char	*get_line(void)
 {
 	char	*line;
+	char	*trimmed;
 
 	line = readline("minishell$ ");
 	if (line && ft_strlen(line))

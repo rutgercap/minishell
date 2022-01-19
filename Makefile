@@ -18,6 +18,9 @@ vpath		%.c $(SRCS_DIR)/tokenizer
 SRCS		:=	main.c \
 				signals.c \
 				exit_error.c \
+				tokenizer.c \
+				process_char.c \
+				process_char_utils.c \
 				mini_exit.c \
 				ft_strlen.c \
 				ft_bzero.c \
@@ -30,9 +33,7 @@ SRCS		:=	main.c \
 				ft_putchar_fd.c \
 				ft_strncmp.c \
 				ft_isspace.c \
-				tokenizer.c \
-				process_char.c \
-				process_char_utils.c \
+				ft_strtrim.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
