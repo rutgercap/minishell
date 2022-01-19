@@ -71,12 +71,7 @@ t_token	*tokenizer(char *raw_line)
 	t_token	*tokens;
 	t_line	line;
 
-	line.text = ft_strtrim(raw_line, " ");
-	if (!line.text)
-	{
-		errno = ENOMEM;
-		exit_error(errno, "tokenizer", NULL);
-	}
+	line.text = raw_line;
 	line.len = ft_strlen(line.text);
 	line.position = -1;
 	tokens = new_token(NULL, TOKEN_EOF);

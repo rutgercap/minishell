@@ -25,9 +25,6 @@ static void	write_type(t_type type, int mode)
 	case RED_IPUT:
 		ft_putendl_fd("red_iput", 1);
 		break;
-	case SPACE:
-		ft_putendl_fd("space", 1);
-		break;
 	default:
 		ft_putendl_fd("error", 1);
 		break;

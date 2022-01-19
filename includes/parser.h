@@ -6,7 +6,7 @@
 
 typedef struct s_cmd {
     char    *function;
-    char    *arguments;
+    char    **arguments;
     t_red   redirects;
 }   t_cmd;
 

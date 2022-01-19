@@ -1,6 +1,5 @@
 ls
 word
-space
 -l
 word
 ----------------
@@ -12,13 +11,11 @@ word
 ----------------
 sleep
 word
-space
 3
 word
 ----------------
 sleep
 word
-space
 a
 word
 ----------------
@@ -27,15 +24,11 @@ word
 ----------------
 sleep
 word
-space
 3
 word
-space
 pipe
-space
 sleep
 word
-space
 3
 word
 ----------------
@@ -57,23 +50,23 @@ pipe
 ----------------
 echo
 word
-space
   hi  this is a test
 string
 ----------------
 echo
 word
-space
   hi  this is a test
 pstring
 ----------------
 ----------------
 echo
 word
+blabla  
+string
+error
 ----------------
 echo
 word
-space
 3
 word
 red_oput

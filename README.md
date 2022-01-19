@@ -22,7 +22,7 @@ brew install readline
 
 1: miscellaneous (?)
 
-2: malloc failure
+666: syntax error 
 
 
 #### Sources
