@@ -100,7 +100,7 @@ static void	auto_tests(void)
 	test("echo \"  hi  this is a test\"", 0);
 	test("echo \'  hi  this is a test\'", 0);
 	test("         ", 0);
-	test("      echo   ", 0);
+	test("      echo \"blabla  ", 0);
 	test("      echo   3>1", 0);
 }
 

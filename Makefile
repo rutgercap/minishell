@@ -58,6 +58,10 @@ run: all
 drun: all
 	lldb $(NAME)
 
+lextest:
+	make auto -C unit-tests/lexing
+	make clean -C unit-tests/lexing
+
 clean:
 	@rm -rf $(OBJ_DIR)
 
