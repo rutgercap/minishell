@@ -12,17 +12,26 @@ Rebuilding a simple shell program
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.
 
+*brew installation:*
+
 ```console
 
 brew install readline
 
 ```
 
-### Exit codes
+Then run
 
-1: miscellaneous (?)
+```console
 
-666: syntax error 
+brew info readline
+
+```
+![compiler path](https://user-images.githubusercontent.com/2053650/150352713-fc5d9da7-046f-46dc-93ff-593e330235fc.png "Compiler path")
+
+Add these to the makefile
+
+![Adjust this](https://user-images.githubusercontent.com/2053650/150352709-ebf59ce0-e609-44da-9351-1c9ffdd1b445.png "Adjust this in makefile")
 
 
 #### Sources
@@ -42,9 +51,4 @@ https://www.gnu.org/software/bash/manual/html_node/Redirections.html
 Hilmi tips:
 http://www.throwtheswitch.org/unity
 https://cs61.seas.harvard.edu/site/2021/Section10/
-
-#### To check
-
-includes/exit.c: header maken voor builtins? alternatief is gewoon stdlib includen.
-lexer/tokenizer.c: ft_stchr gebruiken of aparte functies?
 
