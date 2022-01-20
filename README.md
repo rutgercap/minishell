@@ -1,11 +1,36 @@
 # Minishell
-Rebuilding a simple shell program
+Rebuilding the basics of Bash
 
-## To do
+## Functionality
 
-- Badges
+- Working history
+- Launches executables based on PATH variable or based on relative or absolute path
+- Bultins:
+  - echo
+    - with option -n
+  - cd
+    - absolute or relative
+  - pwd
+  - export
+  - env
+  - exit
+- Support for single and double quote strings
+- Basic redirections through: '>', '<', '<<' and '>>'.
+- Pipes
+- Environment variables (including $?)
+- Ctrl-C, Ctrl-D and Ctrl-\
 
-#### Required
+## To run
+
+**Readline library is required (see below for how-to)**
+
+```console
+
+make run
+
+```
+
+#### Readline
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.
 
@@ -30,6 +55,14 @@ Add these to the makefile
 
 ![Adjust this](https://user-images.githubusercontent.com/2053650/150352709-ebf59ce0-e609-44da-9351-1c9ffdd1b445.png "Adjust this in makefile")
 
+### Learning goals
+
+- Intrinsics of bash
+- Shell environment variables
+- Forking in C programs
+- Writing scalable code
+- Teamwork
+- Extensive knowledge of processes and file descriptors
 
 #### Sources
 
