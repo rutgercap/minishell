@@ -92,9 +92,9 @@ static void	find_expansions(t_token *token, char **env, char *pid)
 	char	*to_expand;
 	char	*var;
 
-	to_expand = token->text;
 	while (true)
 	{
+		to_expand = token->text;
 		if (ft_strlen(token->text) == 1)
 			break ;
 		to_expand = ft_strchr(to_expand, '$');

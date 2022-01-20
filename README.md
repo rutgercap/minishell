@@ -1,14 +1,11 @@
-# minishell
+# Minishell
 Rebuilding a simple shell program
 
-### To do
+## To do
 
-- Finish signals
-- lexing
-- parsing
-- execution of cmds
+- Badges
 
-### Required
+#### Required
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.
 
