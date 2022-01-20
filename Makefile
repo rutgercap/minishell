@@ -34,6 +34,8 @@ SRCS		:=	main.c \
 				ft_strncmp.c \
 				ft_isspace.c \
 				ft_strtrim.c \
+				ft_strchr.c \
+				ft_substr.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
@@ -61,6 +63,10 @@ drun: all
 lextest:
 	make auto -C unit-tests/lexing
 	make clean -C unit-tests/lexing
+
+expandtest:
+	make auto -C unit-tests/expander
+	make clean -C unit-tests/expander
 
 clean:
 	@rm -rf $(OBJ_DIR)

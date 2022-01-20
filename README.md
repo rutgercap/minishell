@@ -39,6 +39,10 @@ https://stackoverflow.com/questions/52666511/create-an-ast-from-bash-in-c/526675
 Redirects:
 https://www.gnu.org/software/bash/manual/html_node/Redirections.html
 
+Hilmi tips:
+http://www.throwtheswitch.org/unity
+https://cs61.seas.harvard.edu/site/2021/Section10/
+
 #### To check
 
 includes/exit.c: header maken voor builtins? alternatief is gewoon stdlib includen.

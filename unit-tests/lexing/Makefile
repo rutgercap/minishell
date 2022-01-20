@@ -5,6 +5,7 @@ INCL_DIR	:=	../../includes
 
 # Srcs
 SRCS		:=	lexing_tester.c \
+				../token_testing.c \
 				$(SRCS_DIR)/tokenizer/tokenizer.c \
 				$(SRCS_DIR)/tokenizer/process_char.c \
 				$(SRCS_DIR)/tokenizer/process_char_utils.c \
@@ -24,6 +25,9 @@ SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/utils/ft_putnbr_fd.c
 OBJS		:=	$(SRCS:.c=.o)
 
+OUTPUT		:=	output
+COMPARE		:=	compare
+
 # Config
 CC			:=	gcc
 FLAGS		:=	-Wall -Wextra -g
@@ -38,11 +42,11 @@ $(NAME):	$(OBJS)
 	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -o $@
 
 run: all
-	./$(NAME) > output
+	./$(NAME) > $(OUTPUT)
 	
 auto: all
-	./$(NAME) > output
-	diff output compare
+	./$(NAME) > $(OUTPUT)
+	diff $(OUTPUT) $(COMPARE)
 
 drun: all
 	lldb $(NAME)
@@ -52,6 +56,7 @@ clean:
 
 fclean:	clean
 	@rm -f $(OBJS)
+	@rm -f $(OUTPUT)
 
 re:	fclean all
 
