@@ -16,14 +16,14 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	test("", 0, env);
 	test("nothing \"should happen\" here", 0, env);
-	test("expand $LANG", 0, env);
+	test("expand $USER", 0, env);
 	test("$", 0, env);
 	test("$ $ $ $", 0, env);
 	test("echo \"hi\"", 0, env);
-	test("$LANG", 0, env);
-	test("\'$LANG\'", 0, env);
+	test("$USER", 0, env);
+	test("\'$USER\'", 0, env);
 	test("$?hi", 0, env);
-	test("$?$LANG", 0, env);
-	test("$?$LANGhi", 0, env);
-	test("$?$LANG$?", 0, env);
+	test("$?$USER", 0, env);
+	test("$?$USERhi", 0, env);
+	test("$?$USER$?", 0, env);
 }

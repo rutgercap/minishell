@@ -75,6 +75,8 @@ dtest:
 
 clean:
 	@rm -rf $(OBJ_DIR)
+	make clean -C unit-tests/expander
+	make clean -C unit-tests/lexing
 
 fclean:	clean
 	@rm -f $(NAME)
