@@ -11,3 +11,9 @@ exit
 
 // signal handlers here?
 // header file maken voor builtins? - check exit.c
+
+
+export
+
+export HOME=$HOME:daan		werkt
+export HOME=$HOMEdaan		werkt niet en wordt een newline
