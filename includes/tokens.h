@@ -8,7 +8,6 @@
 
 typedef enum e_type {
 	WORD,
-	SPACE,
 	PIPE,
 	STRING,
 	PURE_STRING,

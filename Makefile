@@ -1,7 +1,8 @@
 NAME		:=	minishell
 
-# Readline -- might be different on your machine
-RL_DIR		:=	/Users/rcappend/Documents/homebrew/Cellar/readline/8.1.1/lib
+# Readline -- adjust this for your machine
+RL_LIB		:=	-L/opt/homebrew/opt/readline/lib
+RL_INC		:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -34,29 +35,43 @@ SRCS		:=	main.c \
 				ft_strncmp.c \
 				ft_isspace.c \
 				ft_strtrim.c \
+				ft_strchr.c \
+				ft_substr.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
 # Config
 CC			:=	gcc
 FLAGS		:=	-Wall -Wextra -g #-Werror || annoying during development
-LIBS		:=	-L$(RL_DIR) -lreadline -lhistory
+LIBS		:=	-lreadline -lhistory
 
 # fix relink
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(addprefix $(OBJ_DIR)/, $(OBJS)) $(FLAGS) $(LIBS) -o $(NAME)
+	$(CC) $(addprefix $(OBJ_DIR)/, $(OBJS)) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
 
 %.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -o $(addprefix $(OBJ_DIR)/, $@)
+	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $(addprefix $(OBJ_DIR)/, $@)
 
 run: all
 	./$(NAME)
 
 drun: all
 	lldb $(NAME)
+
+lextest:
+	make auto -C unit-tests/lexing
+	make clean -C unit-tests/lexing
+
+expandtest:
+	make auto -C unit-tests/expander
+	make clean -C unit-tests/expander
+
+dtest:
+	make drun -C unit-tests/expander
+	make clean -C unit-tests/expander
 
 clean:
 	@rm -rf $(OBJ_DIR)
