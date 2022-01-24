@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 10:04:43 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/20 12:47:49 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/21 16:24:41 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void	expander(t_token *tokens, char **env, int last_pid)
 	}
 	while (tokens->type != TOKEN_EOF)
 	{
-		if (tokens->type == ERROR)
-			exit_error(258, "syntax error", tokens->prev->text);
 		if (tokens->type != PURE_STRING)
 			find_expansions(tokens, env, pid_string);
 		tokens = tokens->next;

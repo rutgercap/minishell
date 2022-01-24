@@ -8,11 +8,11 @@
 
 typedef enum e_type {
 	WORD,
-	PIPE,
 	STRING,
 	PURE_STRING,
-	RED_OPUT,
+	PIPE,
 	RED_IPUT,
+	RED_OPUT,
 	TOKEN_EOF,
 	ERROR
 }	t_type;
