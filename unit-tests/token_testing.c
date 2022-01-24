@@ -18,10 +18,10 @@ void	write_type(t_type type, int mode)
 	case STRING:
 		ft_putendl_fd("string", 1);
 		break;
-	case RED_OPUT:
+	case IPUT_BRACK:
 		ft_putendl_fd("red_oput", 1);
 		break;
-	case RED_IPUT:
+	case OPUT_BRACK:
 		ft_putendl_fd("red_iput", 1);
 		break;
 	default:

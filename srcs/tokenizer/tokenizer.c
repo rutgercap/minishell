@@ -25,7 +25,7 @@ void	append_to_tokens(t_token *last, t_type type)
 	if (last->type == TOKEN_EOF)
 		last->type = type;
 	else
-		last->next = new_token(last, type);
+		last->next = new_token(last, type, "newline");
 }
 
 void	make_tokens(t_token *token, t_line *line)
@@ -47,7 +47,7 @@ void	make_tokens(t_token *token, t_line *line)
 	}
 }
 
-t_token	*new_token(t_token *last, t_type type)
+t_token	*new_token(t_token *last, t_type type, char *text)
 {
 	t_token	*new;
 
@@ -56,6 +56,15 @@ t_token	*new_token(t_token *last, t_type type)
 	{
 		errno = ENOMEM;
 		exit_error(errno, "init_token", NULL);
+	}
+	if (text)
+	{
+		new->text = ft_strdup(text);
+		if (!new->text)
+		{
+			errno = ENOMEM;
+			exit_error(errno, "init_token", NULL);
+		}
 	}
 	if (last)
 	{
@@ -74,7 +83,7 @@ t_token	*tokenizer(char *raw_line)
 	line.text = raw_line;
 	line.len = ft_strlen(line.text);
 	line.position = -1;
-	tokens = new_token(NULL, TOKEN_EOF);
+	tokens = new_token(NULL, TOKEN_EOF, "newline");
 	make_tokens(tokens, &line);
 	return (tokens);
 }

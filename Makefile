@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-RL_LIB		:=	-L/opt/homebrew/opt/readline/lib
-RL_INC		:=	-I/opt/homebrew/opt/readline/include
+RL_LIB		:=	-L/Users/rcappend/Documents/homebrew/opt/readline/lib
+RL_INC		:=	-I/Users/rcappend/Documents/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -37,6 +37,7 @@ SRCS		:=	main.c \
 				ft_strtrim.c \
 				ft_strchr.c \
 				ft_substr.c \
+				ft_strdup.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 

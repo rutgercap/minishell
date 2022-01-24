@@ -22,7 +22,8 @@ SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/utils/ft_strchr.c \
 				$(SRCS_DIR)/utils/ft_substr.c \
 				$(SRCS_DIR)/utils/ft_memcpy.c \
-				$(SRCS_DIR)/utils/ft_putnbr_fd.c
+				$(SRCS_DIR)/utils/ft_putnbr_fd.c \
+				$(SRCS_DIR)/utils/ft_strdup.c
 OBJS		:=	$(SRCS:.c=.o)
 
 OUTPUT		:=	output

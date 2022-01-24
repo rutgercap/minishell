@@ -8,7 +8,7 @@ word
 ---
 expand
 word
-rutgercappendijk
+rcappend/hest
 word
 ---
 $
@@ -28,7 +28,7 @@ word
 hi
 string
 ---
-rutgercappendijk
+rcappend/hest
 word
 ---
 $USER
@@ -37,12 +37,12 @@ pstring
 42hi
 word
 ---
-42rutgercappendijk
+42rcappend/hest
 word
 ---
 42
 word
 ---
-42rutgercappendijk42
+42rcappend/hest42
 word
 ---

@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 10:04:43 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/24 10:09:17 by rcappend      ########   odam.nl         */
+/*   Created: 2022/01/24 10:13:00 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/01/24 16:19:52 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ static void	find_expansions(t_token *token, char **env, char *pid)
 		if (!to_expand)
 			break ;
 		to_expand++;
-		if (*to_expand && *to_expand == '?')
+		if (!*to_expand)
+			token->type = ERROR;
+		if (*to_expand == '?')
 			expand_var(token, pid);
 		else
 		{
@@ -114,7 +116,9 @@ static void	find_expansions(t_token *token, char **env, char *pid)
 void	expander(t_token *tokens, char **env, int last_pid)
 {
 	char	*pid_string;
+	char	**env;
 
+	env = getenv()
 	pid_string = ft_itoa(last_pid);
 	if (!pid_string)
 	{
@@ -123,10 +127,9 @@ void	expander(t_token *tokens, char **env, int last_pid)
 	}
 	while (tokens->type != TOKEN_EOF)
 	{
-		if (tokens->type == ERROR)
-			exit_error(258, "syntax error", tokens->prev->text);
 		if (tokens->type != PURE_STRING)
 			find_expansions(tokens, env, pid_string);
 		tokens = tokens->next;
 	}
+	free(pid_string);
 }

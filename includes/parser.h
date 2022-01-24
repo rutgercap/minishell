@@ -4,18 +4,35 @@
 # include <utils.h>
 # include <tokens.h>
 
-typedef struct s_red_type {
-    DEFAULT,
-    RED_IPUT,
-    RED_OPUT,
-    RED_IPUT_A,
-    HERE_DOC
-}   t_red;
+typedef enum e_red_type {
+	DEFAULT,
+	RED_IPUT,
+	HERE_DOC,
+	RED_OPUT,
+	RED_OPUT_A,
+}   t_red_type;
+
+typedef struct s_red {
+	t_red_type	type;
+	char		*delim;
+}	t_red;
 
 typedef struct s_cmd {
-    char    *function;
-    char    **arguments;
-    t_red   redirects;
+	char			*command;
+	char			**arguments;
+	t_red			input;
+	t_red			output;
+	struct t_cmd	*next;
 }   t_cmd;
 
+// t_pipe
+
+/*
+
+typedef struct s_ast {
+	t_cmd	*cmds;
+
+}	t_ast;
+
+*/
 #endif

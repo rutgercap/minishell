@@ -8,11 +8,11 @@
 
 typedef enum e_type {
 	WORD,
-	PIPE,
 	STRING,
 	PURE_STRING,
-	RED_OPUT,
-	RED_IPUT,
+	PIPE,
+	OPUT_BRACK,
+	IPUT_BRACK,
 	TOKEN_EOF,
 	ERROR
 }	t_type;
@@ -35,7 +35,7 @@ typedef struct s_line {
 	tokens
 */
 t_token	*tokenizer(char *raw_line);
-t_token	*new_token(t_token *last, t_type type);
+t_token	*new_token(t_token *last, t_type type, char *text);
 void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
 void	free_tokens(t_token **ref);
