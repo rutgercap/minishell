@@ -16,4 +16,5 @@ exit
 export
 
 export HOME=$HOME:daan		werkt
+export HOME=$HOME/daan		werkt
 export HOME=$HOMEdaan		werkt niet en wordt een newline

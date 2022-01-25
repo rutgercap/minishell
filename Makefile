@@ -39,8 +39,13 @@ OBJS		:=	$(SRCS:.c=.o)
 
 # Config
 CC			:=	gcc
-FLAGS		:=	-Wall -Wextra -g #-Werror || annoying during development
 LIBS		:=	-L$(RL_DIR) -lreadline -lhistory
+
+ifdef debug
+	FLAGS := -Wall -Wextra -fsanitize=address -g
+else
+	FLAGS := -Wall -Werror -Wextra
+endif
 
 # fix relink
 all:		$(NAME)

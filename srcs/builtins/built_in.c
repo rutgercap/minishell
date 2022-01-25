@@ -14,14 +14,14 @@ static void	mini_cd(char **arg)
 
 static void mini_pwd(void)
 {
-    char    str[100];							// dit moet ik alleen nog ff uitvogelen
+    char    str[100];
 
     getcwd(str, 100);
     ft_putendl_fd(str, STDOUT_FILENO);
     return ;
 }
 
-static void mini_env(char **env)
+static void	mini_env(char **env)
 {
     int i;
 
@@ -37,7 +37,7 @@ static void mini_env(char **env)
 void	built_in(char *word, char **arg, char **env)
 {
     if (ft_strncmp(word, "echo", 4) == 0)          // miss 5 ipv 4, geldt voor alle hieronder
-        mini_echo(arg, env);
+        mini_echo(arg);
     else if (ft_strncmp(word, "cd", 2) == 0)
         mini_cd(arg);
     else if (ft_strncmp(word, "pwd", 3) == 0)
@@ -45,7 +45,7 @@ void	built_in(char *word, char **arg, char **env)
     // else if (ft_strncmp(word, "export", 6) == 0)
     //     mini_export();
     else if (ft_strncmp(word, "unset", 5) == 0)
-		mini_unset(arg, env);
+		mini_unset(arg, &env);
     else if (ft_strncmp(word, "env", 3) == 0)
         mini_env(env);
     else if (ft_strncmp(word, "exit", 4) == 0)
