@@ -65,6 +65,7 @@ t_token	*new_token(t_token *last, t_type type, char *text)
 			errno = ENOMEM;
 			exit_error(errno, "init_token", NULL);
 		}
+		new->len = ft_strlen(new->text);
 	}
 	if (last)
 	{

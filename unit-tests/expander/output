@@ -8,7 +8,7 @@ word
 ---
 expand
 word
-rcappend/hest
+rcappend
 word
 ---
 $
@@ -28,7 +28,7 @@ word
 hi
 string
 ---
-rcappend/hest
+rcappend
 word
 ---
 $USER
@@ -37,12 +37,12 @@ pstring
 42hi
 word
 ---
-42rcappend/hest
+42rcappend
 word
 ---
 42
 word
 ---
-42rcappend/hest42
+42rcappend42
 word
 ---

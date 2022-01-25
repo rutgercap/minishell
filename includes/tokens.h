@@ -38,6 +38,7 @@ t_token	*tokenizer(char *raw_line);
 t_token	*new_token(t_token *last, t_type type, char *text);
 void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
+t_token	*delete_token(t_token **ref);
 void	free_tokens(t_token **ref);
 
 /*

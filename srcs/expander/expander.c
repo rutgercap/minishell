@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 10:13:00 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/24 16:19:52 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/25 08:03:26 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,7 @@ static void	find_expansions(t_token *token, char **env, char *pid)
 void	expander(t_token *tokens, char **env, int last_pid)
 {
 	char	*pid_string;
-	char	**env;
 
-	env = getenv()
 	pid_string = ft_itoa(last_pid);
 	if (!pid_string)
 	{

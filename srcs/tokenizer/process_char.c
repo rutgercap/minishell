@@ -27,14 +27,12 @@ static void	string(t_token *token, t_line *line)
 
 	if (token->type != TOKEN_EOF)
 	{
-		token->next = new_token(token, TOKEN_EOF, "newline");
+		token->next = new_token(token, STRING, NULL);
 		token = token->next;
 	}
 	end = current_char(line);
 	if (end == '\'')
 		token->type = PURE_STRING;
-	else
-		token->type = STRING;
 	while (true)
 	{
 		c = next_char(line);
@@ -55,7 +53,12 @@ static void	word(t_token *token, t_line *line)
 
 	c = current_char(line);
 	if (token->type == TOKEN_EOF)
+	{
 		token->type = WORD;
+		free(token->text);
+		token->text = NULL;
+		token->len = 0;
+	}
 	else if (token->type != WORD)
 	{
 		token->next = new_token(token, WORD, NULL);

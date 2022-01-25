@@ -3,6 +3,7 @@
 
 # include <tokens.h>
 # include <expander.h>
+# include <parser.h>
 # include <stdio.h>
 
 void	write_type(t_type type, int mode);

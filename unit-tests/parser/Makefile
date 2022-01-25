@@ -1,13 +1,17 @@
-NAME		:=	expandtester
+NAME		:=	parsetester
 
 SRCS_DIR	:=	../../srcs
 INCL_DIR	:=	../../includes
 
 # Srcs
-SRCS		:=	expand_tester.c \
-				../token_testing.c \
+SRCS		:=	parse_tester.c \
+				$(SRCS_DIR)/parser/parse_redirects.c \
+				$(SRCS_DIR)/parser/parser.c \
+				$(SRCS_DIR)/parser/cmd_utils.c \
+				$(SRCS_DIR)/parser/redirect_utils.c \
 				$(SRCS_DIR)/tokenizer/tokenizer.c \
 				$(SRCS_DIR)/tokenizer/process_char.c \
+				$(SRCS_DIR)/tokenizer/token_utils.c \
 				$(SRCS_DIR)/tokenizer/process_char_utils.c \
 				$(SRCS_DIR)/expander/expander.c \
 				$(SRCS_DIR)/utils/exit_error.c \
@@ -48,10 +52,10 @@ $(NAME):	$(OBJS)
 	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -o $@
 
 run: all
-	./$(NAME) > $(OUTPUT)
+	./$(NAME) &> $(OUTPUT)
 	
 auto: all
-	./$(NAME) > $(OUTPUT)
+	./$(NAME) &> $(OUTPUT)
 	diff $(OUTPUT) $(COMPARE)
 
 drun: all

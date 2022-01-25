@@ -14,12 +14,19 @@ vpath		%.c $(SRCS_DIR)/executor
 vpath		%.c $(SRCS_DIR)/parser
 vpath		%.c $(SRCS_DIR)/utils
 vpath		%.c $(SRCS_DIR)/tokenizer
+vpath		%.c $(SRCS_DIR)/expander
 
 # Srcs
 SRCS		:=	main.c \
 				signals.c \
 				exit_error.c \
 				tokenizer.c \
+				token_utils.c \
+				expander.c \
+				cmd_utils.c \
+				parse_redirects.c \
+				parser.c \
+				redirect_utils.c \
 				process_char.c \
 				process_char_utils.c \
 				mini_exit.c \
@@ -37,7 +44,8 @@ SRCS		:=	main.c \
 				ft_strtrim.c \
 				ft_strchr.c \
 				ft_substr.c \
-				ft_strdup.c \
+				ft_itoa.c \
+				ft_abs.c \
 				ft_calloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
@@ -70,14 +78,19 @@ expandtest:
 	make auto -C unit-tests/expander
 	make clean -C unit-tests/expander
 
+parsetest:
+	make auto -C unit-tests/parser
+	make clean -C unit-tests/parser
+
 dtest:
-	make drun -C unit-tests/expander
-	make clean -C unit-tests/expander
+	make drun -C unit-tests/parser
+	make clean -C unit-tests/parser
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	make clean -C unit-tests/expander
 	make clean -C unit-tests/lexing
+	make clean -C unit-tests/parser
 
 fclean:	clean
 	@rm -f $(NAME)
