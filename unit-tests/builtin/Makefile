@@ -73,7 +73,7 @@ clean:
 	@rm -rf $(OBJS)
 
 fclean:	clean
-	@rm -f $(OBJS)
+	@rm -f $(OBJS) $(NAME)
 
 re:	fclean all
 
