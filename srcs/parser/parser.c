@@ -1,13 +1,20 @@
-#include "parser.h"
+#include <parser.h>
 
-/*
-	checks if input correct and check for special characters like pipes etc (parsing?)
-	parameter expansion : ${variable} -> value
-	output: command(s) as tokens
-*/
-
-void	parsing(char *tokens)
+static int	check_for_errors(t_token *tokens)
 {
-	(void)tokens;
-	
+	while (tokens->type != TOKEN_EOF)
+	{
+		if (tokens->type == ERROR)
+		{
+			
+		}
+		tokens = tokens->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+void	parsing(t_token *tokens)
+{
+	if (check_for_errors(tokens))
+		exit(666);
 }

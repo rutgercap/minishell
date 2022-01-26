@@ -69,8 +69,7 @@ void	process_char(t_token *token, t_line *line, char c)
 	if (ft_isspace(c))
 	{
 		skip_white_spaces(line);
-		append_to_tokens(token, SPACE);
-		return ;
+		append_to_tokens(token, TOKEN_EOF);
 	}
 	else if (c == '>')
 		append_to_tokens(token, RED_OPUT);

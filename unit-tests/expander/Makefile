@@ -1,14 +1,15 @@
-NAME		:=	lextest
+NAME		:=	expandtester
 
 SRCS_DIR	:=	../../srcs
 INCL_DIR	:=	../../includes
 
 # Srcs
-SRCS		:=	lexing_tester.c \
+SRCS		:=	expand.c \
 				../token_testing.c \
 				$(SRCS_DIR)/tokenizer/tokenizer.c \
 				$(SRCS_DIR)/tokenizer/process_char.c \
 				$(SRCS_DIR)/tokenizer/process_char_utils.c \
+				$(SRCS_DIR)/expander/expander.c \
 				$(SRCS_DIR)/utils/exit_error.c \
 				$(SRCS_DIR)/utils/ft_calloc.c \
 				$(SRCS_DIR)/utils/ft_isspace.c \
@@ -22,6 +23,11 @@ SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/utils/ft_strchr.c \
 				$(SRCS_DIR)/utils/ft_substr.c \
 				$(SRCS_DIR)/utils/ft_memcpy.c \
+				$(SRCS_DIR)/utils/ft_strjoin.c \
+				$(SRCS_DIR)/utils/ft_strncmp.c \
+				$(SRCS_DIR)/utils/ft_strdup.c \
+				$(SRCS_DIR)/utils/ft_itoa.c \
+				$(SRCS_DIR)/utils/ft_abs.c \
 				$(SRCS_DIR)/utils/ft_putnbr_fd.c
 OBJS		:=	$(SRCS:.c=.o)
 
@@ -56,7 +62,6 @@ clean:
 
 fclean:	clean
 	@rm -f $(OBJS)
-	@rm -f $(OUTPUT)
 
 re:	fclean all
 

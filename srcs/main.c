@@ -3,7 +3,6 @@
 static char	*get_line(void)
 {
 	char	*line;
-	char	*trimmed;
 
 	line = readline("minishell$ ");
 	if (line && ft_strlen(line))
@@ -17,11 +16,12 @@ static void	process_cmd(char *raw_line, char **env)
 	
 	(void)env;
 	tokens = tokenizer(raw_line);
+	// parse
 	// expand_(&tokens);
 	// execute_cmds(AST);
+	// free tokens
 	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
-	// free tokens
 }
 
 int main(int argc, char **argv, char **env)
