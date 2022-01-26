@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 08:16:35 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 09:27:13 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,28 @@ int	syntax_error(t_token *token)
 	return (EXIT_FAILURE);
 }
 
-int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
+static int	parse_words(t_cmd *cmd, t_token *tokens)
+{	
+	while (tokens)
+	{
+		if (tokens->type == PIPE || tokens->type == TOKEN_EOF)
+		{
+			if (cmd->exec || cmd->input || cmd->output)
+				cmd = cmd->next;
+			else
+			{
+				syntax_error(tokens);
+				return (EXIT_FAILURE);
+			}
+		}
+		else
+			append_argument(cmd->exec, tokens);
+		tokens = tokens->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 {
 	t_cmd	*cmd;
 	
@@ -58,6 +79,11 @@ t_cmd	*parser(t_token *tokens)
 		return (NULL);
 	}
 	if (parse_redirects(cmd_list, tokens))
+	{
+		free_cmd_list(&cmd_list);
+		return (NULL);
+	}
+	if (parse_words(cmd_list, tokens))
 	{
 		free_cmd_list(&cmd_list);
 		return (NULL);

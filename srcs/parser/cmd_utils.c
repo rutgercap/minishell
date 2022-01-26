@@ -6,28 +6,11 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/25 13:49:25 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 09:22:59 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
-
-void	free_cmd(t_cmd **ref)
-{
-	t_cmd	*cmd;
-	
-	if (!ref || !*ref)
-	{
-		errno = ENODATA;
-		exit_error(errno, "free_cmd", NULL);
-	}
-	cmd = *ref;
-	free(cmd->command);
-	free(cmd->arguments);
-	free_redirects(cmd->input);
-	free_redirects(cmd->output);
-	free(cmd);
-}
 
 t_cmd	*new_cmd(void)
 {
@@ -40,6 +23,54 @@ t_cmd	*new_cmd(void)
 		exit_error(errno, "init_cmd", NULL);
 	}
 	return (new);
+}
+
+void	append_argument(t_exec *exec, t_token *token)
+{
+	if (!exec->arguments)
+	{
+		exec->arguments = ft_calloc(1, sizeof(char *));
+		if (!exec->arguments)
+		{
+			errno = ENOMEM;
+			exit_error(errno, "append argument", NULL);
+		}
+	}
+	exec->arguments[exec->len] = ft_strdup(token->text);
+	if (!exec->arguments[exec->len])
+	{
+		errno = ENOMEM;
+		exit_error(errno, "append argument", NULL);
+	}
+	if (exec->len == 0)
+		exec->len = exec->arguments[0];
+	exec->len++;
+}
+
+void	free_exec(t_exec	*exec)
+{
+	while (exec->len > 0)
+	{
+		exec->len--;
+		free(exec->arguments[exec->len]);
+	}
+	free(exec->arguments);
+}
+
+void	free_cmd(t_cmd **ref)
+{
+	t_cmd	*cmd;
+	
+	if (!ref || !*ref)
+	{
+		errno = ENODATA;
+		exit_error(errno, "free_cmd", NULL);
+	}
+	cmd = *ref;
+	free_exec(cmd->exec);
+	free_redirects(cmd->input);
+	free_redirects(cmd->output);
+	free(cmd);
 }
 
 void	free_cmd_list(t_cmd **ref)
