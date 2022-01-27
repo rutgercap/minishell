@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 11:53:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/25 13:56:34 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 09:57:50 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void	free_redirects(t_red *red)
 {
 	t_red	*next;
 
-	if (!red)
-	{
-		errno = ENODATA;
-		exit_error(errno, "free_redirects", NULL);
-	}
 	while (red)
 	{
 		next = red->next;

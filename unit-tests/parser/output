@@ -2,8 +2,30 @@ null
 ---
 null
 ---
+test
 ---
+test
+test
 ---
+test
+output:
+pipe
+|
+test
 ---
-minishell: syntax error near unexpected token 'newline'
-free_redirects: No message available on STREAM
+minishell: syntax error near unexpected token '>'
+null
+---
+minishell: syntax error near unexpected token '>'
+null
+---
+minishell: syntax error near unexpected token '>'
+null
+---
+echo
+hi
+output:
+pipe
+|
+cat
+---

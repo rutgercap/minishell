@@ -86,6 +86,10 @@ dtest:
 	make drun -C unit-tests/parser
 	make clean -C unit-tests/parser
 
+dexpand:
+	make drun -C unit-tests/expander
+	make clean -C unit-tests/expander
+
 clean:
 	@rm -rf $(OBJ_DIR)
 	make clean -C unit-tests/expander

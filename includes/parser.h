@@ -21,9 +21,14 @@ typedef struct s_red {
 	struct s_red	*next;
 }	t_red;
 
+typedef struct s_exec {
+	char	*command;
+	char	**arguments;
+	int		len;
+}	t_exec;
+
 typedef struct s_cmd {
-	char			*command;
-	char			**arguments;
+	t_exec		*exec;
 	t_red			*input;
 	t_red			*output;
 	struct s_cmd	*next;
@@ -35,6 +40,7 @@ typedef struct s_cmd {
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd **cmd);
 void	free_cmd_list(t_cmd **ref);
+void	append_argument(t_exec *exec, t_token *token);
 
 /*
 	redirects list utils

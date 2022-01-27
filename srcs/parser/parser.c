@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 09:27:13 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 10:50:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,21 @@ int	syntax_error(t_token *token)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token \'", STDERR_FILENO);
-	ft_putstr_fd(token->text, STDERR_FILENO);
+	if (token->type == PIPE)
+		ft_putchar_fd('|', STDERR_FILENO);
+	else if (token->type == OPUT_BRACK)
+		ft_putchar_fd('>', STDERR_FILENO);
+	else if (token->type == IPUT_BRACK)
+		ft_putchar_fd('<', STDERR_FILENO);
+	else
+		ft_putstr_fd("newline", STDERR_FILENO);
 	ft_putendl_fd("\'", STDERR_FILENO);
 	return (EXIT_FAILURE);
 }
 
 static int	parse_words(t_cmd *cmd, t_token *tokens)
 {	
-	while (tokens)
+	while (true)
 	{
 		if (tokens->type == PIPE || tokens->type == TOKEN_EOF)
 		{
@@ -37,6 +44,8 @@ static int	parse_words(t_cmd *cmd, t_token *tokens)
 		}
 		else
 			append_argument(cmd->exec, tokens);
+		if (tokens->type == TOKEN_EOF)
+			break;
 		tokens = tokens->next;
 	}
 	return (EXIT_SUCCESS);
@@ -44,9 +53,11 @@ static int	parse_words(t_cmd *cmd, t_token *tokens)
 
 static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 {
+	t_cmd	*head;
 	t_cmd	*cmd;
 	
 	cmd = new_cmd();
+	head = cmd;
 	while (tokens->type != TOKEN_EOF)
 	{
 		if (tokens->type == ERROR)
@@ -62,7 +73,7 @@ static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 		}
 		tokens = tokens->next;
 	}
-	*cmd_list = cmd;
+	*cmd_list = head;
 	return (EXIT_SUCCESS);
 }
 

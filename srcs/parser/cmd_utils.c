@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 09:22:59 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 09:37:03 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ t_cmd	*new_cmd(void)
 	if (!new)
 	{
 		errno = ENOMEM;
-		exit_error(errno, "init_cmd", NULL);
+		exit_error(errno, "new_cmd", NULL);
+	}
+	new->exec = ft_calloc(1, sizeof(t_exec));
+	if (!new->exec)
+	{
+		errno = ENOMEM;
+		exit_error(errno, "new_cmd", NULL);
 	}
 	return (new);
 }
@@ -43,11 +49,11 @@ void	append_argument(t_exec *exec, t_token *token)
 		exit_error(errno, "append argument", NULL);
 	}
 	if (exec->len == 0)
-		exec->len = exec->arguments[0];
+		exec->command = exec->arguments[0];
 	exec->len++;
 }
 
-void	free_exec(t_exec	*exec)
+void	free_exec(t_exec *exec)
 {
 	while (exec->len > 0)
 	{
@@ -55,6 +61,7 @@ void	free_exec(t_exec	*exec)
 		free(exec->arguments[exec->len]);
 	}
 	free(exec->arguments);
+	free(exec);
 }
 
 void	free_cmd(t_cmd **ref)

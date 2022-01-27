@@ -27,19 +27,6 @@ static void	write_red_type(t_red_type type)
 	}
 }
 
-static void	write_arguments(char **arguments)
-{
-	int i = 0;
-
-	if (!arguments || !*arguments)
-		return ;
-	while (arguments[i])
-	{
-		ft_putendl_fd(arguments[i], 1);
-		i++;
-	}
-}
-
 static void	write_red(t_red *red, char *type)
 {
 	while (red)
@@ -51,12 +38,25 @@ static void	write_red(t_red *red, char *type)
 	}
 }
 
+static void	write_exec(t_exec *exec)
+{
+	int i = 1;
+
+	if (!exec || !exec->len)
+		return ;
+	ft_putendl_fd(exec->command, 1);
+	while (i < exec->len)
+	{
+		ft_putendl_fd(exec->arguments[i], 1);
+		i++;
+	}
+}
+
 static void	write_cmds(t_cmd *cmd)
 {
 	while (cmd)
 	{
-		ft_putendl_fd(cmd->command, 1);
-		write_arguments(cmd->arguments);
+		write_exec(cmd->exec);
 		write_red(cmd->input, "input:");
 		write_red(cmd->output, "output:");
 		if (cmd->next)

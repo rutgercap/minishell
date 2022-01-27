@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:31:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/25 08:38:19 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/26 10:38:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ t_token	*delete_token(t_token **ref)
 		prev->next = i->next;
 	free(i->text);
 	free(i);
+	if (prev)
+		return (prev);
 	return (next);
 }

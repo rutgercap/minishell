@@ -1,8 +1,6 @@
 ---
 nothing
 word
-should happen
-string
 here
 word
 ---
@@ -25,8 +23,6 @@ word
 ---
 echo
 word
-hi
-string
 ---
 rcappend
 word

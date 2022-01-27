@@ -27,7 +27,7 @@ static void	string(t_token *token, t_line *line)
 
 	if (token->type != TOKEN_EOF)
 	{
-		token->next = new_token(token, STRING, NULL);
+		token->next = new_token(token, STRING);
 		token = token->next;
 	}
 	end = current_char(line);
@@ -40,7 +40,7 @@ static void	string(t_token *token, t_line *line)
 			break ;
 		else if (c == CMD_EOF)
 		{
-			token->next = new_token(token, ERROR, "newline");
+			token->next = new_token(token, ERROR);
 			break ;
 		}
 		append_to_text(token, c);
@@ -61,7 +61,7 @@ static void	word(t_token *token, t_line *line)
 	}
 	else if (token->type != WORD)
 	{
-		token->next = new_token(token, WORD, NULL);
+		token->next = new_token(token, WORD);
 		token = token->next;
 	}
 	append_to_text(token, c);
@@ -75,9 +75,9 @@ void	process_char(t_token *token, t_line *line, char c)
 		append_to_tokens(token, TOKEN_EOF);
 	}
 	else if (c == '>')
-		append_to_tokens(token, IPUT_BRACK);
-	else if (c == '<')
 		append_to_tokens(token, OPUT_BRACK);
+	else if (c == '<')
+		append_to_tokens(token, IPUT_BRACK);
 	else if (c == '|')
 		append_to_tokens(token, PIPE);
 	else if (c == '\'' || c == '\"')
