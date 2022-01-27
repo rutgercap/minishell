@@ -36,14 +36,14 @@ static void	mini_env(char **env)
 
 void	built_in(char *word, char **arg, char **env)
 {
-    if (ft_strncmp(word, "echo", 4) == 0)
+    if (ft_strncmp(word, "echo", 4) == 0)			// arg[0] als word
         mini_echo(arg);
     else if (ft_strncmp(word, "cd", 2) == 0)
         mini_cd(arg);
     else if (ft_strncmp(word, "pwd", 3) == 0)
         mini_pwd();
     else if (ft_strncmp(word, "export", 6) == 0)
-        mini_export();
+        mini_export(arg, &env);
     else if (ft_strncmp(word, "unset", 5) == 0)
 		mini_unset(arg, &env);
     else if (ft_strncmp(word, "env", 3) == 0)
