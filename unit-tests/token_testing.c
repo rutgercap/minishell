@@ -12,17 +12,17 @@ void	write_type(t_type type, int mode)
 	case PIPE:
 		ft_putendl_fd("pipe", 1);
 		break;
-	case PURE_STRING:
-		ft_putendl_fd("pstring", 1);
+	case INPUT_D:
+		ft_putendl_fd("red_double_input", 1);
 		break;
-	case STRING:
-		ft_putendl_fd("string", 1);
+	case OUTPUT_D:
+		ft_putendl_fd("red_double_output", 1);
 		break;
-	case RED_OPUT:
-		ft_putendl_fd("red_oput", 1);
+	case INPUT_S:
+		ft_putendl_fd("red_input", 1);
 		break;
-	case RED_IPUT:
-		ft_putendl_fd("red_iput", 1);
+	case OUTPUT_S:
+		ft_putendl_fd("red_output", 1);
 		break;
 	default:
 		ft_putendl_fd("error", 1);

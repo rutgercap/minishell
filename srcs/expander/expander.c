@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/01/20 10:04:43 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/20 12:47:49 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/24 10:13:00 by rcappend          #+#    #+#             */
+/*   Updated: 2022/01/27 09:54:02 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ static void	find_expansions(t_token *token, char **env, char *pid)
 		if (!to_expand)
 			break ;
 		to_expand++;
-		if (*to_expand && *to_expand == '?')
+		if (!*to_expand)
+			token->type = ERROR;
+		if (*to_expand == '?')
 			expand_var(token, pid);
 		else
 		{
@@ -123,10 +125,9 @@ void	expander(t_token *tokens, char **env, int last_pid)
 	}
 	while (tokens->type != TOKEN_EOF)
 	{
-		if (tokens->type == ERROR)
-			exit_error(258, "syntax error", tokens->prev->text);
 		if (tokens->type != PURE_STRING)
 			find_expansions(tokens, env, pid_string);
 		tokens = tokens->next;
 	}
+	free(pid_string);
 }

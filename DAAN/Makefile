@@ -1,13 +1,13 @@
 NAME		:=	lextest
 
-SRCS_DIR	:=	../../srcs
-INCL_DIR	:=	../../includes
+SRCS_DIR	:=	../srcs
+INCL_DIR	:=	../includes
 
 # Srcs
-SRCS		:=	lexing_tester.c \
-				../token_testing.c \
-				$(SRCS_DIR)/tokenizer/new.c \
-				$(SRCS_DIR)/tokenizer/new_char.c \
+SRCS		:=	tester.c \
+				token_tester.c \
+				lexing.c \
+				lexing_utils.c \
 				$(SRCS_DIR)/utils/exit_error.c \
 				$(SRCS_DIR)/utils/ft_calloc.c \
 				$(SRCS_DIR)/utils/ft_isspace.c \
@@ -25,9 +25,6 @@ SRCS		:=	lexing_tester.c \
 				$(SRCS_DIR)/utils/ft_check_malloc.c \
 				$(SRCS_DIR)/utils/ft_strdup.c
 OBJS		:=	$(SRCS:.c=.o)
-
-OUTPUT		:=	output
-COMPARE		:=	compare
 
 # Config
 CC			:=	gcc
@@ -47,11 +44,7 @@ $(NAME):	$(OBJS)
 	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -o $@
 
 run: all
-	./$(NAME) > $(OUTPUT)
-	
-auto: all
-	./$(NAME) > $(OUTPUT)
-	diff $(OUTPUT) $(COMPARE)
+	./$(NAME)
 
 drun: all
 	lldb $(NAME)

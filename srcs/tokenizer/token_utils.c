@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_isalnum.c                                       :+:    :+:            */
+/*   token_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/29 15:40:03 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/24 15:52:40 by rcappend      ########   odam.nl         */
+/*   Created: 2022/01/25 08:31:35 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/01/26 10:38:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include <tokens.h>
+
+t_token	*delete_token(t_token **ref)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	t_token	*i;
+	t_token	*prev;
+	t_token	*next;
+
+	if (!ref || !*ref)
+	{
+		errno = ENODATA;
+		exit_error(errno, "delete token", NULL);
+	}
+	i = *ref;
+	next = i->next;
+	prev = i->prev;
+	if (prev)
+		prev->next = i->next;
+	free(i->text);
+	free(i);
+	if (prev)
+		return (prev);
+	return (next);
 }

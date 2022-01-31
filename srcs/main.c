@@ -13,13 +13,13 @@ static char	*get_line(void)
 static void	process_cmd(char *raw_line, char **env)
 {
 	t_token	*tokens;
+	t_cmd	*cmd;
 	
-	(void)env;
 	tokens = tokenizer(raw_line);
-	// parse
-	// expand_(&tokens);
+	expander(tokens, env, 0);
+	cmd = parser(tokens);
+	free_tokens(&tokens);
 	// execute_cmds(AST);
-	// free tokens
 	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
 }

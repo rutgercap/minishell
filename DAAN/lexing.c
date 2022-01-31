@@ -28,31 +28,12 @@ void	append_to_tokens(t_token *last, t_type type)
 		last->next = new_token(last, type);
 }
 
-void	make_tokens(t_token *token, t_line *line)
-{
-	char		c;
-
-	c = 0;
-	while (true)
-	{
-		c = next_char(line);
-		if (c == CMD_EOF)
-		{
-			append_to_tokens(token, TOKEN_EOF);
-			break ;
-		}
-		process_char(token, line, c);
-		while (token->next != NULL)
-			token = token->next;
-	}
-}
-
 t_token	*new_token(t_token *last, t_type type)
 {
 	t_token	*new;
 
 	new = ft_calloc(1, sizeof(t_token));
-	ft_check_malloc(new, "init_token");
+	ft_check_malloc(new, "new_token");
 	if (last)
 	{
 		last->next = new;
@@ -62,15 +43,19 @@ t_token	*new_token(t_token *last, t_type type)
 	return (new);
 }
 
-t_token	*tokenizer(char *raw_line)
+t_token	*tokenizer(char *line)
 {
 	t_token	*tokens;
-	t_line	line;
+	t_flag	*flag;
+	int		i;
 
-	line.text = raw_line;
-	line.len = ft_strlen(line.text);	// + 1, check char_utils '>='
-	line.position = -1;
-	tokens = new_token(NULL, TOKEN_EOF);
-	make_tokens(tokens, &line);
+	tokens = NULL;
+	flag = (t_flag *)malloc(1 * sizeof(t_flag));
+	*flag = NORMAL;
+	i = 0;
+	while (line[i])
+	{
+		i = check_char(line, i, tokens, flag);
+	}
 	return (tokens);
 }
