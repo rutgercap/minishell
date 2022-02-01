@@ -59,11 +59,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-<<<<<<< HEAD
-# Testers
-parsetest
-lextest
-=======
-# test file
-test
->>>>>>> parser
+
+# testing files
+tester
+results/

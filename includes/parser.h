@@ -3,6 +3,7 @@
 
 # include <utils.h>
 # include <tokens.h>
+# include <expander.h>
 
 # define SYNTAX_ERROR -1
 

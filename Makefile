@@ -1,24 +1,19 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-RL_LIB		:=	-L/opt/homebrew/opt/readline/lib
-RL_INC		:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
 SRCS_DIR	:=	srcs
 OBJ_DIR		:=	objs
-vpath 		%.c $(SRCS_DIR)
-vpath 		%.c $(SRCS_DIR)/builtins
-vpath		%.c $(SRCS_DIR)/executor
-vpath		%.c $(SRCS_DIR)/parser
-vpath		%.c $(SRCS_DIR)/utils
-vpath		%.c $(SRCS_DIR)/tokenizer
-vpath		%.c $(SRCS_DIR)/expander
+TEST_DIR	:=	unit-tests
+VPATH 		:=	$(subst $(space),:,$(shell find srcs -type d))
 
 # Srcs
-SRCS		:=	main.c \
-				signals.c \
+MAIN		=	main.c
+export SRCS	=	signals.c \
 				exit_error.c \
 				tokenizer.c \
 				token_utils.c \
@@ -49,22 +44,24 @@ SRCS		:=	main.c \
 				ft_itoa.c \
 				ft_abs.c \
 				ft_calloc.c
-OBJS		:=	$(SRCS:.c=.o)
+MINI_SRCS	=	$(SRCS) $(MAIN)
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
-FLAGS		:=	-Wall -Wextra -g #-Werror || annoying during development
+FLAGS		:=	-Wall -Wextra -g #-Werror
 LIBS		:=	-lreadline -lhistory
 
-# fix relink
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(addprefix $(OBJ_DIR)/, $(OBJS)) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
+	@$(CC) $(OBJS) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
+	@echo success!
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(notdir %.c)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $(addprefix $(OBJ_DIR)/, $@)
+	@echo "compiling $(notdir $(basename $@))"
+	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $@
 
 run: all
 	./$(NAME)
@@ -72,34 +69,19 @@ run: all
 drun: all
 	lldb $(NAME)
 
-lextest:
-	make auto -C unit-tests/lexing
-	make clean -C unit-tests/lexing
+test:
+	@echo compiling and running tests...
+	@$(MAKE) -C $(TEST_DIR) run
 
-expandtest:
-	make auto -C unit-tests/expander
-	make clean -C unit-tests/expander
-
-parsetest:
-	make auto -C unit-tests/parser
-	make clean -C unit-tests/parser
-
-dtest:
-	make drun -C unit-tests/parser
-	make clean -C unit-tests/parser
-
-dexpand:
-	make drun -C unit-tests/expander
-	make clean -C unit-tests/expander
+echo:
+	@$(MAKE) -C $(TEST_DIR) echo
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	make clean -C unit-tests/expander
-	make clean -C unit-tests/lexing
-	make clean -C unit-tests/parser
 
 fclean:	clean
 	@rm -f $(NAME)
+	@$(MAKE) -C $(TEST_DIR) fclean
 
 re:	fclean all
 
