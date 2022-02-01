@@ -4,7 +4,7 @@ SRCS_DIR	:=	../../srcs
 INCL_DIR	:=	../../includes
 
 # Srcs
-SRCS		:=	expand.c \
+SRCS		:=	expand_tester.c \
 				../token_testing.c \
 				$(SRCS_DIR)/tokenizer/tokenizer.c \
 				$(SRCS_DIR)/tokenizer/process_char.c \

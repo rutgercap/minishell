@@ -1,20 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_isalnum.c                                       :+:    :+:            */
+/*   redirect_utils.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/29 15:40:03 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/24 15:52:40 by rcappend      ########   odam.nl         */
+/*   Created: 2022/01/25 11:53:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/01/26 09:57:50 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include <parser.h>
+
+void	free_redirects(t_red *red)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	t_red	*next;
+
+	while (red)
+	{
+		next = red->next;
+		free(red->delim);
+		free(red);
+		red = next;
+	}
+}
+
+t_red	*new_redirect(t_red_type type)
+{
+	t_red	*new;
+
+	new = ft_calloc(1, sizeof(t_red));
+	if (!new)
+	{
+		errno = ENOMEM;
+		exit_error(errno, "new_redirect", NULL);
+	}
+	new->type = type;
+	return (new);
 }

@@ -1,0 +1,31 @@
+null
+---
+null
+---
+test
+---
+test
+test
+---
+test
+output:
+pipe
+|
+test
+---
+minishell: syntax error near unexpected token '>'
+null
+---
+minishell: syntax error near unexpected token '>'
+null
+---
+minishell: syntax error near unexpected token '>'
+null
+---
+echo
+hi
+output:
+pipe
+|
+cat
+---

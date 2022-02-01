@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   process_char.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/01 07:48:56 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/01 08:34:23 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <tokens.h>
 
 static void	append_to_text(t_token *token, char c)
@@ -20,33 +32,17 @@ static void	append_to_text(t_token *token, char c)
 	token->len++;
 }
 
-static void	string(t_token *token, t_line *line)
+static void	brackets(t_token *token, t_line *line, char c, t_type type)
 {
-	char	end;
-	char	c;
+	char	next;
 
-	if (token->type != TOKEN_EOF)
+	next = peek_char(line);
+	if (c == next)
 	{
-		token->next = new_token(token, TOKEN_EOF);
-		token = token->next;
+		next = next_char(line);
+		type++;
 	}
-	end = current_char(line);
-	if (end == '\'')
-		token->type = PURE_STRING;
-	else
-		token->type = STRING;
-	while (true)
-	{
-		c = next_char(line);
-		if (c == end)
-			break ;
-		else if (c == CMD_EOF)
-		{
-			token->next = new_token(token, ERROR);
-			break ;
-		}
-		append_to_text(token, c);
-	}
+	append_to_tokens(token, type);
 }
 
 static void	word(t_token *token, t_line *line)
@@ -55,7 +51,12 @@ static void	word(t_token *token, t_line *line)
 
 	c = current_char(line);
 	if (token->type == TOKEN_EOF)
+	{
 		token->type = WORD;
+		free(token->text);
+		token->text = NULL;
+		token->len = 0;
+	}
 	else if (token->type != WORD)
 	{
 		token->next = new_token(token, WORD);
@@ -64,21 +65,35 @@ static void	word(t_token *token, t_line *line)
 	append_to_text(token, c);
 }
 
-void	process_char(t_token *token, t_line *line, char c)
+static void	quotes(char c, bool *s_quote, bool *d_quote)
+{
+	if (*d_quote == false && c == '\'')
+		*s_quote = !*s_quote;
+	else if (*s_quote == false && c == '\"')
+		*d_quote = !*d_quote;
+}
+
+void	process_char(t_token *token, t_line *line, bool *s_quote, bool *d_quote)
 {	
-	if (ft_isspace(c))
-	{
-		skip_white_spaces(line);
-		append_to_tokens(token, TOKEN_EOF);
+	char	c;
+
+	c = current_char(line);
+	if (c == '\'' || c == '\"')
+		quotes(c, s_quote, d_quote);
+	if (!in_string(*s_quote, *d_quote) && ft_strchr("<>| ", c))
+	{	
+		if (ft_isspace(c))
+		{
+			skip_white_spaces(line);
+			append_to_tokens(token, TOKEN_EOF);
+		}
+		else if (c == '>')
+			brackets(token, line, c, OUTPUT_S);
+		else if (c == '<')
+			brackets(token, line, c, INPUT_S);
+		else if (c == '|')
+			append_to_tokens(token, PIPE);
 	}
-	else if (c == '>')
-		append_to_tokens(token, RED_OPUT);
-	else if (c == '<')
-		append_to_tokens(token, RED_IPUT);
-	else if (c == '|')
-		append_to_tokens(token, PIPE);
-	else if (c == '\'' || c == '\"')
-		string(token, line);
 	else
 		word(token, line);
 }

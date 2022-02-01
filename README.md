@@ -34,18 +34,25 @@ Add these to the makefile
 #### Sources
 
 build linux parser:
+
 https://blog.devgenius.io/lets-build-a-linux-shell-part-i-954c95911501
 
 bash prompts:
+
 https://wiki.archlinux.org/title/Bash/Prompt_customization
 
 AST example:
+
 https://stackoverflow.com/questions/52666511/create-an-ast-from-bash-in-c/52667521
 
 Redirects:
+
 https://www.gnu.org/software/bash/manual/html_node/Redirections.html
 
 Hilmi tips:
+
 http://www.throwtheswitch.org/unity
 https://cs61.seas.harvard.edu/site/2021/Section10/
 
+bash parser:
+https://mywiki.wooledge.org/BashParser

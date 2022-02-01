@@ -1,4 +1,4 @@
-#include "../testing.h"
+#include "testing.h"
 
 static void	test(char *line, int mode)
 {
