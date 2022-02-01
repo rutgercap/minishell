@@ -3,6 +3,7 @@
 
 # include <utils.h>
 # include <tokens.h>
+# include <expander.h>
 
 # define SYNTAX_ERROR -1
 
@@ -52,7 +53,7 @@ t_red	*new_redirect(t_red_type type);
 	main
 */
 int		parse_redirects(t_cmd *cmd_list, t_token *tokens);
-int		syntax_error(t_token *token);
+int		syntax_error(const t_type type);
 t_cmd	*parser(t_token *tokens);
 
 #endif

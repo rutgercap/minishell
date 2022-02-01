@@ -6,21 +6,21 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 10:50:37 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/01/31 08:26:02 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-int	syntax_error(t_token *token)
+int	syntax_error(const t_type type)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token \'", STDERR_FILENO);
-	if (token->type == PIPE)
+	if (type == PIPE)
 		ft_putchar_fd('|', STDERR_FILENO);
-	else if (token->type == OPUT_BRACK)
+	else if (type == OPUT_BRACK)
 		ft_putchar_fd('>', STDERR_FILENO);
-	else if (token->type == IPUT_BRACK)
+	else if (type == IPUT_BRACK)
 		ft_putchar_fd('<', STDERR_FILENO);
 	else
 		ft_putstr_fd("newline", STDERR_FILENO);
@@ -84,6 +84,7 @@ t_cmd	*parser(t_token *tokens)
 	if (tokens->type == TOKEN_EOF)
 		return (NULL);
 	cmd_list = NULL;
+
 	if (parse_pipes(&cmd_list, tokens))
 	{
 		free_cmd_list(&cmd_list);
