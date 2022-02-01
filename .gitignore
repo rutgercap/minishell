@@ -60,6 +60,6 @@ Mkfile.old
 dkms.conf
 
 
-# test file
-test
-unit-tests/build
+# testing files
+tester
+results/

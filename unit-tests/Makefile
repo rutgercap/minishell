@@ -1,67 +1,50 @@
-NAME				:=	tester
+NAME		:=	tester
 
-# Minishell directories
-SRCS_P				:=	../srcs/
-MINI_SRCS			:=	$(SRCS_P)$(wildcard *.c) $(SRCS_P)$(wildcard */*.c)
+# mini srcs /dirs
+INCL_DIR	:=	../includes
+SRCS_DIR	:=	../srcs
+OBJ_DIR		:=	../objs
+VPATH		:=	$(subst $(space),:,$(shell find $(SRCS_DIR) -type d))
 
-# Testing directories
-PATHB 				:=	build/
-PATHD				:=	build/depends/
-PATHO				:=	build/objs/
-PATHR				:=	build/results/
-PATHT				:=	./
-UNITY_P 			:=	unity/src/
-SRC_TESTS			:=	*.c
+# unity srcs / dirs
+UNITY_DIR	:=	unity
+UNITY_SRC	:=	$(UNITY_DIR)/src/unity.c
+UNITY_OBJ	:=	$(addprefix $(OBJ_DIR)/, $(notdir $(UNITY_SRC:.c=.o)))
 
-# Configuration
-TARGET_EXTENSION	:=	.out
-COMPILE				:=	gcc -c
-LINK				:=	gcc
-DEPEND				:=	gcc -MM -MG -MF
-INCLUDES			:=	-I. -I$(PATHU) -I$(PATHS)
-CFLAGS				:=	-Wall -Wextra -fsanitize=address -g
+# testing srcs / dirs
+RES_DIR		:=	results
+TEST_SRCS	:=	$(wildcard *.c)
+ALL_SRCS	:=	$(TEST_SRCS) $(SRCS)
+OBJS		:=	$(addprefix $(OBJ_DIR)/, $(ALL_SRCS:.c=.o))
 
-all:		$(NAME)
-$(NAME):	$(OBJS)
+# Config
+FLAGS		:=	-Wall -Wextra -fsanitize=address -g
+LIBS		:=	-lreadline -lhistory
 
-test: $(BUILD_PATHS) $(RESULTS)
-    @echo "ignores:"
-    @echo `grep -s IGNORE $(PATHR)*.txt`
-    @echo "-----------------------\nFAILURES:\n-----------------------"
-    @echo `grep -s FAIL $(PATHR)*.txt`
-    @echo "\nDONE"
+all:	$(NAME)
+$(NAME):	$(UNITY_OBJ) $(OBJS)
+	@$(CC) $(OBJS) $(UNITY_OBJ) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
+	@echo compiled successfully!
 
-RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt,$(SRC_T))
+$(UNITY_OBJ):
+	@$(CC) $(FLAGS) -c $(UNITY_SRC) -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
-$(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
-    -./$< > $@ 2>&1
+$(OBJ_DIR)/%.o: $(notdir %.c)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
-$(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHO)unity.o $(PATHD)Test%.d
-    $(LINK) -o $@ $^
+run: all $(RES_DIR)
+	@./$(NAME) 2>&1 > $(RES_DIR)/results.txt
 
-$(PATHO)%.o:: $(PATHT)%.c
-    $(COMPILE) $(CFLAGS) $< -o $@
+echo:
+	@echo $(OBJS)
 
-$(PATHO)%.o:: $(PATHS)%.c
-    $(COMPILE) $(CFLAGS) $< -o $@
+$(RES_DIR):
+	@mkdir -p $(RES_DIR)
 
-$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-    $(COMPILE) $(CFLAGS) $< -o $@ 
+clean:
+	@rm -rf $(OBJ_DIR)
+	@rm -rf $(RES_DIR)
 
-$(PATHD)%.d:: $(PATHT)%.c
-    $(DEPEND) $@ $<
-
-$(PATHB):
-    $(MKDIR) $(PATHB)
-
-$(PATHD):
-    $(MKDIR) $(PATHD)
-
-$(PATHO):
-    $(MKDIR) $(PATHO)
-
-$(PATHR):
-    $(MKDIR) $(PATHR)
-
-.PHONY: clean
-.PHONY: test
+fclean: clean
+	@rm -f $(NAME)

@@ -1,18 +1,19 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-RL_LIB		:=	-L/opt/homebrew/opt/readline/lib
-RL_INC		:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
 SRCS_DIR	:=	srcs
 OBJ_DIR		:=	objs
+TEST_DIR	:=	unit-tests
 VPATH 		:=	$(subst $(space),:,$(shell find srcs -type d))
 
 # Srcs
-SRCS		:=	main.c \
-				signals.c \
+MAIN		=	main.c
+export SRCS	=	signals.c \
 				exit_error.c \
 				tokenizer.c \
 				token_utils.c \
@@ -43,11 +44,12 @@ SRCS		:=	main.c \
 				ft_itoa.c \
 				ft_abs.c \
 				ft_calloc.c
-OBJS		:=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+MINI_SRCS	=	$(SRCS) $(MAIN)
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
-FLAGS		:=	-Wall -Wextra -g #-Werror || annoying during development
+FLAGS		:=	-Wall -Wextra -g #-Werror
 LIBS		:=	-lreadline -lhistory
 
 all:		$(NAME)
@@ -67,14 +69,19 @@ run: all
 drun: all
 	lldb $(NAME)
 
+test:
+	@echo compiling and running tests...
+	@$(MAKE) -C $(TEST_DIR) run
+
 echo:
-	@echo $(OBJS)
+	@$(MAKE) -C $(TEST_DIR) echo
 
 clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean:	clean
 	@rm -f $(NAME)
+	@$(MAKE) -C $(TEST_DIR) fclean
 
 re:	fclean all
 

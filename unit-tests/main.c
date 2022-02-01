@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expand_tester.c                                    :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/31 14:45:02 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/31 15:34:42 by rcappend      ########   odam.nl         */
+/*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/01 15:00:34 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testing.h"
 
+void    setUp(void) {
+
+}
+
+void    tearDown(void) {
+    
+}
+
 int main(void)
 {
-    
+    UNITY_BEGIN();
+    printf("no error!\n");
+    return UNITY_END();
 }
