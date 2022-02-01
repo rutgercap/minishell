@@ -9,5 +9,6 @@
 # include <unity.h>
 
 t_token *make_token(t_type *type, char *text, t_token *last);
+void	lextester1(void);
 
 #endif
