@@ -37,12 +37,11 @@ $(OBJ_DIR)/%.o: $(notdir %.c)
 test: $(RES_DIR) $(NAME)
 	@echo "-----------------------"
 	@./$(NAME) 2>&1 > $(RES_DIR)/results.txt
-	@cat $(RES_DIR)/results.txt
 	@echo "-----------------------"
 	@echo "Results can be found in $(RES_DIR)/results.txt"
 
-echo:
-	@echo $(OBJS)
+dtest: $(RES_DIR) $(NAME)
+	lldb $(NAME)
 
 $(RES_DIR):
 	@mkdir -p $(RES_DIR)

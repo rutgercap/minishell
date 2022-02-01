@@ -12,8 +12,8 @@ TEST_DIR	:=	unit-tests
 VPATH 		:=	$(subst $(space),:,$(shell find srcs -type d))
 
 # Srcs
-MAIN		=	main.c
-export SRCS	=	signals.c \
+MAIN		:=	main.c
+export SRCS	:=	signals.c \
 				exit_error.c \
 				tokenizer.c \
 				token_utils.c \
@@ -44,8 +44,8 @@ export SRCS	=	signals.c \
 				ft_itoa.c \
 				ft_abs.c \
 				ft_calloc.c
-MINI_SRCS	=	$(SRCS) $(MAIN)
-OBJS		=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
+MINI_SRCS	:=	$(SRCS) $(MAIN)
+OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
@@ -71,9 +71,9 @@ drun: all
 test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
 
-echo:
-	@$(MAKE) -C $(TEST_DIR) echo
-
+dtest: $(OBJ_DIR)
+	@$(MAKE) -C $(TEST_DIR) dtest
+	
 clean:
 	@rm -rf $(OBJ_DIR)
 

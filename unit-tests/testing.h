@@ -8,6 +8,6 @@
 # include <string.h>
 # include <unity.h>
 
-void    test_lexer();
+int test_lexer();
 
 #endif
