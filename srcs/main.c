@@ -16,7 +16,6 @@ static void	process_cmd(char *raw_line, char **env)
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	expander(tokens, env, 0);
 	cmd = parser(tokens);
 	free_tokens(&tokens);
 	// execute_cmds(AST);

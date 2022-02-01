@@ -3,15 +3,9 @@
 
 # include <utils.h>
 
+// don't reduce buff_size to 1
 # define BUFF_SIZE 32
 # define CMD_EOF -2
-
-typedef enum e_flag
-{
-	NORMAL,
-	S_BRACKET,
-	D_BRACKET
-}	t_flag;
 
 typedef enum e_type {
 	WORD,
@@ -21,7 +15,6 @@ typedef enum e_type {
 	INPUT_S,
 	INPUT_D,
 	TOKEN_EOF,
-	ERROR
 }	t_type;
 
 typedef struct s_token {
@@ -47,12 +40,13 @@ void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
 t_token	*delete_token(t_token **ref);
 void	free_tokens(t_token **ref);
-int	check_char(char *line, int i, t_token *tokens, t_flag *flag);
+int		in_string(bool s_quote, bool d_quote);
+// int	check_char(char *line, int i, t_token *tokens, t_flag *flag);
 
 /*
 	special characters
 */
-void	process_char(t_token *token, t_line *line, char c);
+void	process_char(t_token *token, t_line *line, bool *s_quote, bool *d_quote);
 
 /*
 	lexing

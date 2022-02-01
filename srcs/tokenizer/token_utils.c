@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:31:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 10:38:45 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/01 07:44:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,38 @@ t_token	*delete_token(t_token **ref)
 	if (prev)
 		return (prev);
 	return (next);
+}
+
+void	free_tokens(t_token **ref)
+{
+	t_token	*i;
+	t_token	*next;
+	
+	if (!ref || !*ref)
+	{
+		errno = ENODATA;
+		exit_error(errno, "free_token_list", NULL);
+	}
+	i = *ref;
+	while (i != NULL)
+	{
+		next = i->next;
+		delete_token(&i);
+		i = next;
+	}
+}
+
+t_token	*new_token(t_token *last, t_type type)
+{
+	t_token	*new;
+
+	new = ft_calloc(1, sizeof(t_token));
+	ft_check_malloc(new, "init_token");
+	if (last)
+	{
+		last->next = new;
+		new->prev = last;
+	}
+	new->type = type;
+	return (new);
 }

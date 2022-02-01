@@ -1,5 +1,12 @@
 #include <tokens.h>
 
+int		in_string(bool s_quote, bool d_quote)
+{
+	if (!s_quote && !d_quote)
+		return (0);
+	return (1);
+}
+
 char	peek_char(t_line *line)
 {
 	if (line->position + 1 >= line->len)
