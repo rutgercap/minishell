@@ -1,20 +1,14 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-RL_LIB		:=	-L/Users/rcappend/Documents/homebrew/opt/readline/lib
-RL_INC		:=	-I/Users/rcappend/Documents/homebrew/opt/readline/include
+RL_LIB		:=	-L/opt/homebrew/opt/readline/lib
+RL_INC		:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
 SRCS_DIR	:=	srcs
 OBJ_DIR		:=	objs
-vpath 		%.c $(SRCS_DIR)
-vpath 		%.c $(SRCS_DIR)/builtins
-vpath		%.c $(SRCS_DIR)/executor
-vpath		%.c $(SRCS_DIR)/parser
-vpath		%.c $(SRCS_DIR)/utils
-vpath		%.c $(SRCS_DIR)/tokenizer
-vpath		%.c $(SRCS_DIR)/expander
+VPATH 		:=	$(subst $(space),:,$(shell find srcs -type d))
 
 # Srcs
 SRCS		:=	main.c \
@@ -49,22 +43,23 @@ SRCS		:=	main.c \
 				ft_itoa.c \
 				ft_abs.c \
 				ft_calloc.c
-OBJS		:=	$(SRCS:.c=.o)
+OBJS		:=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
 FLAGS		:=	-Wall -Wextra -g #-Werror || annoying during development
 LIBS		:=	-lreadline -lhistory
 
-# fix relink
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(addprefix $(OBJ_DIR)/, $(OBJS)) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
+	@$(CC) $(OBJS) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
+	@echo success!
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(notdir %.c)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $(addprefix $(OBJ_DIR)/, $@)
+	@echo "compiling $(notdir $(basename $@))"
+	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $@
 
 run: all
 	./$(NAME)
@@ -72,31 +67,11 @@ run: all
 drun: all
 	lldb $(NAME)
 
-lextest:
-	make auto -C unit-tests/lexing
-	make clean -C unit-tests/lexing
-
-expandtest:
-	make auto -C unit-tests/expander
-	make clean -C unit-tests/expander
-
-parsetest:
-	make auto -C unit-tests/parser
-	make clean -C unit-tests/parser
-
-dtest:
-	make drun -C unit-tests/parser
-	make clean -C unit-tests/parser
-
-dexpand:
-	make drun -C unit-tests/expander
-	make clean -C unit-tests/expander
+echo:
+	@echo $(OBJS)
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	make clean -C unit-tests/expander
-	make clean -C unit-tests/lexing
-	make clean -C unit-tests/parser
 
 fclean:	clean
 	@rm -f $(NAME)
