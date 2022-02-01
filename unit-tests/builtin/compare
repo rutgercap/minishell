@@ -1,0 +1,32 @@
+TESTER_ECHO
+test1:
+ik ben $USER
+piekeboe
+-n hallo ik ben $USERpiekeboe
+----------------------
+TERM_PROGRAM=vscode
+TERM=xterm-256color
+HOMEBREW_TEMP=/tmp/dvan-der/Homebrew/Temp
+SHELL=/bin/zsh
+MAKEFLAGS=
+TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n000_xbr002q_y/T/
+Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.aSqfXx11Mv/Render
+TERM_PROGRAM_VERSION=1.35.1
+ZSH=/Users/dvan-der/.oh-my-zsh
+USER=dvan-der
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.cqJOO5Hztc/Listeners
+__CF_USER_TEXT_ENCODING=0x15D5E:0x0:0x0
+MAKELEVEL=1
+PAGER=less
+MFLAGS=
+HOMEBREW_CACHE=/tmp/dvan-der/Homebrew/Caches
+LSCOLORS=Gxfxcxdxbxegedabagacad
+PATH=/Users/dvan-der/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/dvan-der/.brew/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
+_=./test
+PWD=/Users/dvan-der/Documents/CODAM/MINISHELL/unit-tests/builtin
+LANG=en_US.UTF-8
+XPC_FLAGS=0x0
+XPC_SERVICE_NAME=0
+SHLVL=2
+LESS=-R
+LOGNAME=dvan-der

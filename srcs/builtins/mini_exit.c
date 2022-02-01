@@ -1,4 +1,4 @@
-#include <stdlib.h>	// nieuwe header maken ??
+#include <stdlib.h>
 
 void	mini_exit(void)
 {

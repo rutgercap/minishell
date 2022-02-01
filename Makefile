@@ -24,12 +24,14 @@ SRCS		:=	main.c \
 				token_utils.c \
 				expander.c \
 				cmd_utils.c \
-				parse_redirects.c \
 				parser.c \
 				redirect_utils.c \
 				process_char.c \
 				process_char_utils.c \
 				mini_exit.c \
+				ft_check_malloc.c \
+				ft_strlcat.c \
+				ft_strlcpy.c \
 				ft_strlen.c \
 				ft_bzero.c \
 				ft_strjoin.c \

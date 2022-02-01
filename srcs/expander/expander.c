@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/31 13:40:52 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/01 08:51:14 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static char	*get_var(t_token *token, char **env, int last_pid, long i)
 	}
 	env_location = find_var_in_env(token->text + i, env);
 	var = get_value(env_location);
+	return (var);
 }
 
 static char	*get_rest(t_token *token, long i)
@@ -72,6 +73,12 @@ static char	*get_rest(t_token *token, long i)
 	
 	if (token->text[i] == '?')
 		rest = ft_substr(token->text, i + 1, token->len - i + 1);
+	else
+	{
+		while (!ft_strchr("\'\"$ ", token->text[i]))
+			i++;
+		rest = ft_substr(token->text, i + 1, token->len - i + 1);
+	}
 	if (!rest)
 	{
 		errno = ENOMEM;

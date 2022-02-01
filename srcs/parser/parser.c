@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/31 08:26:02 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/01 08:51:29 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	syntax_error(const t_type type)
 	ft_putstr_fd("syntax error near unexpected token \'", STDERR_FILENO);
 	if (type == PIPE)
 		ft_putchar_fd('|', STDERR_FILENO);
-	else if (type == OPUT_BRACK)
+	else if (type == OUTPUT_S || type == OUTPUT_D)
 		ft_putchar_fd('>', STDERR_FILENO);
-	else if (type == IPUT_BRACK)
+	else if (type == INPUT_S || type == INPUT_D)
 		ft_putchar_fd('<', STDERR_FILENO);
 	else
 		ft_putstr_fd("newline", STDERR_FILENO);
@@ -38,7 +38,7 @@ static int	parse_words(t_cmd *cmd, t_token *tokens)
 				cmd = cmd->next;
 			else
 			{
-				syntax_error(tokens);
+				syntax_error(tokens->type);
 				return (EXIT_FAILURE);
 			}
 		}
@@ -60,12 +60,7 @@ static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 	head = cmd;
 	while (tokens->type != TOKEN_EOF)
 	{
-		if (tokens->type == ERROR)
-		{
-			*cmd_list = cmd;
-			return (syntax_error(tokens));	
-		}
-		else if (tokens->type == PIPE)
+		if (tokens->type == PIPE)
 		{
 			cmd->output = new_redirect(RED_PIPE);
 			cmd->next = new_cmd();
@@ -86,11 +81,6 @@ t_cmd	*parser(t_token *tokens)
 	cmd_list = NULL;
 
 	if (parse_pipes(&cmd_list, tokens))
-	{
-		free_cmd_list(&cmd_list);
-		return (NULL);
-	}
-	if (parse_redirects(cmd_list, tokens))
 	{
 		free_cmd_list(&cmd_list);
 		return (NULL);

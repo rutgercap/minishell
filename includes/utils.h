@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   utils.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rutgercappendijk <rutgercappendijk@stud      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2020/11/11 10:32:16 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/19 09:18:55 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
+/*   Updated: 2022/01/25 10:08:38 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ void		ft_strcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 void		exit_error(const int code, const char *func, const char *msg);
+
+void	ft_check_malloc(void *ptr, char *func);
 
 #	endif
