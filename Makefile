@@ -54,12 +54,11 @@ LIBS		:=	-lreadline -lhistory
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJ_DIR) $(OBJS)
 	@$(CC) $(OBJS) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
 	@echo success!
 
 $(OBJ_DIR)/%.o: $(notdir %.c)
-	@mkdir -p $(OBJ_DIR)
 	@echo "compiling $(notdir $(basename $@))"
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $@
 
@@ -69,9 +68,8 @@ run: all
 drun: all
 	lldb $(NAME)
 
-test:
-	@echo compiling and running tests...
-	@$(MAKE) -C $(TEST_DIR) run
+test: $(OBJ_DIR)
+	@$(MAKE) -C $(TEST_DIR) test
 
 echo:
 	@$(MAKE) -C $(TEST_DIR) echo
@@ -82,6 +80,9 @@ clean:
 fclean:	clean
 	@rm -f $(NAME)
 	@$(MAKE) -C $(TEST_DIR) fclean
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 re:	fclean all
 

@@ -31,10 +31,15 @@ $(UNITY_OBJ):
 
 $(OBJ_DIR)/%.o: $(notdir %.c)
 	@mkdir -p $(OBJ_DIR)
+	@echo compiling $(notdir $(basename $<))
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
-run: all $(RES_DIR)
+test: $(RES_DIR) $(NAME)
+	@echo "-----------------------"
 	@./$(NAME) 2>&1 > $(RES_DIR)/results.txt
+	@cat $(RES_DIR)/results.txt
+	@echo "-----------------------"
+	@echo "Results can be found in $(RES_DIR)/results.txt"
 
 echo:
 	@echo $(OBJS)

@@ -8,6 +8,6 @@
 # include <string.h>
 # include <unity.h>
 
-t_token *make_token(t_type *type, char *text, t_token *last);
+void    test_lexer();
 
 #endif
