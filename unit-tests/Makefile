@@ -1,9 +1,8 @@
-NAME		:=	tester
-
-# mini srcs /dirs
+# mini srcs / dirs
 INCL_DIR	:=	../includes
 SRCS_DIR	:=	../srcs
 OBJ_DIR		:=	../objs
+MINI_OBJS	:=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 VPATH		:=	$(subst $(space),:,$(shell find $(SRCS_DIR) -type d))
 
 # unity srcs / dirs
@@ -11,22 +10,34 @@ UNITY_DIR	:=	unity
 UNITY_SRC	:=	$(UNITY_DIR)/src/unity.c
 UNITY_OBJ	:=	$(addprefix $(OBJ_DIR)/, $(notdir $(UNITY_SRC:.c=.o)))
 
-# testing srcs / dirs
-RES_DIR		:=	results
+# combined srcs / objs
 TEST_SRCS	:=	$(wildcard *.c)
-ALL_SRCS	:=	$(TEST_SRCS) $(SRCS)
-OBJS		:=	$(addprefix $(OBJ_DIR)/, $(ALL_SRCS:.c=.o))
+TEST_OBJS	:=	$(addprefix $(OBJ_DIR)/, $(TEST_SRCS:.c=.o))
+ALL_OBJS	:=	$(TEST_OBJS) $(MINI_OBJS) $(UNITY_OBJ)
+
+# results
+RES_DIR		:=	results
+RESULTS		:=	$(patsubst %.c,$(RES_DIR)/%.txt,$(TEST_SRCS))
+BUILD_DIRS	:=	$(RES_DIR) $(OBJ_DIR)
 
 # Config
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 LIBS		:=	-lreadline -lhistory
+EXTENSION	:=	.out
 
-all:	$(NAME)
-$(NAME):	$(UNITY_OBJ) $(OBJS)
-	@$(CC) $(OBJS) $(UNITY_OBJ) $(FLAGS) $(LIBS) $(RL_LIB) -o $(NAME)
-	@echo compiled successfully!
 
-$(UNITY_OBJ):
+test: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
+	@echo "success!"
+	@echo results can be found in results/
+
+$(RES_DIR)/%.txt: $(OBJ_DIR)/%$(EXTENSION)
+	@$(info running $(notdir $(basename $@)))
+	@-./$< > $@ 2>&1
+
+$(OBJ_DIR)/%$(EXTENSION): $(OBJ_DIR)/%.o
+	@$(CC) $(MINI_OBJS) $< $(UNITY_OBJ) $(FLAGS) $(LIBS) $(RL_LIB) -o $@
+
+$(UNITY_OBJ): $(BUILD_DIRS)
 	@$(CC) $(FLAGS) -c $(UNITY_SRC) -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
 $(OBJ_DIR)/%.o: $(notdir %.c)
@@ -34,21 +45,20 @@ $(OBJ_DIR)/%.o: $(notdir %.c)
 	@echo compiling $(notdir $(basename $<))
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
-test: $(RES_DIR) $(NAME)
-	@echo "-----------------------"
-	@./$(NAME) 2>&1 > $(RES_DIR)/results.txt
-	@echo "-----------------------"
-	@echo "Results can be found in $(RES_DIR)/results.txt"
-
-dtest: $(RES_DIR) $(NAME)
-	lldb $(NAME)
+dtest: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
+	lldb $(OBJ_DIR)/expand_tester$(EXTENSION)
 
 $(RES_DIR):
 	@mkdir -p $(RES_DIR)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+echo:
+	@echo
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(RES_DIR)
 
-fclean: clean
-	@rm -f $(NAME)
+.PRECIOUS: $(OBJ_DIR)%$(TARGET_EXTENSION)

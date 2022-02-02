@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 15:13:43 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/01 17:32:08 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 08:25:04 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 t_token		*tokens;
 t_token		*i;
 
-void    setUp(void) {
-    
-}
-
 static void	init_test(char *line)
 {
 	tokens = tokenizer(line);
@@ -26,14 +22,17 @@ static void	init_test(char *line)
 	i = tokens;
 }
 
-static void		*assert_token(t_type type, char *text)
+static void		assert_token(t_type type, char *text)
 {
 	long	len;
 
 	TEST_ASSERT_NOT_NULL(i);
 	TEST_ASSERT_EQUAL_INT16(type, i->type);
 	if (!text)
+	{
 		TEST_ASSERT_NULL(i->text);
+		i->len = 0;
+	}
 	else
 	{
 		len = strlen(text);
@@ -41,6 +40,10 @@ static void		*assert_token(t_type type, char *text)
 		TEST_ASSERT_EQUAL_UINT64(len, i->len);
 	}
 	i = i->next;
+}
+
+void    setUp(void) {
+    
 }
 
 void    tearDown(void) {
@@ -193,7 +196,7 @@ static void	trial_17()
 	assert_token(WORD, "\"");
 }
 
-int	test_lexer()
+int main(void)
 {
 	UNITY_BEGIN();
 	RUN_TEST(trial_1);
