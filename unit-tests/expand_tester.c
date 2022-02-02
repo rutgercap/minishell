@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 13:16:00 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 13:17:33 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,17 +266,6 @@ static void	trial_31()
 {
 	init_test("\"123$double_var 123\"");
 	assert_token(WORD, "123blabla 123");
-}
-
-void	print_env(void)
-{
-	int j = 0;
-	
-	while (g_env[j])
-	{
-		printf("%s\n", g_env[j]);
-		j++;
-	}
 }
 
 int main(int argc, char **argv, char **env)
