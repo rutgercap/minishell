@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 11:29:47 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 13:16:00 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,72 @@ static void	trial_22()
 	assert_token(WORD, "\'blabla\'");
 }
 
+static void	trial_23()
+{
+	init_test("\"  $env_var  \"");
+	assert_token(WORD, "  blabla  ");
+}
+
+static void	trial_24()
+{
+	init_test("\"  $?  \"");
+	assert_token(WORD, "  42  ");
+}
+
+static void	trial_25()
+{
+	init_test("\"  $$  \"");
+	assert_token(WORD, "  $$  ");
+}
+
+static void	trial_26()
+{
+	init_test("\"  $  \"");
+	assert_token(WORD, "  $  ");
+}
+
+static void	trial_27()
+{
+	init_test("\"     $\"");
+	assert_token(WORD, "     $");
+}
+
+static void	trial_28()
+{
+	init_test("echo hi\"$env_var\"$env_var");
+	assert_token(WORD, "echo");
+	assert_token(WORD, "hiblablablabla");
+}
+
+static void	trial_29()
+{
+	init_test("\"123$double_var123\"");
+	assert_token(WORD, "123");
+}
+
+static void	trial_30()
+{
+	init_test("\"  $doesnt_exist  \"");
+	assert_token(WORD, "    ");
+}
+
+static void	trial_31()
+{
+	init_test("\"123$double_var 123\"");
+	assert_token(WORD, "123blabla 123");
+}
+
+void	print_env(void)
+{
+	int j = 0;
+	
+	while (g_env[j])
+	{
+		printf("%s\n", g_env[j]);
+		j++;
+	}
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -242,6 +308,14 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_20);
 	RUN_TEST(trial_21);
 	RUN_TEST(trial_22);
-	
+	RUN_TEST(trial_23);
+	RUN_TEST(trial_24);
+	RUN_TEST(trial_25);
+	RUN_TEST(trial_26);
+	RUN_TEST(trial_27);
+	RUN_TEST(trial_28);
+	RUN_TEST(trial_29);
+	RUN_TEST(trial_30);
+	RUN_TEST(trial_31);
     return (UNITY_END());
 }

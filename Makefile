@@ -77,9 +77,13 @@ fclean:	clean
 	@rm -f $(NAME)
 
 # used for unit tests
-export env_var	:=	blabla
+export double_var	:=	$$env_var
+export env_var		:=	blabla
 test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
+
+echo:
+	@echo $(double_var)
 
 dtest: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) dtest
