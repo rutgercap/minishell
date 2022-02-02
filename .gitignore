@@ -59,7 +59,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-
 # testing files
 tester
 results/

@@ -25,7 +25,6 @@ FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 LIBS		:=	-lreadline -lhistory
 EXTENSION	:=	.out
 
-
 test: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
 	@echo "success!"
 	@echo results can be found in results/

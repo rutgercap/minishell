@@ -23,6 +23,7 @@ export SRCS	:=	signals.c \
 				redirect_utils.c \
 				process_char.c \
 				process_char_utils.c \
+				parse_quotes.c \
 				mini_exit.c \
 				ft_check_malloc.c \
 				ft_strlcat.c \
@@ -68,18 +69,20 @@ run: all
 drun: all
 	lldb $(NAME)
 
+clean:
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(TEST_DIR) clean
+
+fclean:	clean
+	@rm -f $(NAME)
+
+# used for unit tests
+export env_var	:=	blabla
 test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
 
 dtest: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) dtest
-	
-clean:
-	@rm -rf $(OBJ_DIR)
-
-fclean:	clean
-	@rm -f $(NAME)
-	@$(MAKE) -C $(TEST_DIR) fclean
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)

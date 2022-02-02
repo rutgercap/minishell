@@ -6,37 +6,43 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:00:34 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/31 14:28:36 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 10:26:11 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-void    new_text(t_token *token, char *old)
+int     copy_check(char c, bool s_quote, bool d_quote)
 {
-    bool	s_quote;
-	bool	d_quote;
+    if (c != '\'' && c != '\"')
+        return (EXIT_SUCCESS);
+    else if (d_quote == true && c == '\'')
+        return (EXIT_SUCCESS);
+    else if (s_quote == true && c == '\"')
+        return (EXIT_SUCCESS);
+    return (EXIT_FAILURE);
+}
+
+void    new_text(t_token *token, char *old, bool s_quote, bool d_quote)
+{
 	char	*new;
 	int		i;
 
 	new = ft_calloc(token->len + 1, 1);
-	if (!new)
-	{
-		errno = ENOMEM;
-		exit_error(errno, "new_text", NULL);
-	}
+    ft_check_malloc(new, "new_text");
 	i = 0;
 	while (*old)
 	{
 		if (d_quote == false && *old == '\'')
-            s_quote != s_quote;
+            s_quote = !s_quote;
         else if (s_quote == false && *old == '\"')
-            d_quote != d_quote;
-		if ((s_quote == false && *old != '\'') ||
-			(d_quote == false && *old != '\"'))
-		new[i] = *old;
+            d_quote = !d_quote;
+		if (!copy_check(*old, s_quote, d_quote))
+        {
+            new[i] = *old;
+            i++;
+        }
 		old++;
-		i++;
 	}
 	free(token->text);
 	token->text = new;
@@ -54,15 +60,15 @@ void    remove_quotes(t_token *token)
     while (token->text[i])
     {
         if (d_quote == false && token->text[i] == '\'')
-            s_quote != s_quote;
+            s_quote = !s_quote;
         else if (s_quote == false && token->text[i] == '\"')
-            d_quote != d_quote;
+            d_quote = !d_quote;
         if ((d_quote == false && token->text[i] == '\'') ||
             (s_quote == false && token->text[i] == '\"'))
             token->len--;
         i++;
     }
-	new_text(token, token->text);
+	new_text(token, token->text, s_quote, d_quote);
 }
 
 int parse_quotes(t_token *token, char **env, int last_pid)
@@ -77,9 +83,9 @@ int parse_quotes(t_token *token, char **env, int last_pid)
     while (i < token->len)
     {
         if (d_quote == false && token->text[i] == '\'')
-            s_quote != s_quote;
+            s_quote = !s_quote;
         else if (s_quote == false && token->text[i] == '\"')
-            d_quote != d_quote;
+            d_quote = !d_quote;
         else if (s_quote == false && token->text[i] == '$')
             i -= expander(token, env, last_pid, i);
         i++;
@@ -90,7 +96,7 @@ int parse_quotes(t_token *token, char **env, int last_pid)
 }
 
 int parse_quotes_and_expand(t_token *token, char **env, int last_pid)
-{
+{    
     while (token->type != TOKEN_EOF)
     {
         if (token->text)

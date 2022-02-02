@@ -29,7 +29,7 @@ typedef struct s_exec {
 }	t_exec;
 
 typedef struct s_cmd {
-	t_exec		*exec;
+	t_exec			*exec;
 	t_red			*input;
 	t_red			*output;
 	struct s_cmd	*next;
@@ -53,7 +53,8 @@ t_red	*new_redirect(t_red_type type);
 	main
 */
 int		parse_redirects(t_cmd *cmd_list, t_token *tokens);
+int		parse_quotes_and_expand(t_token *token, char **env, int last_pid);
 int		syntax_error(const t_type type);
-t_cmd	*parser(t_token *tokens);
+t_cmd	*parser(t_token *tokens, char **env, int last_pid);
 
 #endif
