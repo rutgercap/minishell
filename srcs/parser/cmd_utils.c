@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 09:37:03 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 11:43:30 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	free_cmd(t_cmd **ref)
 	free(cmd);
 }
 
-void	free_cmd_list(t_cmd **ref)
+void	*free_cmd_list(t_cmd **ref)
 {
 	t_cmd	*i;
 	t_cmd	*next;
@@ -97,4 +97,5 @@ void	free_cmd_list(t_cmd **ref)
 		free_cmd(&i);
 		i = next;
 	}
+	return (NULL);
 }

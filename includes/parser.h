@@ -40,7 +40,7 @@ typedef struct s_cmd {
 */
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd **cmd);
-void	free_cmd_list(t_cmd **ref);
+void	*free_cmd_list(t_cmd **ref);
 void	append_argument(t_exec *exec, t_token *token);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 11:18:22 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 11:29:47 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,12 @@ static void	trial_21()
 	assert_token(WORD, "$env_var");
 }
 
+static void	trial_22()
+{
+	init_test("\"\'$env_var\'\"");
+	assert_token(WORD, "\'blabla\'");
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -235,7 +241,7 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_19);
 	RUN_TEST(trial_20);
 	RUN_TEST(trial_21);
-	// expansions
+	RUN_TEST(trial_22);
 	
     return (UNITY_END());
 }
