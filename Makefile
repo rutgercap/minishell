@@ -9,7 +9,7 @@ INCL_DIR	:=	includes
 SRCS_DIR	:=	srcs
 OBJ_DIR		:=	objs
 TEST_DIR	:=	unit-tests
-VPATH 		:=	$(subst $(space),:,$(shell find srcs -type d))
+VPATH 		:=	$(subst $(space),:,$(shell find $(SRCS_DIR) -type d))
 
 # Srcs
 MAIN		:=	main.c
@@ -81,9 +81,6 @@ export double_var	:=	$$env_var
 export env_var		:=	blabla
 test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
-
-echo:
-	@echo $(double_var)
 
 dtest: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) dtest
