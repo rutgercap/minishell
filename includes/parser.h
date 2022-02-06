@@ -8,8 +8,6 @@
 # define SYNTAX_ERROR -1
 
 typedef enum e_red_type {
-	UNDEFINED,
-	RED_PIPE,
 	RED_IPUT,
 	HERE_DOC,
 	RED_OPUT,
@@ -41,7 +39,7 @@ typedef struct s_cmd {
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd **cmd);
 void	*free_cmd_list(t_cmd **ref);
-void	append_argument(t_exec *exec, t_token *token);
+void	add_argument(t_exec *exec, t_token *token);
 
 /*
 	redirects list utils
@@ -54,6 +52,7 @@ t_red	*new_redirect(t_red_type type);
 */
 int		parse_redirects(t_cmd *cmd_list, t_token *tokens);
 int		parse_quotes_and_expand(t_token *token, char **env, int last_pid);
+int		parse_words(t_cmd *cmd, t_token *tokens);
 int		syntax_error(const t_type type);
 t_cmd	*parser(t_token *tokens, char **env, int last_pid);
 

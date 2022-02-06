@@ -6,13 +6,13 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:00:34 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 10:26:11 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/05 08:50:33 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-int     copy_check(char c, bool s_quote, bool d_quote)
+static int     copy_check(char c, bool s_quote, bool d_quote)
 {
     if (c != '\'' && c != '\"')
         return (EXIT_SUCCESS);
@@ -23,7 +23,7 @@ int     copy_check(char c, bool s_quote, bool d_quote)
     return (EXIT_FAILURE);
 }
 
-void    new_text(t_token *token, char *old, bool s_quote, bool d_quote)
+static void    new_text(t_token *token, char *old, bool s_quote, bool d_quote)
 {
 	char	*new;
 	int		i;
@@ -48,7 +48,7 @@ void    new_text(t_token *token, char *old, bool s_quote, bool d_quote)
 	token->text = new;
 }
 
-void    remove_quotes(t_token *token)
+static void    remove_quotes(t_token *token)
 {
     bool    s_quote;
     bool    d_quote;
@@ -71,7 +71,7 @@ void    remove_quotes(t_token *token)
 	new_text(token, token->text, s_quote, d_quote);
 }
 
-int parse_quotes(t_token *token, char **env, int last_pid)
+static int parse_quotes(t_token *token, char **env, int last_pid)
 {
     bool    s_quote;
     bool    d_quote;

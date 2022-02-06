@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/02 15:36:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 16:03:20 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 16:16:28 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,3 @@ t_cmd	*third_command(void)
 	cmd_1->next = make_test_command(exec_2, NULL, output_2, NULL);
 	return (cmd_1);
 }
-

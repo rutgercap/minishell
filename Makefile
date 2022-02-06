@@ -16,14 +16,16 @@ MAIN		:=	main.c
 export SRCS	:=	signals.c \
 				exit_error.c \
 				tokenizer.c \
-				token_utils.c \
-				expander.c \
-				cmd_utils.c \
-				parser.c \
-				redirect_utils.c \
 				process_char.c \
 				process_char_utils.c \
+				token_utils.c \
+				expander.c \
+				parser.c \
+				parse_redirects.c \
 				parse_quotes.c \
+				parse_words.c \
+				redirect_utils.c \
+				cmd_utils.c \
 				mini_exit.c \
 				ft_check_malloc.c \
 				ft_strlcat.c \
@@ -43,6 +45,7 @@ export SRCS	:=	signals.c \
 				ft_strchr.c \
 				ft_substr.c \
 				ft_itoa.c \
+				ft_split.c \
 				ft_abs.c \
 				ft_calloc.c
 MINI_SRCS	:=	$(SRCS) $(MAIN)
@@ -76,6 +79,9 @@ clean:
 fclean:	clean
 	@rm -f $(NAME)
 
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
 # used for unit tests
 export double_var	:=	$$env_var
 export env_var		:=	blabla
@@ -83,10 +89,8 @@ test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
 
 dtest: $(OBJ_DIR)
+	@$(MAKE) -C $(TEST_DIR) clean
 	@$(MAKE) -C $(TEST_DIR) dtest
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
 
 re:	fclean all
 

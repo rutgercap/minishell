@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 11:43:30 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/05 08:50:57 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,7 @@ t_cmd	*new_cmd(void)
 	return (new);
 }
 
-void	append_argument(t_exec *exec, t_token *token)
-{
-	if (!exec->arguments)
-	{
-		exec->arguments = ft_calloc(1, sizeof(char *));
-		if (!exec->arguments)
-		{
-			errno = ENOMEM;
-			exit_error(errno, "append argument", NULL);
-		}
-	}
-	exec->arguments[exec->len] = ft_strdup(token->text);
-	if (!exec->arguments[exec->len])
-	{
-		errno = ENOMEM;
-		exit_error(errno, "append argument", NULL);
-	}
-	if (exec->len == 0)
-		exec->command = exec->arguments[0];
-	exec->len++;
-}
-
-void	free_exec(t_exec *exec)
+static void	free_exec(t_exec *exec)
 {
 	while (exec->len > 0)
 	{
@@ -71,7 +49,7 @@ void	free_cmd(t_cmd **ref)
 	if (!ref || !*ref)
 	{
 		errno = ENODATA;
-		exit_error(errno, "free_cmd", NULL);
+		return ;
 	}
 	cmd = *ref;
 	free_exec(cmd->exec);
@@ -88,7 +66,7 @@ void	*free_cmd_list(t_cmd **ref)
 	if (!ref || !*ref)
 	{
 		errno = ENODATA;
-		exit_error(errno, "free_cmd_list", NULL);
+		return (NULL);
 	}
 	i = *ref;
 	while (i != NULL)

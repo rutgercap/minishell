@@ -10,13 +10,13 @@ static char	*get_line(void)
 	return (line);
 }
 
-static void	process_cmd(char *raw_line, char **env, int last_pid)
+static void	process_cmd(char *raw_line, char **env, int *last_pid)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	cmd = parser(tokens, env, last_pid);
+	cmd = parser(tokens, env, *last_pid);
 	free_tokens(&tokens);
 	// execute_cmds(AST);
 	if (!ft_strncmp(raw_line, "exit", 4))
@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **env)
 	{
 		line = get_line();
 		if (line && ft_strlen(line))
-			process_cmd(line, env, last_pid);
+			process_cmd(line, env, &last_pid);
 		printf("%s\n", line);
 		free(line);
 	}
