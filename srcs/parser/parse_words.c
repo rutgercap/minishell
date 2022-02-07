@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 08:47:01 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 09:27:14 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/07 13:39:46 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	parse_words(t_cmd *cmd, t_token *tokens)
 	{
 		if (tokens->type == TOKEN_EOF)
 		{
-			if (tokens->prev->type != WORD)
+			if (tokens->prev && tokens->prev->type != WORD)
 				return (syntax_error(tokens->prev->type));
 			break;
 		}

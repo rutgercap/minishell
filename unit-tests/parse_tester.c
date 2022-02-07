@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 12:06:49 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/07 13:54:12 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 	for each command:
 		assert_exec(commands and arguments separated by + )
 		for each redirect:
-			assert_redirect(redirect type, delimiter)
+			assert_redirect(redirect type, file_name)
 		next_command
 	-----
 	
@@ -58,7 +58,6 @@ static void	init_test(char *line)
 		i_input = i->input;
 		i_output = i->output;
 	}
-    free_tokens(&tokens);
     tokens = NULL;
 }
 
@@ -99,19 +98,19 @@ static void assert_exec(char *args)
 	free(args_split);
 }
 
-static void	assert_input(int type, char *delim)
+static void	assert_input(int type, char *file_name)
 {
 	TEST_ASSERT_NOT_NULL_MESSAGE(i_input, "assert_input");
 	TEST_ASSERT_EQUAL_INT16_MESSAGE(type, i_input->type, "input type");
-	TEST_ASSERT_EQUAL_STRING_MESSAGE(delim, i_input->delim, "input delim");
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(file_name, i_input->file_name, "input file_name");
 	i_input = i_input->next;
 }
 
-static void	assert_output(int type, char *delim)
+static void	assert_output(int type, char *file_name)
 {
 	TEST_ASSERT_NOT_NULL_MESSAGE(i_output, "assert_output");
 	TEST_ASSERT_EQUAL_INT16_MESSAGE(type, i_output->type, "output type");
-	TEST_ASSERT_EQUAL_STRING_MESSAGE(delim, i_output->delim, "output delim");
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(file_name, i_output->file_name, "output file_name");
 	i_output = i_output->next;
 }
 
@@ -344,6 +343,41 @@ static void	trial_30()
 	next_cmd();
 }
 
+static void	trial_31()
+{
+	init_test("> cat");
+	assert_output(RED_OPUT, "cat");
+	next_cmd();
+}
+
+static void	trial_32()
+{
+	init_test("< file2 cat > file1 | echo shiet");
+	assert_exec("cat");
+	assert_input(RED_IPUT, "file2");
+	assert_output(RED_OPUT, "file1");
+	next_cmd();
+	assert_exec("echo+shiet");
+	next_cmd();
+}
+
+
+static void	trial_33()
+{
+	init_test("< cat");
+	assert_input(RED_IPUT, "cat");
+	next_cmd();
+}
+
+
+static void	trial_34()
+{
+	init_test("> cat < cat");
+	assert_output(RED_OPUT, "cat");
+	assert_input(RED_IPUT, "cat");
+	next_cmd();
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -381,5 +415,9 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_28);
 	RUN_TEST(trial_29);
 	RUN_TEST(trial_30);
+	RUN_TEST(trial_31);
+	RUN_TEST(trial_32);
+	RUN_TEST(trial_33);
+	RUN_TEST(trial_34);
     return (UNITY_END());
 }

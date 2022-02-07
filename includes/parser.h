@@ -50,7 +50,7 @@ t_red	*new_redirect(t_red_type type);
 /*
 	main
 */
-int		parse_redirects(t_cmd *cmd_list, t_token *tokens);
+int		parse_redirects(t_cmd *cmds, t_token **tokens);
 int		parse_quotes_and_expand(t_token *token, char **env, int last_pid);
 int		parse_words(t_cmd *cmd, t_token *tokens);
 int		syntax_error(const t_type type);

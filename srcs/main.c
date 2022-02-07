@@ -17,7 +17,6 @@ static void	process_cmd(char *raw_line, char **env, int *last_pid)
 	
 	tokens = tokenizer(raw_line);
 	cmd = parser(tokens, env, *last_pid);
-	free_tokens(&tokens);
 	executor(cmd, env, last_pid);
 	free_cmd_list(&cmd);
 	if (!ft_strncmp(raw_line, "exit", 4))

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/02 15:36:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 16:16:28 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/07 13:03:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_cmd   *make_test_command(t_exec *exec, t_red *input, t_red *output, t_cmd *nex
 		new->next = next;
 }
 
-t_red	*make_test_red(t_type type, char *delim, t_red *next)
+t_red	*make_test_red(t_type type, char *file, t_red *next)
 {
 	t_red	*new;
 
 	new = ft_calloc(1, sizeof(t_red));
 	new->type = type;
-	if (delim)
-		new->delim = ft_strdup(delim);
+	if (file)
+		new->file_name = ft_strdup(file);
 	if (next)
 		new->next = next;
 }
