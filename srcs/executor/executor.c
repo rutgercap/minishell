@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 10:19:36 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/07 11:59:41 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	waitpid_fork(t_fork_list *forks, t_utils utils, int *last_pid)
 	}
 	waitpid(forks->child, &status, 0);
 	if (WIFEXITED(status))
-		exit(WEXITSTATUS(status));
+		*last_pid = WEXITSTATUS(status);
 	return ;
 }
 
