@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 09:17:18 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/07 10:19:36 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,18 @@ static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
 	int	output;
 	
 	close(end[0]);
-	input = arrange_input(cmd, &utils->last_pid);
-	if (input == -1)
-		input = fd;
-	output = arrange_output(cmd, &utils->last_pid);
-	if (output == -1)
+	input = arrange_input(cmd, fd, &utils->last_pid);
+	if (input != -1)
 	{
-		if (cmd->next)		
-			output = end[1];
-		else
-			output = 1;
+		if (dup2(input, STDIN_FILENO) < 0)
+			perror("");
 	}
-	if (dup2(input, STDIN_FILENO) < 0)
-		perror("");
-	if (dup2(output, STDOUT_FILENO) < 0)
-		perror("");
+	output = arrange_output(cmd, end[1], &utils->last_pid);
+	if (output != -1)
+	{
+		if (dup2(output, STDOUT_FILENO) < 0)
+			perror("");
+	}
 	close(end[1]);
 	execute_cmd(cmd, utils);
 }
@@ -83,6 +80,7 @@ static t_fork_list	*new_fork(t_fork_list *a_fork)
 	
 	new_fork = (t_fork_list *)malloc(sizeof(t_fork_list));
 	ft_check_malloc(new_fork, "new_fork");
+	new_fork->next = NULL;
 	if (!a_fork)
 		a_fork = new_fork;
 	else
@@ -103,6 +101,7 @@ void	executor(t_cmd *cmd, char **env, int *last_pid)
 	
 	a_fork = NULL;
 	first_cmd = true;
+	fd = -1;
 	while (cmd)
 	{
 		a_fork = new_fork(a_fork);

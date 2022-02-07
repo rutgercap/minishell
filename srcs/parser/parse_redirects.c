@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_redirects.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/01/25 08:19:21 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 11:50:05 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_redirects.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/25 08:19:21 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/07 09:57:21 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static int	add_redirect(t_red **dest, t_token *token)
 		syntax_error(token->type);
 		return (EXIT_FAILURE);
 	}
-	new->delim = ft_strdup(token->text);
-	if (!new->delim)
-		ft_check_malloc(new->delim, "add_redirect");
+	new->file_name = ft_strdup(token->text);
+	if (!new->file_name)
+		ft_check_malloc(new->file_name, "add_redirect");
 	*dest = new;
 	return (EXIT_SUCCESS);
 }

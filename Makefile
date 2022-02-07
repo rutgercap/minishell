@@ -58,7 +58,7 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
-FLAGS		:=	-Wall -Wextra -g #-Werror
+FLAGS		:=	-Wall -Wextra -fsanitize=address -g #-Werror
 LIBS		:=	-lreadline -lhistory
 
 all:		$(NAME)

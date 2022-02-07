@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 09:28:21 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/07 10:15:25 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ t_utils	init_utils(char **env, int *last_pid)
 	return (utils);
 }
 
-int	arrange_output(t_cmd *cmd, int *last_pid)
+int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 {
 	int	output;
 
+	if (cmd->next)
+		output = write_pipe_end;
+	else
+		output = 1;
 	while(cmd->output)
 	{
 		output = open(cmd->output->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -77,10 +81,11 @@ int	arrange_output(t_cmd *cmd, int *last_pid)
 	return (output);	
 }
 
-int	arrange_input(t_cmd *cmd, int *last_pid)
+int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 {
 	int	input;
 
+	input = fd;
 	while(cmd->input)
 	{
 		input = open(cmd->input->file_name, O_RDONLY);
