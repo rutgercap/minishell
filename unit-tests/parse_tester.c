@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/07 13:51:54 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/07 13:54:12 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,23 @@ static void	trial_32()
 	next_cmd();
 }
 
+
+static void	trial_33()
+{
+	init_test("< cat");
+	assert_input(RED_IPUT, "cat");
+	next_cmd();
+}
+
+
+static void	trial_34()
+{
+	init_test("> cat < cat");
+	assert_output(RED_OPUT, "cat");
+	assert_input(RED_IPUT, "cat");
+	next_cmd();
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -400,5 +417,7 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_30);
 	RUN_TEST(trial_31);
 	RUN_TEST(trial_32);
+	RUN_TEST(trial_33);
+	RUN_TEST(trial_34);
     return (UNITY_END());
 }
