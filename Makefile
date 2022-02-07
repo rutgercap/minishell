@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
-export RL_INC	:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
+export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -47,7 +47,12 @@ export SRCS	:=	signals.c \
 				ft_itoa.c \
 				ft_split.c \
 				ft_abs.c \
-				ft_calloc.c
+				ft_calloc.c \
+				ft_free_char_array.c \
+				ft_strnstr.c \
+				executor.c \
+				execute_cmd.c \
+				executor_utils.c
 MINI_SRCS	:=	$(SRCS) $(MAIN)
 OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 

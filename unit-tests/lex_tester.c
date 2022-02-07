@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   lex_tester.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/01 15:13:43 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 10:30:47 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   lex_tester.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/01 15:13:43 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/02 16:12:06 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,22 @@ static void	trial_17()
 	assert_token(WORD, "\"");
 }
 
+static void	trial_18()
+{
+	init_test("cat > file1 >> file2 < file3 -e | echo hallo");
+	assert_token(WORD, "cat");
+	assert_token(OUTPUT_S, NULL);
+	assert_token(WORD, "file1");
+	assert_token(OUTPUT_D, NULL);
+	assert_token(WORD, "file2");
+	assert_token(INPUT_S, NULL);
+	assert_token(WORD, "file3");
+	assert_token(WORD, "-e");
+	assert_token(PIPE, NULL);
+	assert_token(WORD, "echo");
+	assert_token(WORD, "hallo");
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -216,5 +232,6 @@ int main(void)
 	RUN_TEST(trial_15);
 	RUN_TEST(trial_16);
 	RUN_TEST(trial_17);
+	RUN_TEST(trial_18);
 	return UNITY_END();
 }
