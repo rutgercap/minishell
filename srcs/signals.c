@@ -4,7 +4,7 @@
 void	sigint_handler(int signum)
 {
 	(void)signum;	// stops compiler errors
-	rl_replace_line("", 0);
+	rl_replace_line("Minishell$ ", 0);
 }
 
 void	sigquit_handler(int signum)

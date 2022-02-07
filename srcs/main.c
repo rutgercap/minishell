@@ -19,6 +19,7 @@ static void	process_cmd(char *raw_line, char **env, int *last_pid)
 	cmd = parser(tokens, env, *last_pid);
 	free_tokens(&tokens);
 	// execute_cmds(AST);
+	free_cmd_list(&cmd);
 	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
 }
@@ -37,7 +38,6 @@ int main(int argc, char **argv, char **env)
 		line = get_line();
 		if (line && ft_strlen(line))
 			process_cmd(line, env, &last_pid);
-		printf("%s\n", line);
 		free(line);
 	}
 }
