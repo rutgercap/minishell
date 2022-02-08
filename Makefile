@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
-export RL_INC	:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
+export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -26,7 +26,6 @@ export SRCS	:=	signals.c \
 				parse_words.c \
 				redirect_utils.c \
 				cmd_utils.c \
-				mini_exit.c \
 				ft_check_malloc.c \
 				ft_strlcat.c \
 				ft_strlcpy.c \
@@ -52,13 +51,24 @@ export SRCS	:=	signals.c \
 				ft_strnstr.c \
 				executor.c \
 				execute_cmd.c \
-				executor_utils.c
+				executor_utils.c \
+				ft_putnbr_fd.c \
+				built_in.c \
+				mini_unset.c \
+				mini_echo.c \
+				mini_export.c \
+				free_old_env.c
+	
 MINI_SRCS	:=	$(SRCS) $(MAIN)
 OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 
 # Config
 CC			:=	gcc
-FLAGS		:=	-Wall -Wextra -fsanitize=address -g #-Werror
+ifdef debug
+FLAGS		:=	-Wall -Wextra -fsanitize=address -g
+else
+FLAGS		:=	-Wall -Wextra -Werror -g
+endif
 LIBS		:=	-lreadline -lhistory
 
 all:		$(NAME)

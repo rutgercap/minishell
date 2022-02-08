@@ -8,7 +8,6 @@
 # include <expander.h>
 # include <parser.h>
 # include <tokens.h>
-# include <expander.h>
 # include <utils.h>
 
 /*
@@ -27,6 +26,6 @@
 */
 void	init_signals(void);
 
-void	mini_exit(void);
+int		mini_exit(void);
 
 #endif

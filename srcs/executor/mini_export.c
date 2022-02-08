@@ -1,4 +1,16 @@
-#include "builtin.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_export.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
+/*   Updated: 2022/02/07 15:31:04 by dvan-der         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "executor.h"
 
 static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 {
@@ -76,7 +88,7 @@ static int	check_in_env_export(char *arg, char **env)
 	return (-1);
 }
 
-void	mini_export(char **arg, char ***env)
+int	mini_export(char **arg, char ***env)
 {
 	int		i;
 	int		edit_row;
@@ -97,4 +109,5 @@ void	mini_export(char **arg, char ***env)
 		*env = edit_env_export(*env, arg[i], edit_row, size_old_env);
 		i++;
 	}
+	return (1);
 }
