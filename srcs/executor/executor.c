@@ -3,14 +3,10 @@
 /*                                                        ::::::::            */
 /*   executor.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/02/07 10:42:02 by rcappend      ########   odam.nl         */
-=======
-/*   Updated: 2022/02/07 12:59:11 by rcappend      ########   odam.nl         */
->>>>>>> executor
+/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/08 09:26:11 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

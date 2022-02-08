@@ -1,4 +1,4 @@
-#include "builtin.h"
+#include <builtin.h>
 
 static void	mini_exit(void)
 {
@@ -14,10 +14,10 @@ static void	mini_cd(char **arg)
 
 static void mini_pwd(void)
 {
-    char    str[100];
+    char    *pwd;
 
-    getcwd(str, 100);
-    ft_putendl_fd(str, STDOUT_FILENO);
+    pwd = getcwd(NULL, 0);
+    ft_putendl_fd(pwd, STDOUT_FILENO);
     return ;
 }
 

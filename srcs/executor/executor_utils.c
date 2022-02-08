@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-<<<<<<< HEAD
 /*                                                        ::::::::            */
 /*   executor_utils.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/07 10:57:32 by rcappend      ########   odam.nl         */
-=======
-/*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 10:15:25 by dvan-der         ###   ########.fr       */
->>>>>>> executor
+/*   Created: 2022/02/08 09:26:32 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/08 09:26:47 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +63,10 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 	int	output;
 	int	flags;
 
-<<<<<<< HEAD
-	
-=======
 	if (cmd->next)
 		output = write_pipe_end;
 	else
 		output = 1;
->>>>>>> executor
 	while(cmd->output)
 	{
 		flags = O_CREAT | O_RDWR;
