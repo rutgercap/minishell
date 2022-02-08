@@ -1,5 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
+<<<<<<< HEAD
 /*                                                        ::::::::            */
 /*   executor_utils.c                                   :+:    :+:            */
 /*                                                     +:+                    */
@@ -7,6 +8,15 @@
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
 /*   Updated: 2022/02/07 10:57:32 by rcappend      ########   odam.nl         */
+=======
+/*                                                        :::      ::::::::   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
+/*   Updated: 2022/02/07 10:15:25 by dvan-der         ###   ########.fr       */
+>>>>>>> executor
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +68,19 @@ t_utils	init_utils(char **env, int *last_pid)
 	return (utils);
 }
 
-int	arrange_output(t_cmd *cmd, int *last_pid)
+int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 {
 	int	output;
 	int	flags;
 
+<<<<<<< HEAD
 	
+=======
+	if (cmd->next)
+		output = write_pipe_end;
+	else
+		output = 1;
+>>>>>>> executor
 	while(cmd->output)
 	{
 		flags = O_CREAT | O_RDWR;
@@ -84,10 +101,11 @@ int	arrange_output(t_cmd *cmd, int *last_pid)
 	return (output);	
 }
 
-int	arrange_input(t_cmd *cmd, int *last_pid)
+int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 {
 	int	input;
 
+	input = fd;
 	while(cmd->input)
 	{
 		input = open(cmd->input->file_name, O_RDONLY);
