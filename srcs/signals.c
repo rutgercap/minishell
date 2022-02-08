@@ -1,17 +1,21 @@
 #include <minishell.h>
 
-// dont forget to free history after sigint
 void	sigint_handler(int signum)
 {
-	(void)signum;	// stops compiler errors
-	rl_replace_line("Minishell$ ", 0);
+	(void)signum;
+	if (g_interactive)
+		rl_replace_line("Minishell$ ", 0);
+	else
+		exit(130);
 }
 
 void	sigquit_handler(int signum)
 {
-	(void)signum; // stops compiler errors
-	printf("ctrl d\n");
-	mini_exit();
+	(void)signum;
+	if (g_interactive)
+		return ;
+	else
+		exit(131);
 }
 
 void	init_signals(void)

@@ -5,12 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 15:13:43 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 11:34:16 by dvan-der         ###   ########.fr       */
+/*   Created: 2022/02/01 11:15:15 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/08 11:38:48 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testing.h"
+<<<<<<< HEAD
+#include "tokens.h"
+
+void	lex_help_tester(char *line)
+{
+	t_token	*tokens;
+
+	tokens = tokenizer(line);
+	print_tokens(tokens);
+=======
 
 t_token		*tokens;
 t_token		*i;
@@ -234,4 +244,5 @@ int main(void)
 	RUN_TEST(trial_17);
 	RUN_TEST(trial_18);
 	return UNITY_END();
+>>>>>>> executor
 }

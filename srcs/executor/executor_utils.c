@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 14:52:18 by dvan-der         ###   ########.fr       */
+/*   Created: 2022/02/08 09:26:32 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/08 17:39:32 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_utils	init_utils(char **env, int *last_pid)
 	i = 0;
 	while ((env)[i])
 	{
-		if (ft_strnstr(env[i], "PATH=", 5))
+		if (ft_strncmp(env[i], "PATH=", 5))
 			break ;
 		i++;
 	}
@@ -61,6 +61,7 @@ t_utils	init_utils(char **env, int *last_pid)
 int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 {
 	int	output;
+	int	flags;
 
 	if (cmd->next)
 		output = write_pipe_end;
@@ -68,7 +69,12 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 		output = 1;
 	while(cmd->output)
 	{
-		output = open(cmd->output->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		flags = O_CREAT | O_RDWR;
+		if (cmd->output->type == RED_OPUT_A)
+			flags = flags | O_APPEND;
+		else
+			flags = flags | O_TRUNC;
+		output = open(cmd->output->file_name, flags, 0644);
 		if (output < 0 || output > 1024)
 		{
 			ft_putstr_fd(cmd->output->file_name, 2);
