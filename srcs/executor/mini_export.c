@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 17:39:29 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:54:12 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static char **edit_env_export(char **env, char *args, int edit_row, int size_old
 	return (new_env);
 }
 
-<<<<<<< HEAD
 static char	*make_needle(char *args, char c)
 {
 	int		i;
@@ -68,26 +67,21 @@ static char	*make_needle(char *args, char c)
 	return (needle);
 }
 
-static int	check_in_env_export(char *args, char **env)
-=======
-static int	find_var(char *arg, char **env)
->>>>>>> main
+static int	find_var(char *args, char **env)
 {
 	int		i;
 	int		len;
+	char	*needle;
 
-<<<<<<< HEAD
 	needle = make_needle(args, '=');
 	len = ft_strlen(needle);
-=======
 	len = 0;
-	while (arg[len] != '=')
+	while (args[len] != '=')
 		len++;
->>>>>>> main
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], arg, len) == 0)
+		if (ft_strncmp(env[i], args, len) == 0)
 		{
 			if (env[i][len] == '=')
 				return (i);
@@ -109,11 +103,7 @@ void	mini_export(char **args, char ***env, t_utils *utils)
 	i = 0;
 	while (args[i])
 	{
-<<<<<<< HEAD
-		edit_row = check_in_env_export(args[i], *env);
-=======
-		edit_row = find_var(arg[i], *env);
->>>>>>> main
+		edit_row = find_var(args[i], *env);
 		if (edit_row == -1)
 		{
 			i++;

@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:26:32 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 17:39:32 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 18:00:50 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 			ft_putstr_fd(cmd->output->file_name, 2);
 			perror("");
 			*last_pid = errno;
-			return (-1);
 		}
 		if (cmd->output->next)
 			close(output);

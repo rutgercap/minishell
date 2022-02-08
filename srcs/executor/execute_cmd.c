@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 15:31:11 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 18:21:26 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void	execute_cmd(t_cmd *cmd, t_utils *utils)
 	i = 0;
 	while (utils->path_env[i])
 	{
+		ft_putstr_fd(utils->path_env[i], 2);
+		ft_putchar_fd(' ', 2);
+		ft_putstr_fd(cmd->exec->cmd, 2);
+		ft_putchar_fd('\n', 2);
 		str = ft_strjoin(utils->path_env[i], cmd->exec->cmd);
 		ft_check_malloc(str, "execute_child");
 		if (access(str, F_OK && X_OK) == 0)
