@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 12:03:54 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:39:27 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	execute_cmd(t_cmd *cmd, t_utils *utils)
 	int		i;
 	char	*str;
 
+	// ft_putendl_fd("ik ben in execute_cmd", 2);
 	if (access(cmd->exec->command, F_OK && X_OK) == 0)
 		execute_cmd2(cmd, utils);
 	i = 0;
@@ -59,6 +60,8 @@ void	execute_cmd(t_cmd *cmd, t_utils *utils)
 				perror("");
 				utils->last_pid = errno;
 			}
+			// ft_putstr_fd("execve executed", 2);
+			// ft_putchar_fd('\n', 2);
 		}
 		free(str);
 		i++;

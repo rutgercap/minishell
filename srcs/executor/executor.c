@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-<<<<<<< HEAD
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 11:59:41 by dvan-der         ###   ########.fr       */
-=======
-/*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/07 12:59:11 by rcappend      ########   odam.nl         */
->>>>>>> 4ed01afa90d7ca2878b111af6eed881c8e0b4f63
+/*   Updated: 2022/02/08 11:30:12 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +43,26 @@ static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
 	{
 		if (dup2(input, STDIN_FILENO) < 0)
 			perror("");
+		// ft_putstr_fd("input duplicated: ", 2);
+		// ft_putnbr_fd(input, 2);
+		// ft_putchar_fd('\n', 2);
+		close(input);
 	}
 	output = arrange_output(cmd, end[1], &utils->last_pid);
+	// ft_putchar_fd('\n', 2);
+	// ft_putnbr_fd(output, 2);
+	// ft_putchar_fd('\n', 2);
 	if (output != -1)
 	{
 		if (dup2(output, STDOUT_FILENO) < 0)
 			perror("");
+		// ft_putstr_fd("output duplicated: ", 2);
+		// ft_putnbr_fd(output, 2);
+		// ft_putchar_fd('\n', 2);
+		// close(output);
 	}
 	close(end[1]);
+	// ft_putendl_fd("Lets go executor", 2);
 	execute_cmd(cmd, utils);
 }
 
@@ -73,6 +75,7 @@ static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
 		perror("");
 		exit(errno);
 	}
+	a_fork->child = fork();
 	if (a_fork->child < 0)
 	{
 		perror("");
@@ -80,7 +83,8 @@ static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
 	}
 	else if (a_fork->child == 0)
 		child_fork(cmd, utils, end, fd);
-	close(end[1]);
+	else if (a_fork->child > 0)
+		close(end[1]);
 	return (end[0]);
 }
 
@@ -115,13 +119,15 @@ void	executor(t_cmd *cmd, char **env, int *last_pid)
 	while (cmd)
 	{
 		a_fork = new_fork(a_fork);
+		// ft_putstr_fd("fd before handle_fork: ", 2);
+		// ft_putnbr_fd(fd, 2);
+		// ft_putchar_fd('\n', 2);
 		if (first_cmd == true)
 		{
 			utils = init_utils(env, last_pid);
 			head_fork_list = a_fork;
 			first_cmd = false;			
 		}
-		a_fork->child = fork();
 		fd = handle_fork(a_fork, cmd, &utils, fd);
 		cmd = cmd->next;
 	}
