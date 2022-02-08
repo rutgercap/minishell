@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <unity.h>
+# include <unity_fixture.h>
 
 <<<<<<< HEAD
 t_token *make_token(t_type *type, char *text, t_token *last);
