@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 10:28:02 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:52:18 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,10 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 {
 	int	output;
 
-	// ft_putstr_fd("end[0] in arrange_output: ", 2);
-	// ft_putnbr_fd(write_pipe_end, 2);
-	// ft_putchar_fd('\n', 2);
 	if (cmd->next)
 		output = write_pipe_end;
 	else
 		output = 1;
-	// ft_putstr_fd("output in arrange_output: ", 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
 	while(cmd->output)
 	{
 		output = open(cmd->output->file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -82,16 +76,10 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 			*last_pid = errno;
 			return (-1);
 		}
-		// ft_putstr_fd("loop: ", 2);
-		// ft_putnbr_fd(output, 2);
-		// ft_putchar_fd('\n', 2);
 		if (cmd->output->next)
 			close(output);
 		cmd->output = cmd->output->next;
 	}
-	// ft_putstr_fd("output out arrange_output: ", 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
 	return (output);	
 }
 
@@ -100,9 +88,6 @@ int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 	int	input;
 
 	input = fd;
-	// ft_putstr_fd("fd in arrange_input: ", 2);
-	// ft_putnbr_fd(fd, 2);
-	// ft_putchar_fd('\n', 2);
 	while(cmd->input)
 	{
 		if (input != -1)
@@ -115,15 +100,9 @@ int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 			*last_pid = errno;
 			return (-1);
 		}
-		// ft_putstr_fd("loop: ", 2);
-		// ft_putnbr_fd(input, 2);
-		// ft_putchar_fd('\n', 2);
 		if (cmd->input->next)
 			close(input);
 		cmd->input = cmd->input->next;
 	}
-	// ft_putstr_fd("input out arrange_input: ", 2);
-	// ft_putnbr_fd(input, 2);
-	// ft_putchar_fd('\n', 2);
 	return (input);
 }

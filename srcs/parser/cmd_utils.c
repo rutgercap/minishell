@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   cmd_utils.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 08:50:57 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/25 08:26:32 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/08 15:20:04 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	free_exec(t_exec *exec)
 	while (exec->len > 0)
 	{
 		exec->len--;
-		free(exec->arguments[exec->len]);
+		free(exec->args[exec->len]);
 	}
-	free(exec->arguments);
+	free(exec->args);
 	free(exec);
 }
 

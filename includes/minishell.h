@@ -26,6 +26,6 @@
 */
 void	init_signals(void);
 
-int		mini_exit(void);
+void	mini_exit(void);
 
 #endif

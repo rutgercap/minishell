@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 11:30:12 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:27:30 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,24 @@ static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
 	int	input;
 	int	output;
 	
-	close(end[0]);
+	close(end[READ]);
 	input = arrange_input(cmd, fd, &utils->last_pid);
 	if (input != -1)
 	{
 		if (dup2(input, STDIN_FILENO) < 0)
 			perror("");
-		// ft_putstr_fd("input duplicated: ", 2);
-		// ft_putnbr_fd(input, 2);
-		// ft_putchar_fd('\n', 2);
 		close(input);
 	}
-	output = arrange_output(cmd, end[1], &utils->last_pid);
-	// ft_putchar_fd('\n', 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
+	output = arrange_output(cmd, end[WRITE], &utils->last_pid);
 	if (output != -1)
 	{
 		if (dup2(output, STDOUT_FILENO) < 0)
 			perror("");
-		// ft_putstr_fd("output duplicated: ", 2);
-		// ft_putnbr_fd(output, 2);
-		// ft_putchar_fd('\n', 2);
-		// close(output);
 	}
-	close(end[1]);
-	// ft_putendl_fd("Lets go executor", 2);
+	close(end[WRITE]);
+	built_in(cmd, utils);
 	execute_cmd(cmd, utils);
+	return ;
 }
 
 static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
@@ -84,8 +75,8 @@ static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
 	else if (a_fork->child == 0)
 		child_fork(cmd, utils, end, fd);
 	else if (a_fork->child > 0)
-		close(end[1]);
-	return (end[0]);
+		close(end[WRITE]);
+	return (end[READ]);
 }
 
 static t_fork_list	*new_fork(t_fork_list *a_fork)
@@ -105,7 +96,7 @@ static t_fork_list	*new_fork(t_fork_list *a_fork)
 	return (a_fork);
 }
 
-void	executor(t_cmd *cmd, char **env, int *last_pid)
+char	**executor(t_cmd *cmd, char **env, int *last_pid)
 {
 	t_fork_list	*a_fork;
 	t_fork_list	*head_fork_list;
@@ -119,9 +110,6 @@ void	executor(t_cmd *cmd, char **env, int *last_pid)
 	while (cmd)
 	{
 		a_fork = new_fork(a_fork);
-		// ft_putstr_fd("fd before handle_fork: ", 2);
-		// ft_putnbr_fd(fd, 2);
-		// ft_putchar_fd('\n', 2);
 		if (first_cmd == true)
 		{
 			utils = init_utils(env, last_pid);
@@ -132,4 +120,5 @@ void	executor(t_cmd *cmd, char **env, int *last_pid)
 		cmd = cmd->next;
 	}
 	waitpid_fork(head_fork_list, utils, last_pid);
+	return (utils.env);
 }

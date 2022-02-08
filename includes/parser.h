@@ -21,8 +21,8 @@ typedef struct s_red {
 }	t_red;
 
 typedef struct s_exec {
-	char	*command;
-	char	**arguments;
+	char	*cmd;
+	char	**args;
 	int		len;
 }	t_exec;
 

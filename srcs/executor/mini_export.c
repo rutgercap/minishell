@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 15:31:04 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:23:06 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 	ft_strcpy(new_env[new_env_i], env[env_i], len);
 }
 
-static char **edit_env_export(char **env, char *arg, int edit_row, int size_old_env)
+static char **edit_env_export(char **env, char *args, int edit_row, int size_old_env)
 {
 	char	**new_env;
 	int		i;
@@ -33,7 +33,7 @@ static char **edit_env_export(char **env, char *arg, int edit_row, int size_old_
 	while (env[i])
 	{
 		if (i == edit_row)
-			copy_line_env(new_env, &arg, i, 0);
+			copy_line_env(new_env, &args, i, 0);
 		else
 			copy_line_env(new_env, env, i, i);
 		i++;
@@ -43,37 +43,37 @@ static char **edit_env_export(char **env, char *arg, int edit_row, int size_old_
 	return (new_env);
 }
 
-static char	*make_needle(char *arg, char c)
+static char	*make_needle(char *args, char c)
 {
 	int		i;
 	char	*needle;
 
 	i = 0;
-	while (arg[i] != c && arg[i] != '\0')
+	while (args[i] != c && args[i] != '\0')
 	{
-		if (arg[i] == '\0')
+		if (args[i] == '\0')
 			return (NULL);
 		i++;
 	}
 	needle = (char *)malloc((i + 1) * sizeof(char));
 	ft_check_malloc(needle, "check_in_env_export");
 	i = 0;
-	while (arg[i] != c)
+	while (args[i] != c)
 	{
-		needle[i] = arg[i];
+		needle[i] = args[i];
 		i++;
 	}
 	needle[i] = '\0';
 	return (needle);
 }
 
-static int	check_in_env_export(char *arg, char **env)
+static int	check_in_env_export(char *args, char **env)
 {
 	int		i;
 	int		len;
 	char	*needle;
 
-	needle = make_needle(arg, '=');
+	needle = make_needle(args, '=');
 	len = ft_strlen(needle);
 	i = 0;
 	while (env[i])
@@ -88,7 +88,7 @@ static int	check_in_env_export(char *arg, char **env)
 	return (-1);
 }
 
-int	mini_export(char **arg, char ***env)
+void	mini_export(char **args, char ***env, t_utils *utils)
 {
 	int		i;
 	int		edit_row;
@@ -98,16 +98,17 @@ int	mini_export(char **arg, char ***env)
 	while ((*env)[size_old_env])
 		size_old_env++;
 	i = 0;
-	while (arg[i])
+	while (args[i])
 	{
-		edit_row = check_in_env_export(arg[i], *env);
+		edit_row = check_in_env_export(args[i], *env);
 		if (edit_row == -1)
 		{
 			i++;
 			continue ;
 		}
-		*env = edit_env_export(*env, arg[i], edit_row, size_old_env);
+		*env = edit_env_export(*env, args[i], edit_row, size_old_env);
 		i++;
 	}
-	return (1);
+	utils->last_pid = 0;
+	exit(0);
 }

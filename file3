@@ -1,7 +1,0 @@
-output duplicated: 21
-Lets go executor
-ik ben in execute_cmd
-STDIN & STDOUT before execve: 0, 1
-
-Before execve: 01
-hallo

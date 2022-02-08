@@ -6,34 +6,43 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 15:40:43 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:29:56 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	mini_exit(void)
+void	mini_exit(void)
 {
-	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(0);
 }
 
-static int	mini_cd(char **arg)
+static void	mini_cd(char **args, t_utils *utils)
 {
-	chdir(arg[0]);
-	return (1);
+	if (chdir(args[1]) == -1)
+		perror("");
+	utils->last_pid = errno;
+	exit(errno);
 }
 
-static int mini_pwd(void)
+static void mini_pwd(t_utils *utils)
 {
-    char    str[100];
+    char    *str;
 
-    getcwd(str, 100);
-    ft_putendl_fd(str, STDOUT_FILENO);
-    return (1);
+    str = getcwd(NULL, 0);
+	if (!str)
+	{
+		perror("");
+		utils->last_pid = errno;
+		exit(errno);
+	}
+	else
+    	ft_putendl_fd(str, STDOUT_FILENO);
+	utils->last_pid = 0;
+	exit(0);
 }
 
-static int	mini_env(char **env)
+static void	mini_env(char **env, t_utils *utils)
 {
     int i;
 
@@ -43,24 +52,25 @@ static int	mini_env(char **env)
         ft_putendl_fd(env[i], STDOUT_FILENO);
         i++;
     }
-    return (1);
+	utils->last_pid = 0;
+	exit(0);
 }
 
-int	built_in(char *word, char **arg, char **env)
+void	built_in(t_cmd *cmd, t_utils *utils)
 {
-    if (ft_strncmp(word, "echo", 4) == 0)
-        return (mini_echo(arg));
-    else if (ft_strncmp(word, "cd", 2) == 0)
-        return (mini_cd(arg));
-    else if (ft_strncmp(word, "pwd", 3) == 0)
-        return (mini_pwd());
-    else if (ft_strncmp(word, "export", 6) == 0)
-        return (mini_export(arg, &env));
-    else if (ft_strncmp(word, "unset", 5) == 0)
-		return (mini_unset(arg, &env));
-    else if (ft_strncmp(word, "env", 3) == 0)
-        return (mini_env(env));
-    else if (ft_strncmp(word, "exit", 4) == 0)
+    if (ft_strncmp(cmd->exec->cmd, "echo", 4) == 0)
+        mini_echo(cmd->exec->args, utils);
+    else if (ft_strncmp(cmd->exec->cmd, "cd", 2) == 0)
+        mini_cd(cmd->exec->args, utils);
+    else if (ft_strncmp(cmd->exec->cmd, "pwd", 3) == 0)
+        mini_pwd(utils);
+    else if (ft_strncmp(cmd->exec->cmd, "export", 6) == 0)
+        mini_export(cmd->exec->args, &utils->env, utils);
+    else if (ft_strncmp(cmd->exec->cmd, "unset", 5) == 0)
+		mini_unset(cmd->exec->args, &utils->env, utils);
+    else if (ft_strncmp(cmd->exec->cmd, "env", 3) == 0) // what if args?
+        mini_env(utils->env, utils);
+    else if (ft_strncmp(cmd->exec->cmd, "exit", 4) == 0)
 		mini_exit();
-	return (0);
+	return ;
 }
