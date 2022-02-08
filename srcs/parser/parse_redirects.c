@@ -3,115 +3,87 @@
 /*                                                        ::::::::            */
 /*   parse_redirects.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:19:21 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 11:02:50 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/07 13:30:49 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-static int	parse_output_red(char **delim, t_red_type *type, t_token *token)
+static t_token	*delete_red_tokens(t_token **head, t_token *token)
 {
-	int		steps;
+	t_token	*next;
+	t_token	*i;
 
-	token = token->next;
-	steps = 1;
-	if (token->type == OPUT_BRACK)
-	{
-		*type = RED_OPUT_A;
-		token = token->next;
-		steps++;
-	}
-	else if (token->type == IPUT_BRACK)
-		return (SYNTAX_ERROR);
-	else
-		*type = RED_OPUT;
-	if (token->type != WORD || token->type != STRING || 
-		token->type != PURE_STRING)
-		return (SYNTAX_ERROR);
-	*delim = token->text;
-	token->text = NULL;
-	return (steps);
+	next = token->next->next;
+	if (token->prev == NULL)
+		*head = next;
+	i = token->next;
+	delete_token(&token);
+	delete_token(&i);
+	return (next);
 }
 
-static int	parse_input_red(char **delim, t_red_type *type, t_token *token)
+static int	add_redirect(t_red **dest, t_token *token)
 {
-	int		steps;
+	t_red	*new;
 
+	new = new_redirect(token->type - 2);
+	if (!new)
+		ft_check_malloc(new, "add_redirect");
 	token = token->next;
-	steps = 1;
-	if (token->type == IPUT_BRACK)
+	if (token->type != WORD)
 	{
-		*type = HERE_DOC;
-		token = token->next;
-		steps++;
+		syntax_error(token->type);
+		return (EXIT_FAILURE);
 	}
-	else if (token->type == OPUT_BRACK)
-		return (SYNTAX_ERROR);
-	else
-		*type = RED_IPUT;
-	if (token->type != WORD && token->type != STRING && 
-		token->type != PURE_STRING)
-		return (SYNTAX_ERROR);
-	*delim = token->text;
-	token->text = NULL;
-	return (steps);
+	new->file_name = ft_strdup(token->text);
+	if (!new->file_name)
+		ft_check_malloc(new->file_name, "add_redirect");
+	*dest = new;
+	return (EXIT_SUCCESS);
 }
 
-int	add_redirect(t_red **dest, t_token *token, t_type type)
+static int	append_redirect(t_cmd *cmd, t_token *token)
 {
 	t_red	*i;
 
-	i = *dest;	
-	if (i)
-	{
-		while (i->next)
-			i = i->next;
-		i->next = new_redirect(UNDEFINED);
+	if ((token->type == INPUT_S || token->type == INPUT_D) &&
+		!cmd->input)
+		return (add_redirect(&cmd->input, token));
+	else if (!cmd->output)
+		return (add_redirect(&cmd->output, token));
+	if (token->type == INPUT_S || token->type == INPUT_D)
+		i = cmd->input;
+	else
+		i = cmd->output;
+	while (i->next)
 		i = i->next;
-	}
-	else
-	{
-		*dest = new_redirect(UNDEFINED);
-		i = *dest;
-	}
-	if (type == IPUT_BRACK)
-		return (parse_input_red(&i->delim, &i->type, token));
-	else
-		return (parse_output_red(&i->delim, &i->type, token));
+	return (add_redirect(&i->next, token));
 }
 
-t_token	*step_tokens(t_token *tokens, int steps)
+int	parse_redirects(t_cmd *cmds, t_token **tokens)
 {
-	while (steps > 0)
-	{
-		tokens = delete_token(&tokens);
-		steps--;
-	}
-	return (tokens);
-}
-
-int	parse_redirects(t_cmd *cmds, t_token *tokens)
-{
-	int		steps;
+	t_token	*i;
 	
-	while (tokens->type != TOKEN_EOF)
+	i = *tokens;
+	while (i->type != TOKEN_EOF)
 	{
-		steps = 0;
-		if (tokens->type == PIPE)
+		if (i->type == PIPE)
+		{
 			cmds = cmds->next;
-		else if (tokens->type == IPUT_BRACK)
-			steps = add_redirect(&cmds->input, tokens, tokens->type);
-		else if (tokens->type == OPUT_BRACK)
-			steps = add_redirect(&cmds->output, tokens, tokens->type);
-		if (steps < 0)
-			return (syntax_error(tokens));
-		else if (steps)
-			step_tokens(tokens, steps);
+			i = i->next;
+		}
+		else if (i->type >= INPUT_S && i->type <= OUTPUT_D)
+		{
+			if (append_redirect(cmds, i))
+				return (EXIT_FAILURE);
+			i = delete_red_tokens(tokens, i);
+		}
 		else
-			tokens = tokens->next;
+			i = i->next;
 	}
 	return (EXIT_SUCCESS);
 }

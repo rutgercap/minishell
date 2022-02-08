@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/01 08:51:14 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/02 13:04:11 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ static char	*get_value(char *env)
 	int		i;
 
 	i = 0;
+	if (!env)
+		return (NULL);
 	while (env[i] != '=')
 		i++;
-	value = ft_strdup(env + i);
+	value = ft_strdup(env + i + 1);
 	if (!value)
 	{
 		errno = ENOMEM;
@@ -77,7 +79,7 @@ static char	*get_rest(t_token *token, long i)
 	{
 		while (!ft_strchr("\'\"$ ", token->text[i]))
 			i++;
-		rest = ft_substr(token->text, i + 1, token->len - i + 1);
+		rest = ft_substr(token->text, i, token->len - i);
 	}
 	if (!rest)
 	{
@@ -95,19 +97,21 @@ static void	combine(t_token *token, char *start, char *var, char *rest)
 	total_len = ft_strlen(start);
 	total_len += ft_strlen(var);
 	total_len += ft_strlen(rest);
-	token->text = ft_calloc(total_len + 1, 1);
+	total_len++;
+	token->text = ft_calloc(total_len, 1);
 	if (!token->text)
 	{
 		errno = ENOMEM;
 		exit_error(errno, "combine", NULL);
 	}
 	ft_strlcpy(token->text, start, total_len);
-	ft_strlcat(token->text, var, total_len);
+	if (var)
+		ft_strlcat(token->text, var, total_len);
 	ft_strlcat(token->text, rest, total_len);
 	free(start);
 	free(var);
 	free(rest);
-	token->len = total_len;
+	token->len = total_len - 1;
 }
 
 int	expander(t_token *token, char **env, int last_pid, long i)

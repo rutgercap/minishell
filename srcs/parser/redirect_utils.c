@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   redirect_utils.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 11:53:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/01/26 09:57:50 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/08 09:33:19 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_redirects(t_red *red)
 	while (red)
 	{
 		next = red->next;
-		free(red->delim);
+		free(red->file_name);
 		free(red);
 		red = next;
 	}

@@ -10,10 +10,10 @@
 typedef enum e_type {
 	WORD,
 	PIPE,
-	OUTPUT_S,
-	OUTPUT_D,
 	INPUT_S,
 	INPUT_D,
+	OUTPUT_S,
+	OUTPUT_D,
 	TOKEN_EOF,
 }	t_type;
 
@@ -38,7 +38,7 @@ t_token	*tokenizer(char *raw_line);
 t_token	*new_token(t_token *last, t_type type);
 void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
-t_token	*delete_token(t_token **ref);
+void	delete_token(t_token **ref);
 void	free_tokens(t_token **ref);
 int		in_string(bool s_quote, bool d_quote);
 // int	check_char(char *line, int i, t_token *tokens, t_flag *flag);
