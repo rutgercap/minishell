@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/09 14:00:46 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/09 17:04:49 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,7 @@
 
 static void	error_handling(char *cmd, t_mini_vars *utils)
 {
-	if (ft_strchr(cmd, '/'))
-	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd("\n", 2);
-		utils->last_pid = errno; // 2
-	}
-	else
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": command not found\n", 2);
-		utils->last_pid = errno; // 127
-	}
+
 	return ;
 }
 
@@ -59,8 +47,6 @@ void	execute_cmd(t_cmd *cmd, t_mini_vars *utils)
 				perror("");
 				utils->last_pid = errno;
 			}
-			// ft_putstr_fd("execve executed", 2);
-			// ft_putchar_fd('\n', 2);
 		}
 		free(str);
 		i++;

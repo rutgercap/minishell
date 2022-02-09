@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/09 13:16:58 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/09 17:17:36 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static char	*get_line(void)
 	}
 }
 
-static void	process_cmd(char *raw_line, t_mini_vars vars)
+static void	process_cmd(char *raw_line, t_mini_vars *vars)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	cmd = parser(tokens, vars.env, vars.last_pid);
+	cmd = parser(tokens, vars->env, vars->last_pid);
 	if (cmd)
 		executor(cmd, vars);
 	free_cmd_list(&cmd);
@@ -56,11 +56,10 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	vars = init_minishell(env);
 	g_interactive = 1;
-	init_signals();
 	while (true)
 	{
 		line = get_line();
-		process_cmd(line, vars);	
+		process_cmd(line, &vars);	
 		free(line);
 	}
 }

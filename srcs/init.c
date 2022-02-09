@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-static char	*init_env(char **env)
+static char	**init_env(char **env)
 {
 	char	**mini_env;
 	int		len;
@@ -12,9 +12,9 @@ static char	*init_env(char **env)
 	ft_check_malloc(mini_env, "init_env");
 	while (len)
 	{
+		len--;
 		mini_env[len] = ft_strdup(env[len]);
 		ft_check_malloc(mini_env[len], "init_env");
-		len--;
 	}
 	return (mini_env);
 }
@@ -41,8 +41,8 @@ t_mini_vars	init_minishell(char **env)
 {
 	t_mini_vars	vars;
 	
-	*vars.last_pid = 0;
-	init_env(env);
+	vars.last_pid = 0;
+	vars.env = init_env(env);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler); // broken again ???
 	return (vars);

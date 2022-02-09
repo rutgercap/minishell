@@ -27,6 +27,7 @@ export SRCS	:=	init.c \
 				redirect_utils.c \
 				cmd_utils.c \
 				ft_check_malloc.c \
+				ft_free_char_array.c \
 				ft_strlcat.c \
 				ft_strlcpy.c \
 				ft_strlen.c \
@@ -66,7 +67,7 @@ CC			:=	gcc
 ifdef debug
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 else
-FLAGS		:=	-Wall -Wextra -Werror -g
+FLAGS		:=	-Wall -Wextra -g
 endif
 LIBS		:=	-lreadline -lhistory
 
