@@ -33,8 +33,6 @@ int	g_interactive;
 /*
 	functions
 */
-void	init_signals(void);
-
-int		mini_exit(void);
+t_mini_vars	init_minishell(char **env);
 
 #endif

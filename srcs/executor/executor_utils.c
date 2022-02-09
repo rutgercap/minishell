@@ -1,47 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:26:32 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 11:39:27 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   executor_utils.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:26:32 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/09 13:56:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static char	**make_path_env(char *str)
+char	**init_paths(char **env)
 {
-	char	**arr;
-	char	*new_str;
-	int		len;
+	char	**path;
+	char	*temp;
 	int		i;
 
-	len = ft_strlen(str);
-	new_str = ft_substr(str, 5, len - 5);
-	ft_check_malloc(new_str, "make_path_env");
-	arr = ft_split(new_str, ':');
-	free(new_str);
-	ft_check_malloc(*(arr), "make_path_env");
 	i = 0;
-	while (arr[i])
+	while (ft_strncmp(env[i], "PATH=", 5))
+		i++;
+	path = ft_split(env[i], ':');
+	ft_check_malloc(*path, "make_path_env");
+	i = 0;
+	while (path[i])
 	{
-		new_str = ft_strjoin(arr[i], "/");
-		free(arr[i]);
-		arr[i] = new_str;
-		ft_check_malloc(arr[i], "make_path_env");
+		temp = ft_strjoin(path[i], "/");
+		ft_check_malloc(temp, "init_path");
+		free(path[i]);
+		path[i] = temp;
 		i++;
 	}
-	return (arr);
+	return (path);
 }
 
-t_utils	init_utils(char **env, int *last_pid)
+t_mini_vars	init_utils(char **env, int *last_pid)
 {
 	int		i;
 	char	**path_env;
-	t_utils	utils;
+	t_mini_vars	utils;
 
 	i = 0;
 	while ((env)[i])
@@ -50,12 +48,28 @@ t_utils	init_utils(char **env, int *last_pid)
 			break ;
 		i++;
 	}
-	path_env = make_path_env(env[i]);
+	path_env = init_paths(env[i]);
 	ft_check_malloc(path_env, "make_path");
-	utils.path_env = path_env;
+	utils.paths = path_env;
 	utils.last_pid = *last_pid;
 	utils.env = env;
 	return (utils);
+}
+
+static t_fork	*new_fork(t_fork *a_fork)
+{
+	t_fork	*new_fork;
+	
+	new_fork = ft_calloc(1, sizeof(t_fork));
+	ft_check_malloc(new_fork, "new_fork");
+	if (!a_fork)
+		a_fork = new_fork;
+	else
+	{
+		a_fork->next = new_fork;
+		a_fork = a_fork->next;
+	}
+	return (a_fork);
 }
 
 int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
@@ -63,16 +77,10 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 	int	output;
 	int	flags;
 
-	// ft_putstr_fd("end[0] in arrange_output: ", 2);
-	// ft_putnbr_fd(write_pipe_end, 2);
-	// ft_putchar_fd('\n', 2);
 	if (cmd->next)
 		output = write_pipe_end;
 	else
 		output = 1;
-	// ft_putstr_fd("output in arrange_output: ", 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
 	while(cmd->output)
 	{
 		flags = O_CREAT | O_RDWR;
@@ -88,16 +96,10 @@ int	arrange_output(t_cmd *cmd, int write_pipe_end, int *last_pid)
 			*last_pid = errno;
 			return (-1);
 		}
-		// ft_putstr_fd("loop: ", 2);
-		// ft_putnbr_fd(output, 2);
-		// ft_putchar_fd('\n', 2);
 		if (cmd->output->next)
 			close(output);
 		cmd->output = cmd->output->next;
 	}
-	// ft_putstr_fd("output out arrange_output: ", 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
 	return (output);	
 }
 
@@ -106,9 +108,6 @@ int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 	int	input;
 
 	input = fd;
-	// ft_putstr_fd("fd in arrange_input: ", 2);
-	// ft_putnbr_fd(fd, 2);
-	// ft_putchar_fd('\n', 2);
 	while(cmd->input)
 	{
 		if (input != -1)
@@ -121,15 +120,9 @@ int	arrange_input(t_cmd *cmd, int fd, int *last_pid)
 			*last_pid = errno;
 			return (-1);
 		}
-		// ft_putstr_fd("loop: ", 2);
-		// ft_putnbr_fd(input, 2);
-		// ft_putchar_fd('\n', 2);
 		if (cmd->input->next)
 			close(input);
 		cmd->input = cmd->input->next;
 	}
-	// ft_putstr_fd("input out arrange_input: ", 2);
-	// ft_putnbr_fd(input, 2);
-	// ft_putchar_fd('\n', 2);
 	return (input);
 }

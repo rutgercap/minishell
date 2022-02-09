@@ -1,20 +1,16 @@
-<<<<<<< HEAD:srcs/builtins/mini_unset.c
-#include <builtin.h>
-=======
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_unset.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 15:35:48 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   mini_unset.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/09 12:50:14 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
->>>>>>> executor:srcs/executor/mini_unset.c
 
 static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 {

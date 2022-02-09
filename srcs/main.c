@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/08 12:19:10 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/09 13:16:58 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,34 @@ static char	*get_line(void)
 	}
 }
 
-static void	process_cmd(char *raw_line, char **env, int *last_pid)
+static void	process_cmd(char *raw_line, t_mini_vars vars)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	cmd = parser(tokens, env, *last_pid);
-	executor(cmd, env, last_pid);
+	cmd = parser(tokens, vars.env, vars.last_pid);
+	if (cmd)
+		executor(cmd, vars);
 	free_cmd_list(&cmd);
 	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
 }
 
-/*
-	Check minishell.h for info on global variable.
-*/
 int main(int argc, char **argv, char **env)
 {
-	int		last_pid;
-	char	*line;
+	t_mini_vars	vars;
+	char		*line;
 	
 	(void)argc;
 	(void)argv;
-	last_pid = 0;
+	vars = init_minishell(env);
 	g_interactive = 1;
 	init_signals();
 	while (true)
 	{
 		line = get_line();
-		process_cmd(line, env, &last_pid);	
+		process_cmd(line, vars);	
 		free(line);
 	}
 }

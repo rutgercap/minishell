@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 11:39:36 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   executor.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/09 13:55:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	waitpid_fork(t_fork_list *forks, t_utils utils, int *last_pid)
+static void	waitpid_fork(t_fork *forks, t_mini_vars vars)
 {
 	int			status;
-	t_fork_list	*tmp;
+	t_fork	*tmp;
 
-	*last_pid = utils.last_pid;
-	ft_free_char_array(utils.path_env);
 	while (forks->next)
 	{
 		waitpid(forks->child, &status, 0);
@@ -28,11 +26,10 @@ static void	waitpid_fork(t_fork_list *forks, t_utils utils, int *last_pid)
 	}
 	waitpid(forks->child, &status, 0);
 	if (WIFEXITED(status))
-		*last_pid = WEXITSTATUS(status);
-	return ;
+		*vars.last_pid = WEXITSTATUS(status);
 }
 
-static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
+static void	child_fork(t_cmd *cmd, t_mini_vars *utils, int *end, int fd)
 {
 	int	input;
 	int	output;
@@ -43,30 +40,19 @@ static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
 	{
 		if (dup2(input, STDIN_FILENO) < 0)
 			perror("");
-		// ft_putstr_fd("input duplicated: ", 2);
-		// ft_putnbr_fd(input, 2);
-		// ft_putchar_fd('\n', 2);
 		close(input);
 	}
 	output = arrange_output(cmd, end[1], &utils->last_pid);
-	// ft_putchar_fd('\n', 2);
-	// ft_putnbr_fd(output, 2);
-	// ft_putchar_fd('\n', 2);
 	if (output != -1)
 	{
 		if (dup2(output, STDOUT_FILENO) < 0)
 			perror("");
-		// ft_putstr_fd("output duplicated: ", 2);
-		// ft_putnbr_fd(output, 2);
-		// ft_putchar_fd('\n', 2);
-		// close(output);
 	}
 	close(end[1]);
-	// ft_putendl_fd("Lets go executor", 2);
 	execute_cmd(cmd, utils);
 }
 
-static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
+static int	handle_fork(t_fork *a_fork, t_cmd *cmd, t_mini_vars *utils, int fd)
 {
 	int		end[2];
 
@@ -88,30 +74,55 @@ static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
 	return (end[0]);
 }
 
-static t_fork_list	*new_fork(t_fork_list *a_fork)
+t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars vars)
 {
-	t_fork_list	*new_fork;
-	
-	new_fork = (t_fork_list *)malloc(sizeof(t_fork_list));
-	ft_check_malloc(new_fork, "new_fork");
-	new_fork->next = NULL;
-	if (!a_fork)
-		a_fork = new_fork;
-	else
+	t_fork	*forks;
+
+	forks = new_fork(NULL);
+	while (cmd)
 	{
-		a_fork->next = new_fork;
-		a_fork = a_fork->next;
+		
+		if (cmd->next)
+		{
+			forks->next = new_fork(NULL);
+			forks = forks->next;
+		}
+		cmd = cmd->next;
 	}
-	return (a_fork);
+	return (forks);
 }
+
+void	executor(t_cmd *cmd, t_mini_vars vars)
+{
+	t_fork	*forks;
+	
+	if (vars.paths)
+		vars.paths = ft_free_char_array(vars.paths);
+	vars.paths = init_paths(vars.env);
+	forks = want_sum_furk(cmd, vars);
+	waitpid_fork(forks, vars);
+	ft_free_char_array(vars.paths);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 void	executor(t_cmd *cmd, char **env, int *last_pid)
 {
-	t_fork_list	*a_fork;
-	t_fork_list	*head_fork_list;
+	t_fork	*a_fork;
+	t_fork	*head_fork_list;
 	int			fd;
 	bool		first_cmd;
-	t_utils		utils;
+	t_mini_vars		utils;
 	
 	a_fork = NULL;
 	first_cmd = true;
@@ -119,9 +130,6 @@ void	executor(t_cmd *cmd, char **env, int *last_pid)
 	while (cmd)
 	{
 		a_fork = new_fork(a_fork);
-		// ft_putstr_fd("fd before handle_fork: ", 2);
-		// ft_putnbr_fd(fd, 2);
-		// ft_putchar_fd('\n', 2);
 		if (first_cmd == true)
 		{
 			utils = init_utils(env, last_pid);

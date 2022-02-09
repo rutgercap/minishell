@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/07 15:40:43 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_in.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/09 14:02:05 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	mini_exit(void)
 
 static int	mini_cd(char **arg)
 {
-	chdir(arg[0]);
-	return (1);
+	return chdir(arg[0]);
 }
 
 static int mini_pwd(void)
 {
-    char    str[100];
+    char    *pwd;
 
-    getcwd(str, 100);
-    ft_putendl_fd(str, STDOUT_FILENO);
-    return (1);
+    pwd = getcwd(NULL, 0);
+    ft_putendl_fd(pwd, STDOUT_FILENO);
+    free(pwd);
+    return (0);
 }
 
 static int	mini_env(char **env)
@@ -43,7 +43,7 @@ static int	mini_env(char **env)
         ft_putendl_fd(env[i], STDOUT_FILENO);
         i++;
     }
-    return (1);
+    return (0);
 }
 
 int	built_in(char *word, char **arg, char **env)

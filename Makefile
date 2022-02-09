@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
-export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -13,7 +13,7 @@ VPATH 		:=	$(subst $(space),:,$(shell find $(SRCS_DIR) -type d))
 
 # Srcs
 MAIN		:=	main.c
-export SRCS	:=	signals.c \
+export SRCS	:=	init.c \
 				exit_error.c \
 				tokenizer.c \
 				process_char.c \
@@ -47,7 +47,6 @@ export SRCS	:=	signals.c \
 				ft_split.c \
 				ft_abs.c \
 				ft_calloc.c \
-				ft_free_char_array.c \
 				ft_strnstr.c \
 				executor.c \
 				execute_cmd.c \
