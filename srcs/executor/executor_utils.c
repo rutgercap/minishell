@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:26:32 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 18:00:50 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/09 08:35:59 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_utils	init_utils(char **env, int *last_pid)
 	i = 0;
 	while ((env)[i])
 	{
-		if (ft_strncmp(env[i], "PATH=", 5))
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			break ;
 		i++;
 	}

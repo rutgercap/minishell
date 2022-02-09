@@ -60,11 +60,6 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	last_pid = 0;
 	new_env = init_env(env);
-	// while (new_env[last_pid])
-	// {
-	// 	printf("%s\n", new_env[last_pid]);
-	// 	last_pid++;
-	// }
 	init_signals();
 	while (true)
 	{
