@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/10 09:52:20 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/10 09:55:01 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input)
 	}
 	else
 		input_redirects(cmd->input);
-	if (!cmd->output && cmd->next)
+	if (!cmd->output && cmd->next)		// dit werkt nog niet. Als je tot volgende comment weghaalt, werkt ie wel.
 	{
 		ft_putstr_fd("input", 1);
 		if (dup2(end[WRITE], STDOUT_FILENO) < 0)
 			exit_error(errno, "child_process", NULL);	
 	}
 	else
-		output_redirects(cmd->output);
+		output_redirects(cmd->output);	// tot hier
 	execute_cmd(cmd->exec, vars);
 }
