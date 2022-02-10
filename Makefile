@@ -26,6 +26,15 @@ export SRCS	:=	init.c \
 				parse_words.c \
 				redirect_utils.c \
 				cmd_utils.c \
+				executor.c \
+				execute_cmd.c \
+				ft_putnbr_fd.c \
+				built_in.c \
+				child_process.c \
+				mini_unset.c \
+				mini_echo.c \
+				mini_export.c \
+				free_old_env.c \
 				ft_check_malloc.c \
 				ft_free_char_array.c \
 				ft_strlcat.c \
@@ -49,15 +58,7 @@ export SRCS	:=	init.c \
 				ft_abs.c \
 				ft_calloc.c \
 				ft_strnstr.c \
-				executor.c \
-				execute_cmd.c \
-				executor_utils.c \
-				ft_putnbr_fd.c \
-				built_in.c \
-				mini_unset.c \
-				mini_echo.c \
-				mini_export.c \
-				free_old_env.c
+
 	
 MINI_SRCS	:=	$(SRCS) $(MAIN)
 OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))

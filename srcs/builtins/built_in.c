@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/09 14:02:05 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/10 09:07:01 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ static int	mini_env(char **env)
     return (0);
 }
 
-int	built_in(char *word, char **arg, char **env)
+int	built_in(char *cmd, char **args, char **env)
 {
-    if (ft_strncmp(word, "echo", 4) == 0)
-        return (mini_echo(arg));
-    else if (ft_strncmp(word, "cd", 2) == 0)
-        return (mini_cd(arg));
-    else if (ft_strncmp(word, "pwd", 3) == 0)
+    if (ft_strncmp(cmd, "echo", 4) == 0)
+        return (mini_echo(args));
+    else if (ft_strncmp(cmd, "cd", 2) == 0)
+        return (mini_cd(args));
+    else if (ft_strncmp(cmd, "pwd", 3) == 0)
         return (mini_pwd());
-    else if (ft_strncmp(word, "export", 6) == 0)
-        return (mini_export(arg, &env));
-    else if (ft_strncmp(word, "unset", 5) == 0)
-		return (mini_unset(arg, &env));
-    else if (ft_strncmp(word, "env", 3) == 0)
+    else if (ft_strncmp(cmd, "export", 6) == 0)
+        return (mini_export(args, &env));
+    else if (ft_strncmp(cmd, "unset", 5) == 0)
+		return (mini_unset(args, &env));
+    else if (ft_strncmp(cmd, "env", 3) == 0)
         return (mini_env(env));
-    else if (ft_strncmp(word, "exit", 4) == 0)
+    else if (ft_strncmp(cmd, "exit", 4) == 0)
 		mini_exit();
 	return (0);
 }

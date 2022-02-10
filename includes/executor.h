@@ -30,12 +30,10 @@ typedef struct	s_fork
 }	t_fork;
 
 void		executor(t_cmd *cmd, t_mini_vars *vars);
-t_fork		*new_fork(void);
-char		**init_paths(char **env);
-int			arrange_input(t_red *input, int pipe_fd);
-int			arrange_output(t_red *output, int pipe_fd);
-void		execute_cmd(t_cmd *cmd, t_mini_vars *utils);
-int			built_in(char *word, char **arg, char **env);
+void		child_process(t_cmd *cmd, t_mini_vars *vars, \
+				int end[2], int input);
+void		execute_cmd(t_exec *exec, t_mini_vars *vars);
+int			built_in(char *cmd, char **args, char **env);
 int			mini_unset(char **arg, char ***env);
 int			mini_echo(char **arg);
 int			mini_export(char **arg, char ***env);
