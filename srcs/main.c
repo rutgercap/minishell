@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/09 17:17:36 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/10 09:55:58 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 	
 	tokens = tokenizer(raw_line);
 	cmd = parser(tokens, vars->env, vars->last_pid);
-	if (cmd)
-		executor(cmd, vars);
+	if (!cmd)
+		return ;
+	executor(cmd, vars);
 	free_cmd_list(&cmd);
 	if (!ft_strncmp(raw_line, "exit", 4))
 		mini_exit();
