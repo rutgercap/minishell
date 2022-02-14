@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/07 13:54:12 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 12:12:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ static void trial_7()
     init_test(" echo | echo ");
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
 }
@@ -198,8 +199,10 @@ static void trial_13()
     init_test("echo | echo | echo");
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
 }
@@ -285,6 +288,7 @@ static void trial_22()
 	assert_output(RED_OPUT_A, "file2");
 	next_cmd();
 	assert_exec("echo+echo");
+	assert_input(R_PIPE, NULL);
 	assert_input(RED_IPUT, "file3");
 	assert_output(RED_OPUT_A, "file4");
 	next_cmd();
@@ -357,6 +361,7 @@ static void	trial_32()
 	assert_input(RED_IPUT, "file2");
 	assert_output(RED_OPUT, "file1");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo+shiet");
 	next_cmd();
 }

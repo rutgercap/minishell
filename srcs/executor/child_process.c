@@ -6,32 +6,39 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/10 09:55:01 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 15:01:12 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <executor.h>
 
-static void	input_redirects(t_red *input)
+static void	file_error(const char *filename)
+{
+	perror("minishell");
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(filename, 2);
+	exit (errno);
+}
+
+static void	redirect_input(t_red *input)
 {
 	int	fd;
-
+	
 	while (input)
 	{
 		if (input->type == RED_IPUT)
 			fd = open(input->file_name, O_RDONLY);
 		else
-			ft_putstr_fd("heredoc not implemented", STDERR_FILENO);
+			ft_putendl_fd("heredoc not built", 2);
 		if (fd < 0)
-			exit_error(errno, "minishell", NULL);
+			file_error(input->file_name);
 		input = input->next;
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 		exit_error(errno, "output_redirects", NULL);
-	close(fd);
 }
 
-static void	output_redirects(t_red *output)
+static void	redirect_output(t_red *output)
 {
 	int	flags;
 	int	fd;
@@ -50,25 +57,26 @@ static void	output_redirects(t_red *output)
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 		exit_error(errno, "output_redirects", NULL);
-	close(fd);
 }
 
-void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input)
+void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 {
-	if (!cmd->input)
+	if (cmd->input && cmd->input->type == R_PIPE)
 	{
-		if (dup2(end[READ], STDIN_FILENO) < 0)
+		if (dup2(input_fd, STDIN_FILENO) < 0)
+			exit_error(errno, "child_process", NULL);
+		cmd->input = cmd->input->next;
+	}
+	if (cmd->next)
+	{
+		if (dup2(end[WRITE], STDOUT_FILENO) < 0)
 			exit_error(errno, "child_process", NULL);
 	}
 	else
-		input_redirects(cmd->input);
-	if (!cmd->output && cmd->next)		// dit werkt nog niet. Als je tot volgende comment weghaalt, werkt ie wel.
-	{
-		ft_putstr_fd("input", 1);
-		if (dup2(end[WRITE], STDOUT_FILENO) < 0)
-			exit_error(errno, "child_process", NULL);	
-	}
-	else
-		output_redirects(cmd->output);	// tot hier
+		close(end[WRITE]);
+	if (cmd->output)
+		close(end[WRITE]);
+	redirect_input(cmd->input);
+	redirect_output(cmd->output);
 	execute_cmd(cmd->exec, vars);
 }

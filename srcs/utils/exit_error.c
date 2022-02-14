@@ -39,7 +39,7 @@ void	exit_error(const int code, const char *func, const char *msg)
 {
 	if (code == errno)
 		perror(func);
-	else if (func || msg)
+	if (func || msg)
 		write_custom_msg(func, msg);
 	exit(code);
 }

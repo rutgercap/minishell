@@ -6,11 +6,11 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/02 13:04:11 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 11:46:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <expander.h>
+#include <parser.h>
 
 static char	*find_var_in_env(char *text, char **env)
 {

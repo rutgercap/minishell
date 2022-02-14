@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/10 08:15:52 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 10:39:24 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 	t_cmd	*head;
 	t_cmd	*cmd;
 	
-	cmd = new_cmd();
+	cmd = new_cmd(false);
 	head = cmd;
 	while (tokens->type != TOKEN_EOF)
 	{
 		if (tokens->type == PIPE)
 		{
-			cmd->next = new_cmd();
+			cmd->next = new_cmd(true);
 			cmd = cmd->next;
 		}
 		tokens = tokens->next;

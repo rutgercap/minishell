@@ -3,15 +3,17 @@
 
 # include <utils.h>
 # include <tokens.h>
-# include <expander.h>
 
 # define SYNTAX_ERROR -1
+# define EXPANDED 1
+# define NO_EXPAND 0
 
 typedef enum e_red_type {
 	RED_IPUT,
 	HERE_DOC,
 	RED_OPUT,
 	RED_OPUT_A,
+	R_PIPE
 }   t_red_type;
 
 typedef struct s_red {
@@ -36,7 +38,7 @@ typedef struct s_cmd {
 /*
 	command list utils
 */
-t_cmd	*new_cmd(void);
+t_cmd	*new_cmd(bool pipe);
 void	free_cmd(t_cmd **cmd);
 void	*free_cmd_list(t_cmd **ref);
 void	add_argument(t_exec *exec, t_token *token);
@@ -52,6 +54,7 @@ t_red	*new_redirect(t_red_type type);
 */
 int		parse_redirects(t_cmd *cmds, t_token **tokens);
 int		parse_quotes_and_expand(t_token *token, char **env, int last_pid);
+int		expander(t_token *token, char **env, int last_pid, long i);
 int		parse_words(t_cmd *cmd, t_token *tokens);
 int		syntax_error(const t_type type);
 t_cmd	*parser(t_token *tokens, char **env, int last_pid);

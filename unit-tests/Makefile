@@ -17,8 +17,9 @@ ALL_OBJS	:=	$(TEST_OBJS) $(MINI_OBJS) $(UNITY_OBJ)
 
 # results
 RES_DIR		:=	results
+DIFF_DIR	:=	diff
 RESULTS		:=	$(patsubst %.c,$(RES_DIR)/%.txt,$(TEST_SRCS))
-BUILD_DIRS	:=	$(RES_DIR) $(OBJ_DIR)
+BUILD_DIRS	:=	$(RES_DIR) $(OBJ_DIR) $(DIFF_DIR)
 
 # Config
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
@@ -31,7 +32,7 @@ test: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
 
 $(RES_DIR)/%.txt: $(OBJ_DIR)/%$(EXTENSION)
 	@$(info running $(notdir $(basename $@)))
-	@-./$< > $@ 2>&1
+	@-./$< > $@ 2>> $(basename $@)_errors.txt
 
 $(OBJ_DIR)/%$(EXTENSION): $(OBJ_DIR)/%.o
 	@$(CC) $(MINI_OBJS) $< $(UNITY_OBJ) $(FLAGS) $(LIBS) $(RL_LIB) -o $@
@@ -52,6 +53,9 @@ $(RES_DIR):
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+
+$(DIFF_DIR):
+	@mkdir -p $(RES_DIR)/$(DIFF_DIR)
 
 echo:
 	@echo

@@ -6,13 +6,13 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 08:50:57 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 10:39:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parser.h>
 
-t_cmd	*new_cmd(void)
+t_cmd	*new_cmd(bool pipe)
 {
 	t_cmd	*new;
 
@@ -28,6 +28,8 @@ t_cmd	*new_cmd(void)
 		errno = ENOMEM;
 		exit_error(errno, "new_cmd", NULL);
 	}
+	if (pipe)
+		new->input = new_redirect(R_PIPE);
 	return (new);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
+/*   executor_old.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 15:08:08 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 10:15:52 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,26 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WEXITSTATUS(status);
 }
 
-t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
+static t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
 {
-	t_fork	*forks;
+	int		input_fd;
 	int		end[2];
-	int		fd;
+	t_fork	*forks;
 
-	fd = 0;
 	forks = new_fork();
+	input_fd = NO_PIPE;
 	while (cmd)
 	{
+		if (cmd->next && )
 		if (pipe(end) < 0)
 			exit_error(errno, "want_sum_furk", NULL);
 		forks->pid = fork();
 		if (forks->pid < 0)
-			exit_error(errno, "want_sum_furk2", NULL);
+			exit_error(errno, "want_sum_furk", NULL);
 		else if (forks->pid == CHILD)
-			child_process(cmd, vars, end, fd);
+			input_fd = child_process(cmd, vars, end, input_fd);
 		if (cmd->next)
 		{
-			fd = end[READ];
 			forks->next = new_fork();
 			forks = forks->next;
 		}
