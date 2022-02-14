@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 15:01:12 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 16:24:29 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,12 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 			exit_error(errno, "child_process", NULL);
 		cmd->input = cmd->input->next;
 	}
-	if (cmd->next)
+	if (cmd->next && !cmd->output)
 	{
 		if (dup2(end[WRITE], STDOUT_FILENO) < 0)
 			exit_error(errno, "child_process", NULL);
 	}
 	else
-		close(end[WRITE]);
-	if (cmd->output)
 		close(end[WRITE]);
 	redirect_input(cmd->input);
 	redirect_output(cmd->output);
