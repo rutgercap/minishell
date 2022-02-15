@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_tester.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/05 06:04:49 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/08 17:25:58 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_tester.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/14 12:12:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ static void assert_exec(char *args)
     }
 	while (args_split[len])
 		len++;
-	TEST_ASSERT_EQUAL_STRING_MESSAGE(args_split[0], exec->cmd, "command");
-	TEST_ASSERT_EQUAL_STRING_ARRAY_MESSAGE(args_split, exec->args, len, "arguments");
-	TEST_ASSERT_NULL_MESSAGE(exec->args[len], "end of arguments");
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(args_split[0], exec->command, "command");
+	TEST_ASSERT_EQUAL_STRING_ARRAY_MESSAGE(args_split, exec->arguments, len, "arguments");
+	TEST_ASSERT_NULL_MESSAGE(exec->arguments[len], "end of arguments");
 	TEST_ASSERT_EQUAL_INT16_MESSAGE(len, exec->len, "exec->len");
 	while (len)
 	{
@@ -164,6 +164,7 @@ static void trial_7()
     init_test(" echo | echo ");
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
 }
@@ -198,8 +199,10 @@ static void trial_13()
     init_test("echo | echo | echo");
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo");
 	next_cmd();
 }
@@ -285,6 +288,7 @@ static void trial_22()
 	assert_output(RED_OPUT_A, "file2");
 	next_cmd();
 	assert_exec("echo+echo");
+	assert_input(R_PIPE, NULL);
 	assert_input(RED_IPUT, "file3");
 	assert_output(RED_OPUT_A, "file4");
 	next_cmd();
@@ -357,6 +361,7 @@ static void	trial_32()
 	assert_input(RED_IPUT, "file2");
 	assert_output(RED_OPUT, "file1");
 	next_cmd();
+	assert_input(R_PIPE, NULL);
 	assert_exec("echo+shiet");
 	next_cmd();
 }

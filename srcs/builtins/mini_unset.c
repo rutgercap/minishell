@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_unset.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 17:39:26 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   mini_unset.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/09 12:50:14 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ static char	**edit_env_unset(char **env, int exl_row, int size_old_env)
 	return (new_env);
 }
 
-static int	check_in_env_unset(char *args, char **env)
+static int	check_in_env_unset(char *arg, char **env)
 {
 	int	i;
 	int	len;
 
-	len = ft_strlen(args);
+	len = ft_strlen(arg);
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], args, len) == 0)
+		if (ft_strncmp(env[i], arg, len) == 0)
 		{
 			if (env[i][len] == '=')
 				return (i);
@@ -67,16 +67,16 @@ static int	check_in_env_unset(char *args, char **env)
 	return (-1);
 }
 
-void	mini_unset(char **args, char ***env, t_utils *utils)
+int	mini_unset(char **arg, char ***env)
 {
 	int	i;
 	int	exl_row;
 	int	size_old_env;
 
 	i = 0;
-	while (args[i])
+	while (arg[i])
 	{
-		exl_row = check_in_env_unset(args[i], *env);
+		exl_row = check_in_env_unset(arg[i], *env);
 		if (exl_row == -1)
 		{
 			i++;
@@ -88,6 +88,5 @@ void	mini_unset(char **args, char ***env, t_utils *utils)
 		*env = edit_env_unset(*env, exl_row, size_old_env);
 		i++;
 	}
-	utils->last_pid = 0;
-	exit(0);
+	return (1);
 }

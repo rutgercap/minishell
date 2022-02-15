@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
-export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -13,7 +13,7 @@ VPATH 		:=	$(subst $(space),:,$(shell find $(SRCS_DIR) -type d))
 
 # Srcs
 MAIN		:=	main.c
-export SRCS	:=	signals.c \
+export SRCS	:=	init.c \
 				exit_error.c \
 				tokenizer.c \
 				process_char.c \
@@ -26,7 +26,17 @@ export SRCS	:=	signals.c \
 				parse_words.c \
 				redirect_utils.c \
 				cmd_utils.c \
+				executor.c \
+				execute_cmd.c \
+				ft_putnbr_fd.c \
+				built_in.c \
+				child_process.c \
+				mini_unset.c \
+				mini_echo.c \
+				mini_export.c \
+				free_old_env.c \
 				ft_check_malloc.c \
+				ft_free_char_array.c \
 				ft_strlcat.c \
 				ft_strlcpy.c \
 				ft_strlen.c \
@@ -47,17 +57,8 @@ export SRCS	:=	signals.c \
 				ft_split.c \
 				ft_abs.c \
 				ft_calloc.c \
-				ft_free_char_array.c \
 				ft_strnstr.c \
-				executor.c \
-				execute_cmd.c \
-				executor_utils.c \
-				ft_putnbr_fd.c \
-				built_in.c \
-				mini_unset.c \
-				mini_echo.c \
-				mini_export.c \
-				free_old_env.c
+
 	
 MINI_SRCS	:=	$(SRCS) $(MAIN)
 OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
@@ -67,7 +68,7 @@ CC			:=	gcc
 ifdef debug
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 else
-FLAGS		:=	-Wall -Wextra -Werror -g
+FLAGS		:=	-Wall -Wextra -g
 endif
 LIBS		:=	-lreadline -lhistory
 

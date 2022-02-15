@@ -1,124 +1,99 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/09 08:36:39 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   executor.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/14 15:08:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	waitpid_fork(t_fork_list *forks, t_utils utils, int *last_pid)
+char	**init_paths(char **env)
 {
-	int			status;
-	t_fork_list	*tmp;
+	char	**path;
+	char	*temp;
+	int		i;
 
-	*last_pid = utils.last_pid;
-	ft_free_char_array(utils.path_env);
-	while (forks->next)
+	i = 0;
+	while (ft_strncmp(env[i], "PATH=", 5))
+		i++;
+	path = ft_split(env[i] + 5, ':');
+	ft_check_malloc(*path, "make_path_env");
+	i = 0;
+	while (path[i])
 	{
-		waitpid(forks->child, &status, 0);
-		tmp = forks;
-		forks = forks->next;
-		free(tmp);
+		temp = ft_strjoin(path[i], "/");
+		ft_check_malloc(temp, "init_path");
+		free(path[i]);
+		path[i] = temp;
+		i++;
 	}
-	waitpid(forks->child, &status, 0);
-	if (WIFEXITED(status))
-		*last_pid = WEXITSTATUS(status);
-	return ;
+	return (path);
 }
 
-static void	child_fork(t_cmd *cmd, t_utils *utils, int *end, int fd)
+t_fork	*new_fork(void)
 {
-	int	input;
-	int	output;
+	t_fork	*new_fork;
 	
-	close(end[READ]);
-	input = arrange_input(cmd, fd, &utils->last_pid);
-	if (input != -1)
-	{
-		if (dup2(input, STDIN_FILENO) < 0)
-			perror("");
-		close(input);
-	}
-	output = arrange_output(cmd, end[WRITE], &utils->last_pid);
-	if (output != -1)
-	{
-		if (dup2(output, STDOUT_FILENO) < 0)
-			perror("");
-	}
-	close(end[WRITE]);
-	built_in(cmd, utils);
-	execute_cmd(cmd, utils);
-	return ;
-}
-
-static int	handle_fork(t_fork_list *a_fork, t_cmd *cmd, t_utils *utils, int fd)
-{
-	int		end[2];
-
-	if (pipe(end) == -1)
-	{
-		perror("");
-		exit(errno);
-	}
-	a_fork->child = fork();
-	if (a_fork->child < 0)
-	{
-		perror("");
-		exit(errno);
-	}
-	else if (a_fork->child == 0)
-		child_fork(cmd, utils, end, fd);
-	else if (a_fork->child > 0)
-		close(end[WRITE]);
-	return (end[READ]);
-}
-
-static t_fork_list	*new_fork(t_fork_list *a_fork)
-{
-	t_fork_list	*new_fork;
-	
-	new_fork = (t_fork_list *)malloc(sizeof(t_fork_list));
+	new_fork = ft_calloc(1, sizeof(t_fork));
 	ft_check_malloc(new_fork, "new_fork");
-	new_fork->next = NULL;
-	if (!a_fork)
-		a_fork = new_fork;
-	else
-	{
-		a_fork->next = new_fork;
-		a_fork = a_fork->next;
-	}
-	return (a_fork);
+	return (new_fork);
 }
 
-char	**executor(t_cmd *cmd, char **env, int *last_pid)
+static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 {
-	t_fork_list	*a_fork;
-	t_fork_list	*head_fork_list;
-	int			fd;
-	bool		first_cmd;
-	t_utils		utils;
-	
-	a_fork = NULL;
-	first_cmd = true;
-	fd = -1;
+	int		status;
+	t_fork	*next;
+
+	while (forks)
+	{
+		waitpid(forks->pid, &status, 0);
+		next = forks->next;
+		free(forks);
+		forks = next;
+	}
+	if (WIFEXITED(status))
+		vars->last_pid = WEXITSTATUS(status);
+}
+
+t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
+{
+	t_fork	*forks;
+	int		end[2];
+	int		fd;
+
+	fd = 0;
+	forks = new_fork();
 	while (cmd)
 	{
-		a_fork = new_fork(a_fork);
-		if (first_cmd == true)
+		if (pipe(end) < 0)
+			exit_error(errno, "want_sum_furk", NULL);
+		forks->pid = fork();
+		if (forks->pid < 0)
+			exit_error(errno, "want_sum_furk2", NULL);
+		else if (forks->pid == CHILD)
+			child_process(cmd, vars, end, fd);
+		if (cmd->next)
 		{
-			utils = init_utils(env, last_pid);
-			head_fork_list = a_fork;
-			first_cmd = false;			
+			fd = end[READ];
+			forks->next = new_fork();
+			forks = forks->next;
 		}
-		fd = handle_fork(a_fork, cmd, &utils, fd);
 		cmd = cmd->next;
 	}
-	waitpid_fork(head_fork_list, utils, last_pid);
-	return (utils.env);
+	return (forks);
+}
+
+void	executor(t_cmd *cmd, t_mini_vars *vars)
+{
+	t_fork	*forks;
+
+	vars->paths = init_paths(vars->env);
+	forks = want_sum_furk(cmd, vars);
+	waitpid_fork(forks, vars);
+	ft_free_char_array(vars->paths);
 }

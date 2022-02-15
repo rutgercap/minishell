@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/07 09:13:15 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   utils.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2020/11/11 10:32:16 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/09 13:44:52 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ void		exit_error(const int code, const char *func, const char *msg);
 
 void		ft_check_malloc(void *ptr, char *func);
 
-void		ft_free_char_array(char **split_str);
+void		*ft_free_char_array(char **array);
 
 #	endif

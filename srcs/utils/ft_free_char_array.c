@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_free_char_array.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 08:23:11 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/08 14:21:19 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_free_char_array.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/09 13:32:36 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/09 13:44:47 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <utils.h>
 
-void	ft_free_char_array(char **split_str)
+void    *ft_free_char_array(char **array)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	if (!split_str || !*split_str)
-		return ;
-	while (split_str[i])
-	{
-		free(split_str[i]);
-		i++;
-	}
-	free(split_str);
-	return ;
+    i = 0;
+    while (array[i])
+    {
+        free(array[i]);
+        i++;
+    }
+    free(array);
+    return (NULL);
 }

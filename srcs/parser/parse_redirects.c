@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:19:21 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/07 13:30:49 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/14 13:10:07 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,23 @@ static int	add_redirect(t_red **dest, t_token *token)
 
 static int	append_redirect(t_cmd *cmd, t_token *token)
 {
-	t_red	*i;
+	t_red	*dest;
 
-	if ((token->type == INPUT_S || token->type == INPUT_D) &&
-		!cmd->input)
-		return (add_redirect(&cmd->input, token));
-	else if (!cmd->output)
-		return (add_redirect(&cmd->output, token));
-	if (token->type == INPUT_S || token->type == INPUT_D)
-		i = cmd->input;
+	if (token->type == OUTPUT_S || token->type == OUTPUT_D)
+	{
+		if (!cmd->output)
+			return (add_redirect(&cmd->output, token));
+		dest = cmd->output;
+	}
 	else
-		i = cmd->output;
-	while (i->next)
-		i = i->next;
-	return (add_redirect(&i->next, token));
+	{
+		if (!cmd->input)
+			return (add_redirect(&cmd->input, token));
+		dest = cmd->input;
+	}
+	while (dest->next)
+		dest = dest->next;
+	return (add_redirect(&dest->next, token));
 }
 
 int	parse_redirects(t_cmd *cmds, t_token **tokens)

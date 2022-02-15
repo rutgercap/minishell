@@ -1,72 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/09 08:36:34 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execute_cmd.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/14 15:05:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	error_handling(char *cmd, t_utils *utils)
+static void	command_not_found(char *cmd)
 {
-	if (ft_strchr(cmd, '/'))
-	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd("\n", 2);
-		utils->last_pid = errno;
-		exit(errno);
-	}
-	else
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": cmd not found\n", 2);
-		utils->last_pid = errno;
-		exit(errno);
-	}
-	return ;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(": command not found", 2);
+	exit(127);
 }
 
-static void	execute_with_path(t_cmd *cmd, t_utils *utils)
+char	*get_full_command(char *command, char **paths)
 {
-	if (access(cmd->exec->cmd, F_OK && X_OK) == 0)
-	{
-		if (execve(cmd->exec->cmd, cmd->exec->args, utils->env) == 1)
-		{
-			perror("");
-			utils->last_pid = errno;
-		}
-	}
-	return ;
-}
-
-void	execute_cmd(t_cmd *cmd, t_utils *utils)
-{
+	char	*temp;
 	int		i;
-	char	*str;
 
-	execute_with_path(cmd, utils);
+	if (!access(command, X_OK))
+		return (command);
 	i = 0;
-	while (utils->path_env[i])
+	while (paths[i])
 	{
-		str = ft_strjoin(utils->path_env[i], cmd->exec->cmd);
-		ft_check_malloc(str, "execute_child");
-		if (access(str, F_OK && X_OK) == 0)
-		{
-			if (execve(str, cmd->exec->args, utils->env) == -1)
-			{
-				perror("");
-				utils->last_pid = errno;
-			}
-		}
-		free(str);
+		temp = ft_strjoin(paths[i], command);
+		ft_check_malloc(temp, "get_full_command");
+		if (!access(temp, X_OK))
+			return (temp);
+		free(temp);
 		i++;
 	}
-	error_handling(cmd->exec->cmd, utils);
-	return ;
+	return (NULL);
+}
+
+void	execute_cmd(t_exec *exec, t_mini_vars *vars)
+{
+	char	*full_cmd;
+	
+	if (built_in(exec->command, exec->arguments, vars->env))
+		return ;
+	full_cmd = get_full_command(exec->command, vars->paths);
+	if (!full_cmd)
+		command_not_found(exec->command);
+	if (execve(full_cmd, exec->arguments, vars->env) < 0)
+		exit_error(errno, "execute_cmd", NULL);
 }
