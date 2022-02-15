@@ -6,11 +6,11 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/09 12:50:26 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:41:28 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include <executor.h>
 
 static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 {

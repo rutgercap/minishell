@@ -6,11 +6,11 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 15:08:08 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:42:17 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include <executor.h>
 
 char	**init_paths(char **env)
 {
@@ -60,7 +60,7 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WEXITSTATUS(status);
 }
 
-t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
+void	want_sum_furk(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		end[2];
@@ -68,6 +68,7 @@ t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
 
 	fd = 0;
 	forks = new_fork();
+	*head = forks;
 	while (cmd)
 	{
 		if (pipe(end) < 0)
@@ -85,7 +86,6 @@ t_fork	*want_sum_furk(t_cmd *cmd, t_mini_vars *vars)
 		}
 		cmd = cmd->next;
 	}
-	return (forks);
 }
 
 void	executor(t_cmd *cmd, t_mini_vars *vars)
@@ -93,7 +93,7 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	t_fork	*forks;
 
 	vars->paths = init_paths(vars->env);
-	forks = want_sum_furk(cmd, vars);
+	want_sum_furk(&forks, cmd, vars);
 	waitpid_fork(forks, vars);
 	ft_free_char_array(vars->paths);
 }

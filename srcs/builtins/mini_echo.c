@@ -6,11 +6,11 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/14 09:49:22 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:41:28 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include <executor.h>
 
 static void mini_echo_args(char **arg, bool newline)
 {
