@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 13:55:09 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/15 15:22:48 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	t_fork	*forks;
 
 	vars->paths = init_paths(vars->env);
-	if (built_in(cmd->exec->command, cmd->exec->arguments, vars))
-		return ;
-	make_forks(&forks, cmd, vars);
-	waitpid_fork(forks, vars);
+	if (!built_in(cmd->exec->command, cmd->exec->arguments, vars))
+	{
+		make_forks(&forks, cmd, vars);
+		waitpid_fork(forks, vars);
+	}
 	ft_free_char_array(vars->paths);
 }
