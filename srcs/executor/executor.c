@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:42:17 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/15 12:37:32 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 void	want_sum_furk(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
-	int		end[2];
 	int		fd;
 
 	fd = 0;
@@ -71,19 +70,7 @@ void	want_sum_furk(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 	*head = forks;
 	while (cmd)
 	{
-		if (pipe(end) < 0)
-			exit_error(errno, "want_sum_furk", NULL);
-		forks->pid = fork();
-		if (forks->pid < 0)
-			exit_error(errno, "want_sum_furk2", NULL);
-		else if (forks->pid == CHILD)
-			child_process(cmd, vars, end, fd);
-		if (cmd->next)
-		{
-			fd = end[READ];
-			forks->next = new_fork();
-			forks = forks->next;
-		}
+		fd = handle_forks(forks, cmd, vars, fd);
 		cmd = cmd->next;
 	}
 }
@@ -93,6 +80,8 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	t_fork	*forks;
 
 	vars->paths = init_paths(vars->env);
+	if (built_in(cmd->exec->command, cmd->exec->arguments, vars))
+		return ;
 	want_sum_furk(&forks, cmd, vars);
 	waitpid_fork(forks, vars);
 	ft_free_char_array(vars->paths);

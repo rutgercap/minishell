@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
-export RL_INC	:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
+export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -34,7 +34,6 @@ export SRCS	:=	init.c \
 				mini_unset.c \
 				mini_echo.c \
 				mini_export.c \
-				free_old_env.c \
 				ft_check_malloc.c \
 				ft_free_char_array.c \
 				ft_strlcat.c \
@@ -58,6 +57,8 @@ export SRCS	:=	init.c \
 				ft_abs.c \
 				ft_calloc.c \
 				ft_strnstr.c \
+				mini_cd.c \
+				mini_cd_utils.c
 
 	
 MINI_SRCS	:=	$(SRCS) $(MAIN)

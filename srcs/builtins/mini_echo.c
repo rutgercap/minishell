@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   mini_echo.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:41:28 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   mini_echo.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
+/*   Updated: 2022/02/15 11:34:10 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void mini_echo_args(char **arg, bool newline)
         ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-int	mini_echo(char **arg)
+int	mini_echo(char **arg, t_mini_vars *vars)
 {
     bool    newline;
 
@@ -38,5 +38,6 @@ int	mini_echo(char **arg)
     if (!ft_strncmp(arg[1], "-n", 2))
         newline = false;
     mini_echo_args(arg, newline);
+	vars->last_pid = 0;
     return (EXIT_SUCCESS);
 }

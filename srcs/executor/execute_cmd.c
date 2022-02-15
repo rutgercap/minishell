@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execute_cmd.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:41:28 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
+/*   Updated: 2022/02/15 11:20:50 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execute_cmd(t_exec *exec, t_mini_vars *vars)
 {
 	char	*full_cmd;
 	
-	if (built_in(exec->command, exec->arguments, vars->env))
+	if (built_in(exec->command, exec->arguments, vars))
 		return ;
 	full_cmd = get_full_command(exec->command, vars->paths);
 	if (!full_cmd)
