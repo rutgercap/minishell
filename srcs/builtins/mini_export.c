@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 11:28:31 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:05:58 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 
 int	mini_export(char **args, t_mini_vars *vars)
 {
-	int		i;
+	int	i;
 	
 	i = 1;
 	while (args[i])

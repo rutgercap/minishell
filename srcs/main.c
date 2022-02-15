@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:45:11 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/08 09:45:09 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/15 15:03:23 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 		return ;
 	executor(cmd, vars);
 	free_cmd_list(&cmd);
+	if (!ft_strncmp(raw_line, "exit", 4))
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		mini_exit();
+	}
 }
 
 int main(int argc, char **argv, char **env)
