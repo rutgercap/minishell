@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   child_process.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 13:54:34 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   child_process.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/10 08:20:35 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/15 15:32:51 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	redirect_input(t_red *input, int fd)
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 		exit_error(errno, "output_redirects", NULL);
+	if (fd != 0)
+		close(fd);
 }
 
 static void	redirect_output(t_red *output, int fd)
@@ -58,7 +60,8 @@ static void	redirect_output(t_red *output, int fd)
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 		exit_error(errno, "output_redirects", NULL);
-	close(fd);
+	if (fd != 1)
+		close(fd);
 }
 
 void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
