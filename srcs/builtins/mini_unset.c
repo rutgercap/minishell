@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   mini_unset.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:41:28 by rcappend      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   mini_unset.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
+/*   Updated: 2022/02/15 11:30:51 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <executor.h>
+#include "executor.h"
 
 static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 {
@@ -32,7 +32,7 @@ static char	**edit_env_unset(char **env, int exl_row, int size_old_env)
 	ft_check_malloc(new_env, "edit_env_unset");
 	env_i = 0;
 	new_env_i = 0;
-	while (env_i < size_old_env)
+	while (env[env_i])
 	{
 		if (env_i == exl_row)
 		{
@@ -44,48 +44,36 @@ static char	**edit_env_unset(char **env, int exl_row, int size_old_env)
 		new_env_i++;
 	}
 	new_env[new_env_i] = NULL;
-	free_old_env(env);
+	ft_free_char_array(env);
 	return (new_env);
 }
 
-static int	check_in_env_unset(char *arg, char **env)
+static char	**ft_unset(char *arg, char **env, t_mini_vars *vars)
 {
-	int	i;
-	int	len;
+	int		exl_row;
+	int		size_old_env;
+	char	**new_env;
 
-	len = ft_strlen(arg);
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], arg, len) == 0)
-		{
-			if (env[i][len] == '=')
-				return (i);
-		}
-		i++;
-	}
-	return (-1);
+	exl_row = search_in_env(arg, env);
+	if (exl_row == -1)
+		return (env);
+	size_old_env = 0;
+	while (env[size_old_env])
+		size_old_env++;
+	new_env = edit_env_unset(env, exl_row, size_old_env);
+	ft_check_malloc(new_env, "ft_unset");
+	vars->last_pid = 0;
+	return (new_env);
 }
 
-int	mini_unset(char **arg, char ***env)
+int	mini_unset(char **args, t_mini_vars *vars)
 {
 	int	i;
-	int	exl_row;
-	int	size_old_env;
 
 	i = 0;
-	while (arg[i])
+	while (args[i])
 	{
-		exl_row = check_in_env_unset(arg[i], *env);
-		if (exl_row == -1)
-		{
-			i++;
-			continue ;
-		}
-		size_old_env = 0;
-		while ((*env)[size_old_env])
-			size_old_env++;
-		*env = edit_env_unset(*env, exl_row, size_old_env);
+		vars->env = ft_unset(args[i], vars->env, vars);
 		i++;
 	}
 	return (1);
