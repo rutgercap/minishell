@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:42:17 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 12:58:25 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WEXITSTATUS(status);
 }
 
-void	want_sum_furk(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
+void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		end[2];
@@ -72,10 +72,10 @@ void	want_sum_furk(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 	while (cmd)
 	{
 		if (pipe(end) < 0)
-			exit_error(errno, "want_sum_furk", NULL);
+			exit_error(errno, "make_forks", NULL);
 		forks->pid = fork();
 		if (forks->pid < 0)
-			exit_error(errno, "want_sum_furk2", NULL);
+			exit_error(errno, "make_forks", NULL);
 		else if (forks->pid == CHILD)
 			child_process(cmd, vars, end, fd);
 		if (cmd->next)

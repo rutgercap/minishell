@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 08:16:21 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:45:11 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 		return ;
 	executor(cmd, vars);
 	free_cmd_list(&cmd);
-	if (!ft_strncmp(raw_line, "exit", 4))
-		mini_exit();
 }
 
 int main(int argc, char **argv, char **env)

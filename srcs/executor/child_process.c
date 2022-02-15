@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 16:24:29 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/15 13:44:01 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	redirect_input(t_red *input)
 	{
 		if (input->type == RED_IPUT)
 			fd = open(input->file_name, O_RDONLY);
-		else
+		else if (input->type == HERE_DOC)
 			ft_putendl_fd("heredoc not built", 2);
 		if (fd < 0)
 			file_error(input->file_name);
