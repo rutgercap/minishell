@@ -44,5 +44,6 @@ int			mini_cd(char **args, t_mini_vars *vars);
 void		set_new_paths(char *new_pwd, char *old_pwd, t_mini_vars *vars);
 char		*cpy_env_line(char **env, char *item);
 int			handle_forks(t_fork *new_fork, t_cmd *cmd, t_mini_vars *vars, int fd);
+int			here_doc(char *delim);
 
 #endif

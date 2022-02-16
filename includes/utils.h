@@ -19,9 +19,20 @@
 # include <errno.h>
 # include <stdio.h>
 
+# define BUFFER_SIZE 10
+
+char		*get_next_line(int fd);
+int			check_line(char *line);
+void		change_buffer(char *buffer, int buffer_size);
+void		make_newline(char *new_line, char *line, char *buffer, int buffer_size);
+char		*add_buffer(char *line, char *buffer, int buffer_size, int size_line);
+int			check_buffer(char *buffer);
+
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 
 char		*ft_strjoin(char const *s1, char const *s2);
+
+char		*ft_strjoin_free(char *s1, char *s2);
 
 char		*ft_strtrim(char const *s1, char const *set);
 

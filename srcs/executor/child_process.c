@@ -27,7 +27,7 @@ static void	redirect_input(t_red *input, int fd)
 		if (input->type == RED_IPUT)
 			fd = open(input->file_name, O_RDONLY);
 		else if (input->type == HERE_DOC)
-			ft_putendl_fd("heredoc not built", 2);
+			fd = here_doc(input->file_name);
 		if (fd < 0)
 			file_error(input->file_name);
 		if (input->next && fd != 0)

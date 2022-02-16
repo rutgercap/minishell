@@ -1,33 +1,29 @@
-char	*ft_strjoin_free(char *s1, char *s2)
-{
-	char	*str;
-	size_t	len1;
-	size_t	len2;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
+/*   Updated: 2022/02/15 15:22:48 by dvan-der         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	str = (char *)ft_calloc(len1 + len2 + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_memcpy(str, s1, len1);
-	ft_memcpy(str + len1, s2, len2);
-	free(s1);
-	free(s2);
-	return (str);
-}
+#include <executor.h>
 
-static char	*remove_newline(char *text)
-{
-	int		len;
-	char	*new_text;
+// static char	*remove_newline(char *text)
+// {
+// 	int		len;
+// 	char	*new_text;
 
-	len = ft_strlen(text);
-	new_text = (char *)malloc(len * sizeof(char));
-	ft_check_malloc(new_text);
-	ft_strlcpy(new_text, text, len);
-	free(text);
-	return (new_text);
-}
+// 	len = ft_strlen(text);
+// 	new_text = (char *)malloc(len * sizeof(char));
+// 	ft_check_malloc(new_text, "remove_newline");
+// 	ft_strlcpy(new_text, text, len);
+// 	free(text);
+// 	return (new_text);
+// }
 
 static int	delim_in_line(char *line, char *delim, int len)
 {
@@ -41,7 +37,7 @@ static int	delim_in_line(char *line, char *delim, int len)
 	return (0);
 }
 
-char	*here_doc(char *delim)
+static char	*make_text(char *delim)
 {
 	char	*line;
 	char	*text;
@@ -51,7 +47,7 @@ char	*here_doc(char *delim)
 	len = ft_strlen(delim);
 	while (1)
 	{
-		ft_putstr_fd("> ", 1);
+		ft_putstr_fd("> ", 2);
 		line = get_next_line(0);
 		if (delim_in_line(line, delim, len))
 		{
@@ -60,6 +56,24 @@ char	*here_doc(char *delim)
 		}
 		text = ft_strjoin_free(text, line);
 	}
-	text = remove_newline(text);
+	// text = remove_newline(text);
 	return (text);
+}
+
+int	here_doc(char *delim)
+{
+	char 	*text;
+	int		end[2];
+	// int		fd;
+
+	if (pipe(end) < 0)
+		exit_error(errno, "here_doc", NULL);
+	// fd = open(end[1], O_RDONLY);
+	// if (fd < 0)
+	// 	file_error(end[1]);
+	text = make_text(delim);
+	ft_putstr_fd(text, end[1]);
+	free(text);
+	close(end[1]);
+	return (end[0]);
 }
