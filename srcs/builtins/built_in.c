@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 15:10:19 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_in.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/16 09:49:22 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,17 @@ int	built_in(char *cmd, char **args, t_mini_vars *vars)
     else if (!ft_strncmp(cmd, "exit", 4)  && cmd[4] == '\0')
 		mini_exit();
 	return (0);
+}
+
+int special_builtin(char *cmd)
+{
+    if (!ft_strncmp(cmd, "export", 6)  && cmd[6] == '\0')
+        return (1);
+    else if (!ft_strncmp(cmd, "unset", 5)  && cmd[5] == '\0')
+		return (1);
+	else if (!ft_strncmp(cmd, "cd", 2)  && cmd[2] == '\0')
+        return (1);
+	else if (!ft_strncmp(cmd, "exit", 4)  && cmd[4] == '\0')
+		mini_exit();
+    return (0);
 }

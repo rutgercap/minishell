@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   child_process.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 08:20:35 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 15:32:51 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   child_process.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/16 09:53:39 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,22 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 	execute_cmd(cmd->exec, vars);
 }
 
+void	simple_command(t_cmd *cmd, t_mini_vars *vars)
+{
+	redirect_input(cmd->input, STDIN_FILENO);
+	redirect_output(cmd->output, STDOUT_FILENO);
+	execute_cmd(cmd->exec, vars);
+}
+
 int	handle_forks(t_fork *forks, t_cmd *cmd, t_mini_vars *vars, int fd)
 {
 	int		end[2];
 
 	if (pipe(end) < 0)
-		exit_error(errno, "want_sum_furk", NULL);
+		exit_error(errno, "handle_forks", NULL);
 	forks->pid = fork();
 	if (forks->pid < 0)
-		exit_error(errno, "want_sum_furk2", NULL);
+		exit_error(errno, "handle_forks", NULL);
 	else if (forks->pid == CHILD)
 		child_process(cmd, vars, end, fd);
 	else if (forks->pid > 0)

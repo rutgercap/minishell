@@ -33,7 +33,9 @@ typedef struct	s_fork
 void		executor(t_cmd *cmd, t_mini_vars *vars);
 void		child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd);
 void		execute_cmd(t_exec *exec, t_mini_vars *vars);
+void		simple_command(t_cmd *cmd, t_mini_vars *vars);
 int			built_in(char *cmd, char **args, t_mini_vars *vars);
+int 		special_builtin(char *cmd);
 int			mini_unset(char **args, t_mini_vars *vars);
 int			mini_echo(char **arg, t_mini_vars *vars);
 int			mini_export(char **args, t_mini_vars *vars);

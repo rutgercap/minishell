@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:10:47 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/15 10:32:51 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/16 10:34:05 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,70 @@ void	trial_1(void)
 void	trial_2(void)
 {
 	init_test("ls > results/mini2 > results/mini3 | ls >> results/mini3",\
-	 "ls > results/bash2 > results/bash3 | ls >> results/mini3");
+	 "ls > results/bash1 > results/bash2 | ls >> results/bash3");
 	diff_file("mini1", "bash1");
 	diff_file("mini2", "bash2");
 	diff_file("mini3", "bash3");
+}
+
+void	trial_3(void)
+{
+	init_test("> results/mini1", "> results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_4(void)
+{
+	init_test("pwd > results/mini1", "pwd > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_5(void)
+{
+	init_test("pwd > results/mini1 | pwd >> results/mini1", "pwd > results/bash1 | pwd >> results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_6(void)
+{
+	init_test("cd | pwd > results/mini1", "cd | pwd > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_7(void)
+{
+	init_test("echo test1 test2 test3 > results/mini1", "echo test1 test2 test3 > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_8(void)
+{
+	init_test("echo test1 test2 test3 > results/mini1 || echo test4 >> results/mini1", "echo test1 test2 test3 > results/bash1 || echo test4 >> results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_9(void)
+{
+	init_test("echo test1 test2 test3 > results/mini1 || echo test4 > results/mini1", "echo test1 test2 test3 > results/bash1 || echo test4 > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_10(void)
+{
+	init_test("echo test1 test2 test3 > results/mini1 || echo test4 > results/mini1", "echo test1 test2 test3 > results/bash1 || echo test4 > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_11(void)
+{
+	init_test("echo test | cat > results/mini1", "echo test | cat > results/bash1");
+	diff_file("mini1", "bash1");
+}
+
+void	trial_12(void)
+{
+	init_test("echo test | cat | cat | cat | cat > results/mini1", "echo test | cat | cat | cat | cat > results/bash1");
+	diff_file("mini1", "bash1");
 }
 
 int main(int argc, char **argv, char **env)
@@ -143,6 +203,16 @@ int main(int argc, char **argv, char **env)
 	vars.env = init_env(env);
 	UNITY_BEGIN();
 	RUN_TEST(trial_1);
-	RUN_TEST(trial_2);
+	// RUN_TEST(trial_2);
+	// RUN_TEST(trial_3);
+	// RUN_TEST(trial_4);
+	// RUN_TEST(trial_5);
+	// RUN_TEST(trial_6);
+	// RUN_TEST(trial_7);
+	// RUN_TEST(trial_8);
+	// RUN_TEST(trial_9);
+	// RUN_TEST(trial_10);
+	// RUN_TEST(trial_11);
+	// RUN_TEST(trial_12);
 	return (UNITY_END());
 }

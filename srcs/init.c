@@ -23,7 +23,12 @@ static void	sigint_handler(int signum)
 {
 	(void)signum;
 	if (g_interactive)
-		rl_replace_line("\nminishell$ ", 0);
+	{
+		ft_putchar_fd('\n', 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	else
 		exit(130);
 }
