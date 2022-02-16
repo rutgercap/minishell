@@ -97,5 +97,5 @@ int	mini_cd(char **args, t_mini_vars *vars)
 		absolute_path(vars->env, vars, args[1]);
 	else
 		relative_path(vars, args[1]);
-	return (1);	
+	return (EXIT_SUCCESS);	
 }

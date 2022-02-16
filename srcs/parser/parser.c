@@ -33,13 +33,13 @@ static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 	t_cmd	*head;
 	t_cmd	*cmd;
 	
-	cmd = new_cmd(false);
+	cmd = new_cmd();
 	head = cmd;
 	while (tokens->type != TOKEN_EOF)
 	{
 		if (tokens->type == PIPE)
 		{
-			cmd->next = new_cmd(true);
+			cmd->next = new_cmd();
 			cmd = cmd->next;
 		}
 		tokens = tokens->next;

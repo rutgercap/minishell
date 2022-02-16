@@ -86,9 +86,9 @@ static void assert_exec(char *args)
     }
 	while (args_split[len])
 		len++;
-	TEST_ASSERT_EQUAL_STRING_MESSAGE(args_split[0], exec->command, "command");
-	TEST_ASSERT_EQUAL_STRING_ARRAY_MESSAGE(args_split, exec->arguments, len, "arguments");
-	TEST_ASSERT_NULL_MESSAGE(exec->arguments[len], "end of arguments");
+	TEST_ASSERT_EQUAL_STRING_MESSAGE(args_split[0], exec->cmd, "command");
+	TEST_ASSERT_EQUAL_STRING_ARRAY_MESSAGE(args_split, exec->args, len, "arguments");
+	TEST_ASSERT_NULL_MESSAGE(exec->args[len], "end of arguments");
 	TEST_ASSERT_EQUAL_INT16_MESSAGE(len, exec->len, "exec->len");
 	while (len)
 	{

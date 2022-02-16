@@ -12,7 +12,7 @@
 
 #include <parser.h>
 
-t_cmd	*new_cmd(bool pipe)
+t_cmd	*new_cmd(void)
 {
 	t_cmd	*new;
 
@@ -28,8 +28,6 @@ t_cmd	*new_cmd(bool pipe)
 		errno = ENOMEM;
 		exit_error(errno, "new_cmd", NULL);
 	}
-	if (pipe)
-		new->input = new_redirect(R_PIPE);
 	return (new);
 }
 
@@ -38,9 +36,9 @@ static void	free_exec(t_exec *exec)
 	while (exec->len > 0)
 	{
 		exec->len--;
-		free(exec->arguments[exec->len]);
+		free(exec->args[exec->len]);
 	}
-	free(exec->arguments);
+	free(exec->args);
 	free(exec);
 }
 

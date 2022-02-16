@@ -40,15 +40,15 @@ char	*get_full_command(char *command, char **paths)
 	return (NULL);
 }
 
-void	execute_cmd(t_exec *exec, t_mini_vars *vars)
+void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 {
 	char	*full_cmd;
 	
-	if (built_in(exec->command, exec->arguments, vars))
+	if (!built_in(cmd, exec->cmd, vars, 1))
 		return ;
-	full_cmd = get_full_command(exec->command, vars->paths);
+	full_cmd = get_full_command(exec->cmd, vars->paths);
 	if (!full_cmd)
-		command_not_found(exec->command);
-	if (execve(full_cmd, exec->arguments, vars->env) < 0)
+		command_not_found(exec->cmd);
+	if (execve(full_cmd, exec->args, vars->env) < 0)
 		exit_error(errno, "execute_cmd", NULL);
 }

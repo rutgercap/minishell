@@ -20,32 +20,36 @@ static void	file_error(const char *filename)
 	exit (errno);
 }
 
-static void	redirect_input(t_red *input, int fd)
+void	redirect_input(t_red *input, int fd)
 {
 	while (input)
 	{
+		if (fd != 0)
+			close(fd);
 		if (input->type == RED_IPUT)
 			fd = open(input->file_name, O_RDONLY);
 		else if (input->type == HERE_DOC)
 			fd = here_doc(input->file_name);
 		if (fd < 0)
 			file_error(input->file_name);
-		if (input->next && fd != 0)
-			close(fd);
 		input = input->next;
 	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-		exit_error(errno, "output_redirects", NULL);
 	if (fd != 0)
+	{
+		if (dup2(fd, STDIN_FILENO) < 0)
+			exit_error(errno, "output_redirects", NULL);
 		close(fd);
+	}
 }
 
-static void	redirect_output(t_red *output, int fd)
+void	redirect_output(t_red *output, int fd)
 {
 	int	flags;
 
 	while (output)
 	{
+		if (fd != 1)
+			close(fd);
 		flags = O_CREAT | O_RDWR;
 		if (output->type == RED_OPUT_A)
 			flags = flags | O_APPEND;
@@ -53,32 +57,26 @@ static void	redirect_output(t_red *output, int fd)
 			flags = flags | O_TRUNC;
 		fd = open(output->file_name, flags, 0644);
 		if (fd < 0)
-			exit_error(errno, "output_redirects", NULL);
-		if (output->next && fd != 1)
-			close(fd);
+			file_error(output->file_name);
 		output = output->next;
 	}
-	if (dup2(fd, STDOUT_FILENO) < 0)
-		exit_error(errno, "output_redirects", NULL);
 	if (fd != 1)
+	{
+		if (dup2(fd, STDOUT_FILENO) < 0)
+			exit_error(errno, "output_redirects", NULL);
 		close(fd);
+	}
 }
 
 void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 {
 	close(end[READ]);
-	if (cmd->input && cmd->input->type == R_PIPE)
-	{
-		if (dup2(input_fd, STDIN_FILENO) < 0)
-			exit_error(errno, "child_process", NULL);
-		cmd->input = cmd->input->next;
-	}
 	redirect_input(cmd->input, input_fd);
-	if (cmd->next && !cmd->output)
+	if (cmd->next)
 		redirect_output(cmd->output, end[WRITE]);
 	else
-		close(end[WRITE]);
-	execute_cmd(cmd->exec, vars);
+		redirect_output(cmd->output, 1);
+	execute_cmd(cmd, cmd->exec, vars);
 }
 
 int	handle_forks(t_fork *forks, t_cmd *cmd, t_mini_vars *vars, int fd)

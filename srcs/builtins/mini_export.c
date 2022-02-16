@@ -92,5 +92,5 @@ int	mini_export(char **args, t_mini_vars *vars)
 		vars->env = ft_export(args[i], vars->env, vars);
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

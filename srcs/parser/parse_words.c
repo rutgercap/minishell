@@ -26,24 +26,24 @@ void	append_to_arguments(t_exec *exec, char	*new_arg)
 	i = 0;
 	while (i < exec->len)
 	{
-		args[i] = exec->arguments[i];
+		args[i] = exec->args[i];
 		i++;
 	}
 	args[i] = new_arg;
 	exec->len++;
-	free(exec->arguments);
-	exec->arguments = args;
-	exec->command = exec->arguments[0];
+	free(exec->args);
+	exec->args = args;
+	exec->cmd = exec->args[0];
 }
 
 void	add_argument(t_exec *exec, t_token *token)
 {
 	char	*new;
 	
-	if (!exec->arguments)
+	if (!exec->args)
 	{
-		exec->arguments = ft_calloc(1, sizeof(char *));
-		if (!exec->arguments)
+		exec->args = ft_calloc(1, sizeof(char *));
+		if (!exec->args)
 		{
 			errno = ENOMEM;
 			exit_error(errno, "append argument", NULL);

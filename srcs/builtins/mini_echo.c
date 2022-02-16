@@ -19,7 +19,6 @@ static void mini_echo_args(char **arg, bool newline)
     i = 1;
     if (!newline)
         i++;
-    i++;
     while (arg[i])
     {
         ft_putstr_fd(arg[i], STDOUT_FILENO);
@@ -36,7 +35,10 @@ int	mini_echo(char **arg, t_mini_vars *vars)
 
     newline = true;
     if (!ft_strncmp(arg[1], "-n", 2))
-        newline = false;
+	{
+		if (arg[1][2] == '\0')
+        	newline = false;
+	}
     mini_echo_args(arg, newline);
 	vars->last_pid = 0;
     return (EXIT_SUCCESS);

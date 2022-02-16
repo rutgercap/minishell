@@ -13,7 +13,6 @@ typedef enum e_red_type {
 	HERE_DOC,
 	RED_OPUT,
 	RED_OPUT_A,
-	R_PIPE
 }   t_red_type;
 
 typedef struct s_red {
@@ -23,8 +22,8 @@ typedef struct s_red {
 }	t_red;
 
 typedef struct s_exec {
-	char	*command;
-	char	**arguments;
+	char	*cmd;
+	char	**args;
 	int		len;
 }	t_exec;
 
@@ -38,7 +37,7 @@ typedef struct s_cmd {
 /*
 	command list utils
 */
-t_cmd	*new_cmd(bool pipe);
+t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd **cmd);
 void	*free_cmd_list(t_cmd **ref);
 void	add_argument(t_exec *exec, t_token *token);
