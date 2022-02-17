@@ -93,16 +93,16 @@ void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 void	executor(t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
-	int		s_builtin;
+	bool	s_builtin;
 
-	s_builtin = 1;
+	s_builtin = false;
 	vars->paths = init_paths(vars->env);
 	if (!cmd->next)
 	{
-		if (!built_in(cmd, cmd->exec->cmd, vars, 0))
-			s_builtin = 0;
+		if (!single_built_in(cmd, cmd->exec->cmd, vars))
+			s_builtin = true;
 	}
-	if (s_builtin)
+	if (s_builtin == false)
 	{
 		make_forks(&forks, cmd, vars);
 		waitpid_fork(forks, vars);

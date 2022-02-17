@@ -49,7 +49,7 @@ static int	mini_env(char **env, t_mini_vars *vars)
     return (EXIT_SUCCESS);
 }
 
-static int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
+int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
 {
 	if (!ft_strncmp(cmd, "cd", 2) && cmd[2] == '\0')
         return (mini_cd(cmds->exec->args, vars));
@@ -60,15 +60,15 @@ static int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
 	return (EXIT_FAILURE);
 }
 
-int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars, int in_fork)
+int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
 {
-	if (!cmds->next && !in_fork)
-	{	
-		if (!single_built_in(cmds, cmd, vars))
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
-	}
+	// if (!cmds->next && !in_fork)
+	// {	
+	// 	if (!single_built_in(cmds, cmd, vars))
+	// 		return (EXIT_SUCCESS);
+	// 	else
+	// 		return (EXIT_FAILURE);
+	// }
     if (!ft_strncmp(cmd, "echo", 4) && cmd[4] == '\0')
         return (mini_echo(cmds->exec->args, vars));
     else if (!ft_strncmp(cmd, "cd", 2) && cmd[2] == '\0')

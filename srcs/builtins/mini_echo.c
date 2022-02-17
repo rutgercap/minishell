@@ -34,6 +34,11 @@ int	mini_echo(char **arg, t_mini_vars *vars)
     bool    newline;
 
     newline = true;
+	if (!arg[1])
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (EXIT_SUCCESS);
+	}
     if (!ft_strncmp(arg[1], "-n", 2))
 	{
 		if (arg[1][2] == '\0')
