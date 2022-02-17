@@ -20,10 +20,13 @@
 	Defines and typedefs
 */
 # define CTRL_D 64
+# define INTERACT 1
+# define NO_INTERACT 0
 
 /*
 	functions
 */
-t_mini_vars	init_minishell(char **env);
+void	init_signals(void);
+void	sigquit_handler(int signum);
 
 #endif

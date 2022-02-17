@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/17 10:16:52 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   executor.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/17 14:03:32 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,16 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 
 	while (forks)
 	{
-		waitpid(forks->pid, &status, 0);
+		if (waitpid(forks->pid, &status, 0) < 0)
+			exit_error(errno, "waitpid_fork", NULL);
 		next = forks->next;
 		free(forks);
 		forks = next;
 	}
 	if (WIFEXITED(status))
 		vars->last_pid = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		vars->last_pid = WTERMSIG(status) + 128;
 }
 
 void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)

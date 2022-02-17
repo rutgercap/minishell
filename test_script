@@ -2,18 +2,18 @@
 
 ./minishell "echo" > output
 ./minishell "echo /"/" >> output
-./minishell "echo < |"
-./minishell "echo > |"
-./minishell "echo >> |"
-./minishell "echo << |"
-./minishell "echo -nABC"
-./minishell "echo $BLA$BLA=10$BLA"
-./minishell "echo a"bcd"e'
-./minishell "echo 'hoi'"'"bla"'
-./minishell "echo -n'
-./minishell "echo bla -n'
-./minishell "echo -n -n -n'
-./minishell "echo -n -n -n bla'
-./minishell "ls | echo -n bla'
-./minishell "echo -nnnn'
-./minishell "echo -nnnn bla'
+./minishell "echo < |" >> output
+./minishell "echo > |" >> output
+./minishell "echo >> |" >> output
+./minishell "echo << |" >> output
+./minishell "echo -nABC" >> output
+./minishell "echo $BLA$BLA=10$BLA" >> output
+./minishell "echo a"bcd"e' >> output
+./minishell "echo 'hoi'"'"bla"' >> output
+./minishell "echo -n' >> output
+./minishell "echo bla -n' >> output
+./minishell "echo -n -n -n' >> output
+./minishell "echo -n -n -n bla' >> output
+./minishell "ls | echo -n bla' >> output
+./minishell "echo -nnnn' >> output
+./minishell "echo -nnnn bla' >> output

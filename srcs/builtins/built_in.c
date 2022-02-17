@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 15:10:19 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_in.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/17 13:10:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
         return (mini_export(cmds->exec->args, vars));
     else if (!ft_strncmp(cmd, "unset", 5) && cmd[5] == '\0')
 		return (mini_unset(cmds->exec->args, vars));
+	else if (!ft_strncmp(cmd, "exit", 5) && cmd[5] == '\0')
+		mini_exit();
 	return (EXIT_FAILURE);
 }
 
