@@ -159,8 +159,6 @@ int main(int argc, char **argv, char **env)
 	mini_env->last_pid = 0;
 	mini_env->paths = NULL;
 	UNITY_BEGIN();
-	test_bash("lss");
 	RUN_TEST(test_1);
-
 	return (UNITY_END());
 }
