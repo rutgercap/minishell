@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:45:09 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 15:03:23 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/17 13:04:05 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*get_line(void)
+static char	**init_env(char **env)
 {
-	char	*line;
+	char	**mini_env;
+	int		len;
 
-	while (true)
+	len = 0;
+	while (env[len])
+		len++;
+	mini_env = ft_calloc(len + 1, sizeof(char *));
+	ft_check_malloc(mini_env, "init_env");
+	while (len)
 	{
-		line = readline("minishell$ ");
-		if (line && ft_strlen(line))
-		{
-			if (*line == CTRL_D)
-			{
-				ft_putendl_fd("exit", STDOUT_FILENO);
-				exit(0);
-			}
-			add_history(line);
-			return (line);
-		}
-		free(line);
+		len--;
+		mini_env[len] = ft_strdup(env[len]);
+		ft_check_malloc(mini_env[len], "init_env");
 	}
+	return (mini_env);
 }
 
 static void	process_cmd(char *raw_line, t_mini_vars *vars)
@@ -42,12 +40,28 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 	cmd = parser(tokens, vars->env, vars->last_pid);
 	if (!cmd)
 		return ;
+	signal(SIGQUIT, sigquit_handler);
+	g_interactive = 0;
 	executor(cmd, vars);
 	free_cmd_list(&cmd);
-	if (!ft_strncmp(raw_line, "exit", 4))
+}
+
+static char	*get_line(void)
+{
+	char	*line;
+
+	while (true)
 	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		mini_exit();
+		init_signals();
+		line = readline("minishell$ ");
+		if (!line)
+			exit(0);
+		else if (ft_strlen(line))
+		{
+			add_history(line);
+			return (line);
+		}
+		free(line);
 	}
 }
 
@@ -58,10 +72,11 @@ int main(int argc, char **argv, char **env)
 	
 	(void)argc;
 	(void)argv;
-	vars = init_minishell(env);
-	g_interactive = 1;
+	vars.last_pid = 0;
+	vars.env = init_env(env);
 	while (true)
 	{
+		g_interactive = INTERACT;
 		line = get_line();
 		process_cmd(line, &vars);	
 		free(line);

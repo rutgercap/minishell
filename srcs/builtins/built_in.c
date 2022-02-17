@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 15:10:19 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_in.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/17 12:32:05 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars, int in_fork)
 {
 	if (!cmds->next && !in_fork)
 	{
-		// ft_putendl_fd("fuck", 2);	
-		redirect_input(cmds->input, 0);
-		redirect_output(cmds->output, 1);
+		redirect_input(cmds->input, STDIN_FILENO);
+		redirect_output(cmds->output, STDOUT_FILENO);
 	}
     if (!ft_strncmp(cmd, "echo", 4) && cmd[4] == '\0')
         return (mini_echo(cmds->exec->args, vars));
