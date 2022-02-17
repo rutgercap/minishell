@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 08:20:35 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 15:32:51 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:37:58 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	file_error(const char *filename)
 
 void	redirect_input(t_red *input, int fd)
 {
+	// ft_putendl_fd("hallo", 2);
 	while (input)
 	{
 		if (fd != 0)
@@ -34,12 +35,14 @@ void	redirect_input(t_red *input, int fd)
 			file_error(input->file_name);
 		input = input->next;
 	}
-	if (fd != 0)
+	if (dup2(fd, STDIN_FILENO) < 0)
 	{
-		if (dup2(fd, STDIN_FILENO) < 0)
-			exit_error(errno, "output_redirects", NULL);
-		close(fd);
+		ft_putnbr_fd(fd, 2);
+		ft_putchar_fd('\n', 2);	
+		exit_error(errno, "redirect_input", NULL);
 	}
+	if (fd != 0)
+		close(fd);
 }
 
 void	redirect_output(t_red *output, int fd)
@@ -60,12 +63,10 @@ void	redirect_output(t_red *output, int fd)
 			file_error(output->file_name);
 		output = output->next;
 	}
+	if (dup2(fd, STDOUT_FILENO) < 0)
+		exit_error(errno, "redirect_output", NULL);
 	if (fd != 1)
-	{
-		if (dup2(fd, STDOUT_FILENO) < 0)
-			exit_error(errno, "output_redirects", NULL);
 		close(fd);
-	}
 }
 
 void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)

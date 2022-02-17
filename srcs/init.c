@@ -19,23 +19,43 @@ char	**init_env(char **env)
 	return (mini_env);
 }
 
-static void	sigint_handler(int signum)
+void	sigint_handler_in_process(int signum)
 {
-	(void)signum;
-	if (g_interactive)
-		rl_replace_line("\nminishell$ ", 0);
-	else
-		exit(130);
+	(void) signum;
+	printf("\n");
 }
 
-static void	sigquit_handler(int signum)
+void	sigquit_handler_in_process(int signum)
+{
+	(void) signum;
+	printf("Quit: %d\n", signum);
+}
+
+void	sigint_handler(int signum)
+{
+	(void) signum;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+static void	sigint_handler_endl(int signum)
 {
 	(void)signum;
-	if (g_interactive)
-		return ;
-	else
-		exit(131);
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
+
+// static void	sigquit_handler(int signum)
+// {
+// 	(void)signum;
+// 	if (g_interactive)
+// 		return ;
+// 	else
+// 		exit(131);
+// }
 
 t_mini_vars	init_minishell(char **env)
 {
@@ -43,7 +63,7 @@ t_mini_vars	init_minishell(char **env)
 	
 	vars.last_pid = 0;
 	vars.env = init_env(env);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler); // broken again ???
+	signal(SIGINT, sigint_handler_endl);
+	signal(SIGQUIT, SIG_IGN);
 	return (vars);
 }

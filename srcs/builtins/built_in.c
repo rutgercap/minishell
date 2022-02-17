@@ -49,10 +49,11 @@ static int	mini_env(char **env, t_mini_vars *vars)
     return (EXIT_SUCCESS);
 }
 
-int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars, int last_cmd)
+int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars, int in_fork)
 {
-	if (!cmds->next && !last_cmd)
+	if (!cmds->next && !in_fork)
 	{
+		// ft_putendl_fd("fuck", 2);	
 		redirect_input(cmds->input, 0);
 		redirect_output(cmds->output, 1);
 	}

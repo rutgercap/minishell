@@ -37,8 +37,8 @@ void	write_custom_msg(const char *func, const char *msg)
 
 void	exit_error(const int code, const char *func, const char *msg)
 {
-	if (code == errno)
-		perror(func);
+	// if (code == errno)
+	// 	perror(func);
 	if (func || msg)
 		write_custom_msg(func, msg);
 	exit(code);

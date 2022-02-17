@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 15:22:48 by dvan-der         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:16:52 by dvan-der         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,21 @@ char	**init_paths(char **env)
 	return (path);
 }
 
-t_fork	*new_fork(void)
+static t_fork	*new_fork(t_fork *forks)
 {
 	t_fork	*new_fork;
 	
-	new_fork = ft_calloc(1, sizeof(t_fork));
+	new_fork = (t_fork *)malloc(sizeof(t_fork));
 	ft_check_malloc(new_fork, "new_fork");
-	return (new_fork);
+	new_fork->next = NULL;
+	if (!forks)
+		forks = new_fork;
+	else
+	{
+		forks->next = new_fork;
+		forks = forks->next;
+	}
+	return (forks);
 }
 
 static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
@@ -64,12 +72,19 @@ void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		fd;
+	bool	first_cmd;
 
+	forks = NULL;
 	fd = 0;
-	forks = new_fork();
-	*head = forks;
+	first_cmd = true;
 	while (cmd)
 	{
+		forks = new_fork(forks);
+		if (first_cmd)
+		{
+			*head = forks;
+			first_cmd = false;
+		}
 		fd = handle_forks(forks, cmd, vars, fd);
 		cmd = cmd->next;
 	}
@@ -84,10 +99,10 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	vars->paths = init_paths(vars->env);
 	if (!cmd->next)
 	{
-		if (built_in(cmd, cmd->exec->cmd, vars, 0))
+		if (!built_in(cmd, cmd->exec->cmd, vars, 0))
 			s_builtin = 0;
 	}
-	if (!s_builtin)
+	if (s_builtin)
 	{
 		make_forks(&forks, cmd, vars);
 		waitpid_fork(forks, vars);
