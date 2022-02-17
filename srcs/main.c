@@ -70,10 +70,15 @@ int main(int argc, char **argv, char **env)
 	t_mini_vars	vars;
 	char		*line;
 	
-	(void)argc;
-	(void)argv;
-	vars.last_pid = 0;
-	vars.env = init_env(env);
+	// (void)argc;
+	// (void)argv;
+	vars = init_minishell(env);
+	g_interactive = 1;
+	if (argc == 2)
+	{
+		process_cmd(argv[1], &vars);
+		return (vars.last_pid);
+	}
 	while (true)
 	{
 		g_interactive = INTERACT;

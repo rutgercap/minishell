@@ -44,7 +44,7 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 {
 	char	*full_cmd;
 	
-	if (!built_in(cmd, exec->cmd, vars, 1))
+	if (!built_in(cmd, exec->cmd, vars))
 		exit(0);
 	full_cmd = get_full_command(exec->cmd, vars->paths);
 	if (!full_cmd)

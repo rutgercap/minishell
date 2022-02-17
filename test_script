@@ -1,0 +1,19 @@
+#!/bin/bash
+
+./minishell "echo" > output
+./minishell "echo /"/" >> output
+./minishell "echo < |" >> output
+./minishell "echo > |" >> output
+./minishell "echo >> |" >> output
+./minishell "echo << |" >> output
+./minishell "echo -nABC" >> output
+./minishell "echo $BLA$BLA=10$BLA" >> output
+./minishell "echo a"bcd"e' >> output
+./minishell "echo 'hoi'"'"bla"' >> output
+./minishell "echo -n' >> output
+./minishell "echo bla -n' >> output
+./minishell "echo -n -n -n' >> output
+./minishell "echo -n -n -n bla' >> output
+./minishell "ls | echo -n bla' >> output
+./minishell "echo -nnnn' >> output
+./minishell "echo -nnnn bla' >> output
