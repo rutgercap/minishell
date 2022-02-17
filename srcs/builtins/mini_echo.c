@@ -34,7 +34,6 @@ int	mini_echo(char **arg, t_mini_vars *vars)
     bool    newline;
 
     newline = true;
-	// ft_putendl_fd("fuck", 2);	
     if (!ft_strncmp(arg[1], "-n", 2))
 	{
 		if (arg[1][2] == '\0')

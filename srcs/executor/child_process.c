@@ -22,7 +22,6 @@ static void	file_error(const char *filename)
 
 void	redirect_input(t_red *input, int fd)
 {
-	// ft_putendl_fd("hallo", 2);
 	while (input)
 	{
 		if (fd != 0)
@@ -36,11 +35,7 @@ void	redirect_input(t_red *input, int fd)
 		input = input->next;
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		ft_putnbr_fd(fd, 2);
-		ft_putchar_fd('\n', 2);	
 		exit_error(errno, "redirect_input", NULL);
-	}
 	if (fd != 0)
 		close(fd);
 }

@@ -49,13 +49,25 @@ static int	mini_env(char **env, t_mini_vars *vars)
     return (EXIT_SUCCESS);
 }
 
+static int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
+{
+	if (!ft_strncmp(cmd, "cd", 2) && cmd[2] == '\0')
+        return (mini_cd(cmds->exec->args, vars));
+	else if (!ft_strncmp(cmd, "export", 6) && cmd[6] == '\0')
+        return (mini_export(cmds->exec->args, vars));
+    else if (!ft_strncmp(cmd, "unset", 5) && cmd[5] == '\0')
+		return (mini_unset(cmds->exec->args, vars));
+	return (EXIT_FAILURE);
+}
+
 int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars, int in_fork)
 {
 	if (!cmds->next && !in_fork)
-	{
-		// ft_putendl_fd("fuck", 2);	
-		redirect_input(cmds->input, 0);
-		redirect_output(cmds->output, 1);
+	{	
+		if (!single_built_in(cmds, cmd, vars))
+			return (EXIT_SUCCESS);
+		else
+			return (EXIT_FAILURE);
 	}
     if (!ft_strncmp(cmd, "echo", 4) && cmd[4] == '\0')
         return (mini_echo(cmds->exec->args, vars));
