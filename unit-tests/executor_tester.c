@@ -11,6 +11,7 @@ void	tearDown(void) {
 	test_n++;
 }
 
+// gekopieerd uit minishell
 char	**init_env(char **env)
 {
 	char	**temp;
@@ -30,6 +31,7 @@ char	**init_env(char **env)
 	return (temp);
 }
 
+// gekopieerd uit minishell maar zonder signals
 void	process_cmd(char *raw_line, t_mini_vars *vars)
 {
 	t_token	*tokens;
@@ -43,6 +45,7 @@ void	process_cmd(char *raw_line, t_mini_vars *vars)
 	free_cmd_list(&cmd);
 }
 
+// deze gat nog mis
 void	dupdup(FILE *fd) {
 	if (dup2(fileno(fd), STDOUT_FILENO)) {
 		exit_error(errno, "dupdup", NULL);
@@ -52,6 +55,7 @@ void	dupdup(FILE *fd) {
 	}
 }
 
+// hierin gaat command en roept een bash system call op
 int	system_call(char *cmd)
 {
 	const char	*prefix = "/bin/bash -c \"";
@@ -67,6 +71,8 @@ int	system_call(char *cmd)
 	return (ret);
 }
 
+// maakt file. is in results/executor/
+// is bash_0 of mini_0 < wordt automatisch incremented per test
 FILE	*make_file(bool bash) {
 	char	file[30];
 	char	*test_n_str = ft_itoa(test_n);
@@ -88,14 +94,17 @@ FILE	*make_file(bool bash) {
 	return (fd);
 }
 
+// hierin gaat alle test logica nadat files zijn geopend en er is gedup'd
 void	test_mini(char *line) {
 	process_cmd(line, mini_env);
 	exit(mini_env->last_pid);
 }
 
+// hierin gaat alle test logica nadat files zijn geopend en er is gedup'd
 void	test_bash(char *line) {
 	exit(system_call(line));
 }
+
 
 void	do_test(char *m_line, char *b_line)
 {
@@ -127,16 +136,18 @@ void	do_test(char *m_line, char *b_line)
 	if (WIFEXITED(bash_status)) {
 		TEST_ASSERT_EQUAL_INT16_MESSAGE(WEXITSTATUS(bash_status), WEXITSTATUS(mini_status), "exit codes not same");
 	}
+	// dit kijkt of output files evan lang zijn
 	fseek(mini_fd, 0L, SEEK_END);
 	fseek(bash_fd, 0L, SEEK_END);
 	TEST_ASSERT_EQUAL_INT16_MESSAGE(ftell(bash_fd), ftell(mini_fd), "Outputs not same size");
+	// dit checkt exit status
 	printf("%d | %d\n", WEXITSTATUS(bash_status), WEXITSTATUS(mini_status));
 	fclose(mini_fd);
 	fclose(bash_fd);
 }
 
 void	test_1(void) {
-	do_test("lss", "lss");
+	do_test("ls", "ls");
 }
 
 int main(int argc, char **argv, char **env)
