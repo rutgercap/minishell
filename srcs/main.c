@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/17 13:04:05 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/17 13:08:39 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*get_line(void)
 		init_signals();
 		line = readline("minishell$ ");
 		if (!line)
-			exit(0);
+			exit(EXIT_SUCCESS);
 		else if (ft_strlen(line))
 		{
 			add_history(line);
