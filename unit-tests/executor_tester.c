@@ -167,6 +167,12 @@ void	test_2(void) {
 }
 
 void	test_3(void) {
+	do_test("ls > results/file1", "ls > results/file2");
+	assert_file("results/file1", "results/file2");
+	remove_files();
+}
+
+void	test_4(void) {
 	do_test("> results/file1", "> results/file2");
 	assert_file("results/file1", "results/file2");
 	remove_files();
