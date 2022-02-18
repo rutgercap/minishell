@@ -115,4 +115,6 @@ void		*ft_free_char_array(char **array);
 
 void		ft_putnbr_fd(int n, int fd);
 
+char		*ft_filter_str(char const *str, char c);
+
 #	endif

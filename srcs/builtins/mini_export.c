@@ -86,6 +86,8 @@ int	mini_export(char **args, t_mini_vars *vars)
 {
 	int	i;
 	
+	if (!args[1])
+		mini_single_export(vars->env);
 	i = 1;
 	while (args[i])
 	{

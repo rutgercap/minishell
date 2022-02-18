@@ -6,3 +6,22 @@ minishell: syntax error near unexpected token '|'
 minishell: syntax error near unexpected token '|'
 -nABC
 =10
+abcde
+hoi'bla
+bla -n
+blablabla
+minishell: cdnpwd: command not found
+minishell: cdnpwdncd: command not found
+minishell: cd: ..ncd: No such file or directory
+minishell: cd: ..ncd: No such file or directory
+minishell: cd: ../../..npwd: No such file or directory
+minishell: banaan: No such file or directory
+minishell: cd: /usrnpwd: No such file or directory
+minishell: cd: /usr/binnpwd: No such file or directory
+minishell: cd: /bla: No such file or directory
+minishell: cd: /npwd: No such file or directory
+minishell: cd: ..necho: No such file or directory
+/necho ncd testsnecho
+minishell: cdnunset: command not found
+minishell: unset: `unset:': not a valid identifier
+minishell: unset: `-npwd': not a valid identifier
