@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 11:13:27 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:04:45 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 12:10:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,54 @@
 	Bash overflowt met exit codes vanaf 255
 	if no arguments > exit with last pid
 */
-void	error(char *args, t_mini_vars *vars)
+void	error(char *arg, char *error, int code, t_mini_vars *vars)
 {
     ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-    ft_putstr_fd(args, STDERR_FILENO);
-    ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-	vars->last_pid = 255;
+	if (arg)
+    	ft_putstr_fd(arg, STDERR_FILENO);
+    ft_putendl_fd(error, STDERR_FILENO);
+	vars->last_pid = code;
 }
 
-int		process_args(char **args, t_mini_vars *vars)
+bool	find_numeric_arg(t_exec *exec)
 {
-	bool	nondigit_argument;
-	int		i;
-	
-	i = 0;
-	nondigit_argument = false;
-	while (args[i])
+	int	i;
+
+	i = 2;
+	while (i < exec->len)
 	{
-		if (ft_strcheck(args[i], ft_isdigit))
+		if (!ft_strcheck(exec->args[i], ft_isdigit))
 			return (true);
-		else if (!nondigit_argument)
-		{
-			error(args[i], vars);
-			nondigit_argument = true;
-		}
 		i++;
 	}
 	return (false);
 }
 
-int	mini_exit(char **args, t_mini_vars *vars)
+int	mini_exit(t_exec *exec, t_mini_vars *vars)
 {
 	bool	should_exit;
 	
 	ft_putendl_fd("exit", STDERR_FILENO);
 	should_exit = true;
-	if (args[1])
-		should_exit = process_args(args + 1, vars);
+	if (exec->len > 1)
+	{
+		if (!ft_strcheck(exec->args[1], ft_isdigit))
+		{
+			if (exec->len > 2)
+			{
+				should_exit = false;
+				error(NULL, "too many arguments", 1, vars);	
+			}
+			else
+				vars->last_pid = ft_atoi(exec->args[1]);
+		}
+		else
+		{
+			error(exec->args[1], ": numeric argument required", 255, vars);
+			should_exit = find_numeric_arg(exec);
+		}
+	}
 	if (should_exit)
-    	exit((unsigned char)vars->last_pid);
+		exit((unsigned char)vars->last_pid);
 	return (vars->last_pid);
 }

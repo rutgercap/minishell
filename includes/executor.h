@@ -43,7 +43,7 @@ int			mini_export(char **args, t_mini_vars *vars);
 char		**ft_export(char *arg, char **env, t_mini_vars *vars);
 int			search_in_env(char *args, char **env);
 int			mini_cd(char **args, t_mini_vars *vars);
-int			mini_exit(char **args, t_mini_vars *vars);
+int			mini_exit(t_exec *exec, t_mini_vars *vars);
 void		set_new_paths(char *new_pwd, char *old_pwd, t_mini_vars *vars);
 char		*cpy_env_line(char **env, char *item);
 void		mini_single_export(char **env);

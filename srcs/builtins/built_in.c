@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:01:17 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 11:44:25 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
     else if (!ft_strncmp(cmd, "env", 4))
         return (mini_env(vars->env, vars));
     else if (!ft_strncmp(cmd, "exit", 5))
-		return (mini_exit(cmds->exec->args, vars));
+		return (mini_exit(cmds->exec, vars));
 	return (EXIT_FAILURE);
 }

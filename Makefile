@@ -56,6 +56,7 @@ export SRCS	:=	signals.c \
 				ft_strchr.c \
 				ft_substr.c \
 				ft_itoa.c \
+				ft_atoi.c \
 				ft_split.c \
 				ft_abs.c \
 				ft_calloc.c \
