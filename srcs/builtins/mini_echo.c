@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_echo.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 11:34:10 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   mini_echo.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/21 11:02:06 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <executor.h>
 
-static void mini_echo_args(char **arg, bool new_line, int i)
+static void mini_echo_args(char **arg, bool newline, int i)
 {
     while (arg[i])
     {
@@ -21,24 +21,24 @@ static void mini_echo_args(char **arg, bool new_line, int i)
         	ft_putchar_fd(' ', STDOUT_FILENO);
         i++;
     }
-    if (new_line == true)
+    if (newline == true)
         ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-static int	check_for_flag(char **arg, char c, bool *new_line)
+static int	check_for_flag(char **arg, char c, bool *newline)
 {
 	int		i;
 	int		j;
 
 	i = 1;
-	while (!ft_strncmp(arg[i], "-n", 2))
+	while (!ft_strncmp(arg[i], "-n", 3))
 	{
 		j = 2;
 		while (arg[i][j] == c)
 			j++;
 		if (arg[i][j] == '\0')
 		{
-        	*new_line = false;
+        	*newline = false;
 			i++;
 		}
 		else
@@ -59,7 +59,7 @@ int	mini_echo(char **arg, t_mini_vars *vars)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (EXIT_SUCCESS);
 	}
-	if (!ft_strncmp(arg[1], "-n", 2))
+	if (!ft_strncmp(arg[1], "-n", 3))
 		i = check_for_flag(arg, arg[1][1], &new_line);
     mini_echo_args(arg, new_line, i);
 	vars->last_pid = 0;

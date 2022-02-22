@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/18 09:56:28 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 10:54:43 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WTERMSIG(status) + 128;
 }
 
-void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
+void	forked_command(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		fd;
@@ -93,22 +93,40 @@ void	make_forks(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 	}
 }
 
+t_fork	*simple_command(t_cmd *cmd, t_mini_vars *vars)
+{
+	t_fork	*forks;
+
+	if (is_special_builtin(cmd->exec->cmd))
+	{
+		redirect_input(cmd->input, STDIN_FILENO);
+		redirect_output(cmd->output, STDOUT_FILENO);
+		built_in(cmd, cmd->exec->cmd, vars);
+		return (NULL);
+	}
+	forks = new_fork(NULL);
+	forks->pid = fork();
+	if (forks->pid < 0)
+		exit_error(errno, "simple_command", NULL);
+	else if (forks->pid == CHILD)
+	{
+		redirect_input(cmd->input, STDIN_FILENO);
+		redirect_output(cmd->output, STDOUT_FILENO);
+		execute_cmd(cmd, cmd->exec, vars);
+	}
+	return (forks);
+}
+
 void	executor(t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
-	bool	s_builtin;
 
-	s_builtin = false;
 	vars->paths = init_paths(vars->env);
 	if (!cmd->next)
-	{
-		if (!single_built_in(cmd, cmd->exec->cmd, vars))
-			s_builtin = true;
-	}
-	if (s_builtin == false)
-	{
-		make_forks(&forks, cmd, vars);
+		forks = simple_command(cmd, vars);
+	else
+		forked_command(&forks, cmd, vars);
+	if (forks)
 		waitpid_fork(forks, vars);
-	}
 	ft_free_char_array(vars->paths);
 }

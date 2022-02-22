@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mini_export.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 15:05:58 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   mini_single_export.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/21 11:48:42 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	printwithsecondquote(char *line)
+static void	print_w_second_quote(char *line)
 {
 	while (*line && *line != '=')
 		line++;
@@ -26,7 +26,7 @@ static void	printwithsecondquote(char *line)
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-static void	printwithfirstquote(char *line)
+static void	print_w_first_quote(char *line)
 {
 	while (*line && *line != '=')
 	{
@@ -45,8 +45,8 @@ void	mini_single_export(char **env)
 	while (env[i])
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		printwithfirstquote(env[i]);
-		printwithsecondquote(env[i]);
+		print_w_first_quote(env[i]);
+		print_w_second_quote(env[i]);
 		i++;
 	}
 	return ;

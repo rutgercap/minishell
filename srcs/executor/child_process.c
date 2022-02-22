@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/17 12:34:44 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/21 12:23:53 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 	if (cmd->next)
 		redirect_output(cmd->output, end[WRITE]);
 	else
-		redirect_output(cmd->output, 1);
+		redirect_output(cmd->output, STDOUT_FILENO);
 	execute_cmd(cmd, cmd->exec, vars);
 }
 

@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 09:26:10 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 15:22:48 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   here_doc.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/22 10:34:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <executor.h>
-
-// static char	*remove_newline(char *text)
-// {
-// 	int		len;
-// 	char	*new_text;
-
-// 	len = ft_strlen(text);
-// 	new_text = (char *)malloc(len * sizeof(char));
-// 	ft_check_malloc(new_text, "remove_newline");
-// 	ft_strlcpy(new_text, text, len);
-// 	free(text);
-// 	return (new_text);
-// }
 
 static int	delim_in_line(char *line, char *delim, int len)
 {
@@ -48,7 +35,7 @@ static char	*make_text(char *delim)
 	while (1)
 	{
 		ft_putstr_fd("> ", 2);
-		line = get_next_line(0);
+		line = get_next_line(STDIN_FILENO);
 		if (delim_in_line(line, delim, len))
 		{
 			free(line);

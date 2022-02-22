@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 11:20:50 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execute_cmd.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/22 10:38:26 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	command_not_found(char *cmd)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putendl_fd(": command not found", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
 	exit(127);
 }
 
@@ -45,7 +45,7 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 	char	*full_cmd;
 	
 	if (!built_in(cmd, exec->cmd, vars))
-		exit(0);
+		exit(vars->last_pid);
 	full_cmd = get_full_command(exec->cmd, vars->paths);
 	if (!full_cmd)
 		command_not_found(exec->cmd);

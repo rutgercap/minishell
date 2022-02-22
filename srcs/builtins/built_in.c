@@ -6,16 +6,11 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/17 13:10:08 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/21 16:01:17 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <executor.h>
-
-int	mini_exit(void)
-{
-	exit(0);
-}
 
 static int mini_pwd(t_mini_vars *vars)
 {
@@ -49,34 +44,38 @@ static int	mini_env(char **env, t_mini_vars *vars)
     return (EXIT_SUCCESS);
 }
 
-int	single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
+int	is_special_builtin(char *cmd)
 {
-	if (!ft_strncmp(cmd, "cd", 2) && cmd[2] == '\0')
-        return (mini_cd(cmds->exec->args, vars));
-	else if (!ft_strncmp(cmd, "export", 6) && cmd[6] == '\0')
-        return (mini_export(cmds->exec->args, vars));
-    else if (!ft_strncmp(cmd, "unset", 5) && cmd[5] == '\0')
-		return (mini_unset(cmds->exec->args, vars));
-	else if (!ft_strncmp(cmd, "exit", 5) && cmd[5] == '\0')
-		mini_exit();
-	return (EXIT_FAILURE);
+	if (!cmd)
+        return (0);
+    if (!ft_strncmp(cmd, "cd", 3))
+        return (1);
+	else if (!ft_strncmp(cmd, "export", 7))
+        return (1);
+    else if (!ft_strncmp(cmd, "unset", 6))
+		return (1);
+	else if (!ft_strncmp(cmd, "exit", 5))
+		return (1);
+	return (0);
 }
 
 int	built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars)
 {
-    if (!ft_strncmp(cmd, "echo", 4) && cmd[4] == '\0')
+    if (!cmd)
+        return (EXIT_FAILURE);
+    if (!ft_strncmp(cmd, "echo", 5))
         return (mini_echo(cmds->exec->args, vars));
-    else if (!ft_strncmp(cmd, "cd", 2) && cmd[2] == '\0')
+    else if (!ft_strncmp(cmd, "cd", 3))
         return (mini_cd(cmds->exec->args, vars));
-    else if (!ft_strncmp(cmd, "pwd", 3) && cmd[3] == '\0')
+    else if (!ft_strncmp(cmd, "pwd", 4))
         return (mini_pwd(vars));
-    else if (!ft_strncmp(cmd, "export", 6) && cmd[6] == '\0')
+    else if (!ft_strncmp(cmd, "export", 7))
         return (mini_export(cmds->exec->args, vars));
-    else if (!ft_strncmp(cmd, "unset", 5) && cmd[5] == '\0')
+    else if (!ft_strncmp(cmd, "unset", 6))
 		return (mini_unset(cmds->exec->args, vars));
-    else if (!ft_strncmp(cmd, "env", 3) && cmd[3] == '\0')
+    else if (!ft_strncmp(cmd, "env", 4))
         return (mini_env(vars->env, vars));
-    else if (!ft_strncmp(cmd, "exit", 4) && cmd[4] == '\0')
-		mini_exit();
+    else if (!ft_strncmp(cmd, "exit", 5))
+		return (mini_exit(cmds->exec->args, vars));
 	return (EXIT_FAILURE);
 }
