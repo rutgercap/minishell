@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/17 12:34:44 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/21 12:23:53 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	file_error(const char *filename)
 {
 	perror("minishell");
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(filename, 2);
-	exit (errno);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(filename, STDERR_FILENO);
+	exit(errno);
 }
 
 void	redirect_input(t_red *input, int fd)
@@ -71,7 +71,7 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 	if (cmd->next)
 		redirect_output(cmd->output, end[WRITE]);
 	else
-		redirect_output(cmd->output, 1);
+		redirect_output(cmd->output, STDOUT_FILENO);
 	execute_cmd(cmd, cmd->exec, vars);
 }
 

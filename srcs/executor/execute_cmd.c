@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 13:55:14 by dvan-der          #+#    #+#             */
-/*   Updated: 2022/02/15 11:20:50 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execute_cmd.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
+/*   Updated: 2022/02/21 11:28:58 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 	char	*full_cmd;
 	
 	if (!built_in(cmd, exec->cmd, vars))
-		exit(0);
+		exit(vars->last_pid);
 	full_cmd = get_full_command(exec->cmd, vars->paths);
 	if (!full_cmd)
 		command_not_found(exec->cmd);

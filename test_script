@@ -32,13 +32,4 @@
 ./minishell "echo $OLDPWDcd /\necho $OLDPWD\ncd tests\necho $OLDPWD"
 ./minishell "cd\nunset OLDPWD\necho oldpwd after unset: $OLDPWD\ncd -\npwd"
 ./minishell "ls | ls | unset OLDPWD\necho oldpwd after unset: $OLDPWD\ncd -\npwd"
-
-
-
-
-
-
-
-
-
 ./minishell "mkdir TESTDIR\ncd TESTDIR\nrmdir ../TESTDIR\npwd"
