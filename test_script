@@ -17,7 +17,6 @@
 ./minishell "ls | echo -n bla' >> output
 ./minishell "echo -nnnn' >> output
 ./minishell "echo -nnnn bla' >> output
-
 ./minishell "cd\npwd"
 ./minishell "cd\npwd\ncd -\npwd"
 ./minishell "cd ..\ncd tests\npwd"

@@ -20,9 +20,6 @@ minishell: cd: /usr\npwd: No such file or directory
 minishell: cd: /usr/bin\npwd: No such file or directory
 minishell: cd: /bla: No such file or directory
 minishell: cd: /\npwd: No such file or directory
-minishell: cd: /usr/bin\npwd: No such file or directory
-minishell: cd: /bla: No such file or directory
-minishell: cd: /\npwd: No such file or directory
 minishell: cd: ..\necho: No such file or directory
 minishell: cd\nunset: command not found
 minishell: unset: `unset:': not a valid identifier

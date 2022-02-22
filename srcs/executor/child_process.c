@@ -17,7 +17,7 @@ void	file_error(const char *filename)
 	ft_putstr_fd("minishell", 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(filename, 2);
-	ft_p
+	ft_putstr_fd(": No such file or directory", 2);
 	exit (errno);
 }
 
