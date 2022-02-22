@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
-export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -27,13 +27,14 @@ export SRCS	:=	signals.c \
 				redirect_utils.c \
 				cmd_utils.c \
 				executor.c \
+				child_process.c \
 				execute_cmd.c \
 				ft_putnbr_fd.c \
 				built_in.c \
-				child_process.c \
 				mini_unset.c \
 				mini_echo.c \
 				mini_export.c \
+				mini_exit.c \
 				ft_check_malloc.c \
 				ft_free_char_array.c \
 				ft_strlcat.c \
@@ -49,6 +50,8 @@ export SRCS	:=	signals.c \
 				ft_putchar_fd.c \
 				ft_strncmp.c \
 				ft_isspace.c \
+				ft_isdigit.c \
+				ft_strcheck.c \
 				ft_strtrim.c \
 				ft_strchr.c \
 				ft_substr.c \

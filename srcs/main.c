@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/18 08:47:44 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/21 11:42:50 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 	if (!cmd)
 		return ;
 	signal(SIGQUIT, sigquit_handler);
-	g_interactive = 0;
+	g_interactive = NO_INTERACT;
 	executor(cmd, vars);
 	free_cmd_list(&cmd);
 }
@@ -74,7 +74,6 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	vars.env = init_env(env);
 	vars.last_pid = 0;
-	g_interactive = 1;
 	vars.paths = NULL;
 	while (true)
 	{
