@@ -12,11 +12,12 @@
 
 #include <executor.h>
 
-static void	file_error(const char *filename)
+void	file_error(const char *filename)
 {
-	perror("minishell");
+	ft_putstr_fd("minishell", 2);
 	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(filename, 2);
+	ft_putstr_fd(filename, 2);
+	ft_p
 	exit (errno);
 }
 

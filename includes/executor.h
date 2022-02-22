@@ -49,5 +49,6 @@ void		redirect_input(t_red *input, int fd);
 void		redirect_output(t_red *output, int fd);
 int			single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars);
 void		mini_single_export(char **env);
+void		file_error(const char *filename);
 
 #endif
