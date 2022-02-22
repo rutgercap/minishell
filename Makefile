@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
-export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
+export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
+export RL_INC	:=	-I/opt/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes

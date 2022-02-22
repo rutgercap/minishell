@@ -47,7 +47,7 @@ int			search_in_env(char *args, char **env, t_mini_vars *vars);
 int			mini_cd(char **args, t_mini_vars *vars);
 int			mini_exit(t_exec *exec, t_mini_vars *vars);
 void		set_new_paths(char *new_pwd, char *old_pwd, t_mini_vars *vars);
-char		*cpy_env_line(char **env, char *item);
+char		*get_env_value(char **env, char *item);
 void		mini_single_export(char **env);
 void		error_message(char *arg, t_mini_vars *vars);
 
@@ -58,6 +58,6 @@ void		redirect_input(t_red *input, int fd);
 void		redirect_output(t_red *output, int fd);
 int			single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars);
 void		mini_single_export(char **env);
-void		file_error(const char *filename);
+int			file_error(const char *filename);
 
 #endif

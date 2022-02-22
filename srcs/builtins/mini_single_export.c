@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/21 11:48:42 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 16:25:54 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	error_message(char *arg, t_mini_vars *vars)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putchar_fd('`', 2);
+	ft_putchar_fd('\'', 2);
 	ft_putstr_fd(arg, 2);
 	ft_putchar_fd('\'', 2);
 	ft_putendl_fd(": not a valid identifier", 2);

@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:02:57 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 16:11:57 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**init_paths(char **env)
 	while (ft_strncmp(env[i], "PATH=", 5))
 		i++;
 	path = ft_split(env[i] + 5, ':');
-	ft_check_malloc(*path, "make_path_env");
+	ft_check_malloc(path, "make_path_env");
 	i = 0;
 	while (path[i])
 	{

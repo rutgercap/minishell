@@ -6,19 +6,23 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/21 12:23:53 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 16:44:13 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <executor.h>
 
-void	file_error(const char *filename)
+int	file_error(const char *filename)
 {
-	ft_putstr_fd("minishell", 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(filename, 2);
-	ft_putstr_fd(": No such file or directory", 2);
-	exit (errno);
+	ft_putstr_fd("minishell", STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	if (filename)
+	{
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd("No such file or directory", STDERR_FILENO);
+	return (1);
 }
 
 void	redirect_input(t_red *input, int fd)
