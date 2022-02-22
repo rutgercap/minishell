@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/21 11:28:58 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 10:38:26 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	command_not_found(char *cmd)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putendl_fd(": command not found", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
 	exit(127);
 }
 

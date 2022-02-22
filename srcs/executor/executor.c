@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/21 12:24:31 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 10:54:43 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,11 @@ t_fork	*simple_command(t_cmd *cmd, t_mini_vars *vars)
 	if (forks->pid < 0)
 		exit_error(errno, "simple_command", NULL);
 	else if (forks->pid == CHILD)
-		child_process(cmd, vars, NULL, STDIN_FILENO);
+	{
+		redirect_input(cmd->input, STDIN_FILENO);
+		redirect_output(cmd->output, STDOUT_FILENO);
+		execute_cmd(cmd, cmd->exec, vars);
+	}
 	return (forks);
 }
 

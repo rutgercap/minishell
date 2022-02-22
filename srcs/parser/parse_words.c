@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 08:47:01 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/07 13:39:46 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/22 10:50:03 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	parse_words(t_cmd *cmd, t_token *tokens)
 		}
 		if (tokens->type == PIPE)
 		{
-			if (cmd->exec || cmd->input || cmd->output)
+			if (cmd->exec->len || cmd->input || cmd->output)
 				cmd = cmd->next;
 			else
 			{
