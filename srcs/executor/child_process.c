@@ -12,12 +12,13 @@
 
 #include <executor.h>
 
-static void	file_error(const char *filename)
+void	file_error(const char *filename)
 {
-	perror("minishell");
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(filename, STDERR_FILENO);
-	exit(errno);
+	ft_putstr_fd("minishell", 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(filename, 2);
+	ft_putstr_fd(": No such file or directory", 2);
+	exit (errno);
 }
 
 void	redirect_input(t_red *input, int fd)
