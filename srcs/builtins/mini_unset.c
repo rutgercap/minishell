@@ -54,7 +54,7 @@ static char	**ft_unset(char *arg, char **env, t_mini_vars *vars)
 	int		size_old_env;
 	char	**new_env;
 
-	exl_row = search_in_env(arg, env);
+	exl_row = search_in_env(arg, env, vars);
 	if (exl_row == -1)
 		return (env);
 	size_old_env = 0;

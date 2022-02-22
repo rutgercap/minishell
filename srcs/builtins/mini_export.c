@@ -38,17 +38,24 @@ static char **edit_env_export(char **env, char *args, int edit_row_nr, int size_
 			copy_line_env(new_env, env, i, i);
 		i++;
 	}
+	if (i == edit_row_nr)
+	{
+		copy_line_env(new_env, &args, i, 0);
+		i++;
+	}
 	new_env[i] = NULL;
 	ft_free_char_array(env);
 	return (new_env);
 }
 
-int	search_in_env(char *args, char **env)
+int	search_in_env(char *args, char **env, t_mini_vars *vars)
 {
 	int		i;
 	int		len;
+	int		orig_len;
 
 	len = 0;
+	orig_len = ft_strlen(args);
 	while (args[len] != '=' && args[len])
 		len++;
 	i = 0;
@@ -61,7 +68,11 @@ int	search_in_env(char *args, char **env)
 		}
 		i++;
 	}
-	return (-1);
+	if (len == 0)
+		error_message(args, vars);
+	if (len <= orig_len)
+		return (ADD_NEW);
+	return (NOT_FOUND);
 }
 
 char	**ft_export(char *arg, char **env, t_mini_vars *vars)
@@ -70,13 +81,15 @@ char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 	int		size_old_env;
 	char	**new_env;
 
-	edit_row_nr = search_in_env(arg, env);
-	if (edit_row_nr == -1)
-		return (env);
 	size_old_env = 0;
 	while (env[size_old_env])
 		size_old_env++;
-	new_env = edit_env_export(env, arg, edit_row_nr, size_old_env);
+	edit_row_nr = search_in_env(arg, env, vars);
+	if (edit_row_nr == NOT_FOUND)
+		return (env);
+	else if (edit_row_nr == ADD_NEW)
+		size_old_env++;
+	new_env = edit_env_export(env, arg, size_old_env - 1, size_old_env);
 	ft_check_malloc(new_env, "ft_export");
 	vars->last_pid = 0;
 	return (new_env);

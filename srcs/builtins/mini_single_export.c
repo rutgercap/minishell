@@ -12,6 +12,17 @@
 
 #include "executor.h"
 
+void	error_message(char *arg, t_mini_vars *vars)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putchar_fd('`', 2);
+	ft_putstr_fd(arg, 2);
+	ft_putchar_fd('\'', 2);
+	ft_putendl_fd(": not a valid identifier", 2);
+	vars->last_pid = 1;
+	return ;
+}
+
 static void	print_w_second_quote(char *line)
 {
 	while (*line && *line != '=')
@@ -31,7 +42,7 @@ static void	print_w_first_quote(char *line)
 	while (*line && *line != '=')
 	{
 		ft_putchar_fd(*line, STDOUT_FILENO);
-		line++;
+		line++;	
 	}
 	ft_putchar_fd(*line, STDOUT_FILENO);
 	ft_putchar_fd('\"', STDOUT_FILENO);

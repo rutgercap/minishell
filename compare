@@ -21,9 +21,15 @@ minishell: cd: /usr/bin\npwd: No such file or directory
 minishell: cd: /bla: No such file or directory
 minishell: cd: /\npwd: No such file or directory
 minishell: cd: ..\necho: No such file or directory
+
 minishell: cd\nunset: command not found
 minishell: unset: `unset:': not a valid identifier
 minishell: unset: `-npwd': not a valid identifier
+minishell: unset: `unset:': not a valid identifier
+minishell: unset: `/Users/dvan-derncdnpwd': not a valid identifier
+/Users/dvan-der/Documents/CODAM/minishellkomop
+/Users/dvan-der/Documents/CODAM/minishellkomop
+
 declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000_xbr002q_y/T/"
 declare -x __CF_USER_TEXT_ENCODING="0x15D5E:0x0:0x0"
 declare -x SHELL="/bin/zsh"
