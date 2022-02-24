@@ -12,16 +12,6 @@
 
 #include "executor.h"
 
-static void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
-{
-	int	len;
-
-	len = ft_strlen(env[env_i]);
-	new_env[new_env_i] = (char *)ft_calloc((len + 1), sizeof(char));
-	ft_check_malloc(new_env[new_env_i], "copy_line_env");
-	ft_strcpy(new_env[new_env_i], env[env_i], len);
-}
-
 static char **edit_env_export(char **env, char *args, int edit_row_nr, int size_old_env)
 {
 	char	**new_env;
@@ -70,7 +60,7 @@ int	search_in_env(char *args, char **env, t_mini_vars *vars)
 	}
 	if (len == 0)
 		error_message(args, vars);
-	if (len <= orig_len)
+	if (len < orig_len)
 		return (ADD_NEW);
 	return (NOT_FOUND);
 }
@@ -88,8 +78,11 @@ char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 	if (edit_row_nr == NOT_FOUND)
 		return (env);
 	else if (edit_row_nr == ADD_NEW)
+	{
 		size_old_env++;
-	new_env = edit_env_export(env, arg, size_old_env - 1, size_old_env);
+		edit_row_nr = size_old_env - 1;
+	}
+	new_env = edit_env_export(env, arg, edit_row_nr, size_old_env);
 	ft_check_malloc(new_env, "ft_export");
 	vars->last_pid = 0;
 	return (new_env);
@@ -104,7 +97,10 @@ int	mini_export(char **args, t_mini_vars *vars)
 	i = 1;
 	while (args[i])
 	{
-		vars->env = ft_export(args[i], vars->env, vars);
+		if (check_for_error(args[i], EXPORT))
+			error_message(args[i], vars);
+		else
+			vars->env = ft_export(args[i], vars->env, vars);
 		i++;
 	}
 	return (EXIT_SUCCESS);

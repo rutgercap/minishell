@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/opt/homebrew/opt/readline/lib
-export RL_INC	:=	-I/opt/homebrew/opt/readline/include
+export RL_LIB	:=	-L/usr/local/opt/readline/lib
+export RL_INC	:=	-I/usr/local/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -67,7 +67,10 @@ export SRCS	:=	signals.c \
 				get_next_line_utils.c \
 				ft_strjoin_free.c \
 				here_doc.c \
-				mini_single_export.c
+				mini_export_utils.c \
+				unset_export_utils.c \
+				ft_isalpha.c \
+				ft_isalnum.c
 MINI_SRCS	:=	$(SRCS) $(MAIN)
 OBJS		:=	$(addprefix $(OBJ_DIR)/, $(MINI_SRCS:.c=.o))
 

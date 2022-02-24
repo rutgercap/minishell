@@ -6,7 +6,7 @@
 # include <string.h>
 # include <unity.h>
 
-char	**init_env(char **env);
+// char	**init_env(char **env);
 
 void	process_cmd(char *raw_line, t_mini_vars *vars);
 

@@ -70,11 +70,14 @@ int main(int argc, char **argv, char **env)
 	t_mini_vars	vars;
 	char		*line;
 	
-	(void)argc;
-	(void)argv;
 	vars.env = init_env(env);
 	vars.last_pid = 0;
 	vars.paths = NULL;
+	if (argc == 2)
+	{
+		process_cmd(argv[1], &vars);
+		exit(vars.last_pid);
+	}
 	while (true)
 	{
 		g_interactive = INTERACT;

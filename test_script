@@ -1,38 +1,45 @@
 #!/bin/bash
 
-./minishell "echo" > output
-./minishell "echo /"/" >> output
-./minishell "echo < |" >> output
-./minishell "echo > |" >> output
-./minishell "echo >> |" >> output
-./minishell "echo << |" >> output
-./minishell "echo -nABC" >> output
-./minishell "echo $BLA$BLA=10$BLA" >> output
-./minishell "echo a"bcd"e' >> output
-./minishell "echo 'hoi'"'""bla"" >> output
-./minishell "echo -n' >> output
-./minishell "echo bla -n' >> output
-./minishell "echo -n -n -n' >> output
-./minishell "echo -n -n -n bla' >> output
-./minishell "ls | echo -n bla' >> output
-./minishell "echo -nnnn' >> output
-./minishell "echo -nnnn bla' >> output
-./minishell "cd\npwd"
-./minishell "cd\npwd\ncd -\npwd"
-./minishell "cd ..\ncd tests\npwd"
-./minishell "cd ..\ncd tests/\npwd"
-./minishell "cd ../../..\npwd"
-./minishell "cd banaan"
-./minishell "cd /usr\npwd"
-./minishell "cd /usr/bin\npwd"
-./minishell "cd /bla"
-./minishell "cd /\npwd"
-./minishell "cd ..\necho $OLDPWD\ncd tests\necho $OLDPWD"
-./minishell "echo"
-./minishell "echo $OLDPWDcd /\necho $OLDPWD\ncd tests\necho $OLDPWD"
-./minishell "cd\nunset OLDPWD\necho oldpwd after unset: $OLDPWD\ncd -\npwd"
-./minishell "ls | ls | unset OLDPWD\necho oldpwd after unset: $OLDPWD\ncd -\npwd"
-./minishell "mkdir TESTDIR\ncd TESTDIR\nrmdir ../TESTDIR\npwd"
-./minishell "pwd"
-./minishell "pwd lalala"
-./minishell "echo"
+# echo
+./minishell 'echo > output'
+./minishell 'echo "" >> output`'
+./minishell 'echo < | >> output'
+./minishell 'echo > | >> output'
+./minishell 'echo << | >> output'
+./minishell 'echo >> | >> output'
+./minishell 'echo -nABC >> output'
+./minishell 'echo $BLA$BLA=10$BLA >> output'
+./minishell 'echo a"bc"d >> output'
+./minishell 'echo a"bcd"e >> output'
+./minishell "echo 'hoi'"'"bla" >> output'
+./minishell 'echo -n >> output'
+./minishell 'echo bla -n >> output'
+./minishell 'echo -n -n -n >> output'
+./minishell 'echo -n -n -n bla >> output'
+./minishell 'ls | echo -n bla >> output'
+./minishell 'echo -nnnn >> output'
+./minishell 'echo -nnnn bla >> output'
+
+./minishell 'echo >> output'
+./minishell 'echo >> output'
+
+# pwd
+./minishell 'pwd >> output'
+./minishell 'pwd lalala >> output'
+
+# cd
+./minishell 'echo >> output'
+./minishell 'cd\npwd >> output'
+./minishell 'cd\npwd\ncd -\npwd >> output'
+./minishell 'cd ..\ncd tests\npwd >> output'
+./minishell 'cd ..\ncd tests/\npwd >> output'
+./minishell 'cd ../../..\npwd >> output'
+./minishell 'cd banaan >> output'
+./minishell 'cd /usr\npwd >> output'
+./minishell 'cd /usr/bin\npwd >> output'
+./minishell 'cd /bla >> output'
+./minishell 'cd /\npwd >> output'
+./minishell 'cd ..\necho $OLDPWD\ncd tests\necho $OLDPWD >> output'
+
+#
+./minishell "echo >> output"

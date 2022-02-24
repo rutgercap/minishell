@@ -10,6 +10,8 @@
 # define NOT_FOUND -1
 # define ADD_NEW -2
 # define NO_PIPE -1
+# define EXPORT 1
+# define UNSET 0
 
 /*
 	Global variable that indicates if a sub-process is running
@@ -44,6 +46,8 @@ int			mini_echo(char **arg, t_mini_vars *vars);
 int			mini_export(char **args, t_mini_vars *vars);
 char		**ft_export(char *arg, char **env, t_mini_vars *vars);
 int			search_in_env(char *args, char **env, t_mini_vars *vars);
+int			check_for_error(char *arg, int type);
+void		copy_line_env(char **new_env, char **env, int new_env_i, int env_i);
 int			mini_cd(char **args, t_mini_vars *vars);
 int			mini_exit(t_exec *exec, t_mini_vars *vars);
 void		set_new_paths(char *new_pwd, char *old_pwd, t_mini_vars *vars);

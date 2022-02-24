@@ -21,7 +21,7 @@ char	*get_env_value(char **env, char *key)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, len) && env[i][len] == '=')
+		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
 			return (&env[i][len + 1]);
 		i++;
 	}
