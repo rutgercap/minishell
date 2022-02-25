@@ -3,17 +3,17 @@
 /*                                                        ::::::::            */
 /*   export_tester.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/25 12:47:40 by rcappend      ########   odam.nl         */
+/*   Created: 2022/02/25 13:08:59 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/02/25 13:33:17 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testing.h"
 
-t_mini_vars	*g_vars;
-char		**g_env;
+t_mini_vars *g_vars;
+char        **g_env;
 
 static char	**init_env(char **env)
 {
@@ -34,14 +34,53 @@ static char	**init_env(char **env)
 	return (mini_env);
 }
 
-void    setUp(void)
-{  
-	g_vars->env = init_env(g_env);
+static void	process_cmd(char *raw_line, t_mini_vars *vars)
+{
+	t_token	*tokens;
+	t_cmd	*cmd;
+	
+	tokens = tokenizer(raw_line);
+	cmd = parser(tokens, vars->env, vars->last_pid);
+	if (!cmd)
+		return ;
+	executor(cmd, vars);
+	free_cmd_list(&cmd);
+}
+
+void    setUp(void) {
+    g_vars->env = init_env(g_env);
 	g_vars->last_pid = 0;
 	g_vars->paths = NULL;
 }
 
-void	print_env(char **env)
+void    tearDown(void) {
+    ft_free_char_array(g_vars->env);
+}
+
+static void	assert_find(char *line, bool find) {
+	bool	found = false;
+	int		len = ft_strlen(line);
+	char	**env;
+	int		i = 0;
+
+	env = g_vars->env;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], line, len)) {
+			found = true;
+			break ;
+		}
+		i++;
+	}
+	TEST_ASSERT(found == find);
+}
+
+static void    init_test(char *line, int expected_pid) {
+    process_cmd(line, g_vars);
+	TEST_ASSERT_EQUAL_INT16(expected_pid, g_vars->last_pid);
+}
+
+static void	print_env(char **env)
 {
 	int i = 0;
 
@@ -52,69 +91,39 @@ void	print_env(char **env)
 	}
 }
 
-void    tearDown(void)
-{
-	ft_free_char_array(g_vars->env);
-}
-
-static void	new_test(char *line, int expected, int expected_pid)
-{
-	int	row;
-	
-	row = search_in_env(line, g_vars->env, g_vars);
-	TEST_ASSERT_EQUAL_INT16(expected, row);
-	g_vars->env = ft_export(line, g_vars->env, g_vars);
-	TEST_ASSERT_EQUAL_INT16(expected_pid, g_vars->last_pid);
-	row = search_in_env(line, g_vars->env, g_vars);
-	TEST_ASSERT(row >= 0);
-	TEST_ASSERT_EQUAL_STRING(line, g_vars->env[row]);
-}
-
-static void	adjust_test(char *line, int expected_pid)
-{
-	int	row;
-	int	n_row;
-
-	row = search_in_env(line, g_vars->env, g_vars);
-	g_vars->env = ft_export(line, g_vars->env, g_vars);
-	TEST_ASSERT_EQUAL_INT16(expected_pid, g_vars->last_pid);
-	n_row = search_in_env(line, g_env, g_vars);
-	TEST_ASSERT_EQUAL_INT16(row, n_row);
-	TEST_ASSERT_EQUAL_STRING(line, g_vars->env[n_row]);
-}
-
-static void	error_test(char *line, char *old, int expected_pid)
-{
-	int row;
-
-	if (old) {
-		row = search_in_env(line, g_vars->env, g_vars);
-	}
-	g_vars->env = ft_export(line, g_vars->env, g_vars);
-	TEST_ASSERT_EQUAL_INT16(expected_pid, g_vars->last_pid);
-	if (old) {
-		TEST_ASSERT_EQUAL_STRING(old, g_vars->env[row]);
-	}
-}
-
 static void	trial_1()
 {
-	new_test("hallo=daan", -2, 0);
+	init_test("export hallo=daan", 0);
+	assert_find("hallo=daan", true);
 }
 
 static void	trial_2()
 {
-	adjust_test("env_var=blablabla", 0);
+	init_test("export env_var=blablabla", 0);
+	assert_find("env_var=blablabla", true);
 }
 
 static void	trial_3()
 {
-	error_test("env_var=!", "env_var=blabla", 1);
+	init_test("export env_var=", 0);
+	assert_find("env_var=", true);
 }
 
-int	main(int argc, char **argv, char **env)
+static void	trial_4()
 {
-	(void)argc;
+	init_test("export env_var=1", 0);
+	assert_find("env_var=1", true);
+}
+
+static void	trial_5()
+{
+	init_test("export env_var=123456", 0);
+	assert_find("env_var=123456", true);
+}
+
+int main(int argc, char **argv, char **env)
+{
+    (void)argc;
     (void)argv;
 	g_vars = ft_calloc(1, sizeof(t_mini_vars));
 	if (!g_vars) {
@@ -125,5 +134,5 @@ int	main(int argc, char **argv, char **env)
 	RUN_TEST(trial_1);
 	RUN_TEST(trial_2);
 	RUN_TEST(trial_3);
-	return UNITY_END();
+	return (UNITY_END());
 }
