@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   child_process.c                                    :+:    :+:            */
+/*   exec_forked_cmd.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 16:44:13 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:31:59 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	cmd_not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": cmd_not_found", STDERR_FILENO);
+	ft_putendl_fd(": No such file or directoyy", STDERR_FILENO);
 	exit(127);
 }
 
