@@ -17,7 +17,6 @@
 	Global variable that indicates if a sub-process is running
 	Starts at 1
 	is set to 0 if a sub-process is running
-	
 */
 int	g_interactive;
 

@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/22 16:24:46 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/25 10:52:27 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static char **edit_env_export(char **env, char *args, int edit_row_nr, int size_
 
 int	search_in_env(char *args, char **env, t_mini_vars *vars)
 {
-	int		i;
-	int		len;
 	int		orig_len;
+	int		len;
+	int		i;
 
 	len = 0;
 	orig_len = ft_strlen(args);
