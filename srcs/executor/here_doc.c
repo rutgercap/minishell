@@ -43,7 +43,6 @@ static char	*make_text(char *delim)
 		}
 		text = ft_strjoin_free(text, line);
 	}
-	// text = remove_newline(text);
 	return (text);
 }
 
@@ -51,13 +50,9 @@ int	here_doc(char *delim)
 {
 	char 	*text;
 	int		end[2];
-	// int		fd;
 
 	if (pipe(end) < 0)
 		exit_error(errno, "here_doc", NULL);
-	// fd = open(end[1], O_RDONLY);
-	// if (fd < 0)
-	// 	file_error(end[1]);
 	text = make_text(delim);
 	ft_putstr_fd(text, end[1]);
 	free(text);

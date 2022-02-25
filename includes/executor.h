@@ -53,12 +53,13 @@ void		set_new_paths(char *new_pwd, char *old_pwd, t_mini_vars *vars);
 char		*get_env_value(char **env, char *item);
 void		mini_single_export(char **env);
 void		error_message(char *arg, t_mini_vars *vars);
+char		**init_paths(char **env);
 
-int			handle_forks(t_fork *new_fork, t_cmd *cmd, t_mini_vars *vars, int fd);
+int			exec_forked_cmd(t_fork *new_fork, t_cmd *cmd, t_mini_vars *vars, int fd);
 // redirects
 int			here_doc(char *delim);
-void		redirect_input(t_red *input, int fd);
-void		redirect_output(t_red *output, int fd);
+int			redirect_input(t_red *input, int fd, t_mini_vars *vars);
+int			redirect_output(t_red *output, int fd, t_mini_vars *vars);
 int			single_built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars);
 void		mini_single_export(char **env);
 int			file_error(const char *filename);

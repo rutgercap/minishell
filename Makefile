@@ -25,10 +25,11 @@ export SRCS	:=	signals.c \
 				parse_quotes.c \
 				parse_words.c \
 				redirect_utils.c \
+				redirects.c \
 				cmd_utils.c \
 				executor.c \
-				child_process.c \
-				execute_cmd.c \
+				exec_forked_cmd.c \
+				init_paths.c \
 				ft_putnbr_fd.c \
 				built_in.c \
 				mini_unset.c \

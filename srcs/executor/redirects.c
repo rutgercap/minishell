@@ -25,8 +25,28 @@ int	file_error(const char *filename)
 	return (1);
 }
 
-void	redirect_input(t_red *input, int fd)
+static int	duplicate(int fd, int in_out_fileno, t_mini_vars *vars)
 {
+	int	exit_status;
+
+	if (dup2(fd, in_out_fileno) < 0)
+	{
+		perror("");
+		ft_putchar_fd('\n', 2);
+		vars->last_pid = errno;
+		exit_status = EXIT_FAILURE;
+	}
+	exit_status = EXIT_SUCCESS;
+	if (fd != 0 && fd != 1)
+		close(fd);
+	return (exit_status);
+}
+
+int	redirect_input(t_red *input, int fd, t_mini_vars *vars)
+{
+	char	*file_name_error;
+
+	file_name_error = NULL;
 	while (input)
 	{
 		if (fd != 0)
@@ -35,20 +55,22 @@ void	redirect_input(t_red *input, int fd)
 			fd = open(input->file_name, O_RDONLY);
 		else if (input->type == HERE_DOC)
 			fd = here_doc(input->file_name);
-		if (fd < 0)
-			file_error(input->file_name);
+		if (fd < 0 && !file_name_error)
+			file_name_error = input->file_name;
 		input = input->next;
 	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-		exit_error(errno, "redirect_input", NULL);
-	if (fd != 0)
-		close(fd);
+	if (!file_name_error)
+		return (duplicate(fd, STDIN_FILENO, vars));
+	else
+		return (file_error(file_name_error));
 }
 
-void	redirect_output(t_red *output, int fd)
+int	redirect_output(t_red *output, int fd, t_mini_vars *vars)
 {
-	int	flags;
+	int		flags;
+	char	*file_name_error;
 
+	file_name_error = NULL;
 	while (output)
 	{
 		if (fd != 1)
@@ -59,39 +81,12 @@ void	redirect_output(t_red *output, int fd)
 		else
 			flags = flags | O_TRUNC;
 		fd = open(output->file_name, flags, 0644);
-		if (fd < 0)
-			file_error(output->file_name);
+		if (fd < 0 && !file_name_error)
+			file_name_error = output->file_name;
 		output = output->next;
 	}
-	if (dup2(fd, STDOUT_FILENO) < 0)
-		exit_error(errno, "redirect_output", NULL);
-	if (fd != 1)
-		close(fd);
-}
-
-void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
-{
-	close(end[READ]);
-	redirect_input(cmd->input, input_fd);
-	if (cmd->next)
-		redirect_output(cmd->output, end[WRITE]);
+	if (!file_name_error)
+		return (duplicate(fd, STDOUT_FILENO, vars));
 	else
-		redirect_output(cmd->output, STDOUT_FILENO);
-	execute_cmd(cmd, cmd->exec, vars);
-}
-
-int	handle_forks(t_fork *forks, t_cmd *cmd, t_mini_vars *vars, int fd)
-{
-	int		end[2];
-
-	if (pipe(end) < 0)
-		exit_error(errno, "handle_forks", NULL);
-	forks->pid = fork();
-	if (forks->pid < 0)
-		exit_error(errno, "handle_forks", NULL);
-	else if (forks->pid == CHILD)
-		child_process(cmd, vars, end, fd);
-	else if (forks->pid > 0)
-		close(end[WRITE]);
-	return (end[READ]);
+		return (file_error(file_name_error));
 }

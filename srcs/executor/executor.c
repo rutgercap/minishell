@@ -12,29 +12,6 @@
 
 #include <executor.h>
 
-char	**init_paths(char **env)
-{
-	char	**path;
-	char	*temp;
-	int		i;
-
-	i = 0;
-	while (ft_strncmp(env[i], "PATH=", 5))
-		i++;
-	path = ft_split(env[i] + 5, ':');
-	ft_check_malloc(path, "make_path_env");
-	i = 0;
-	while (path[i])
-	{
-		temp = ft_strjoin(path[i], "/");
-		ft_check_malloc(temp, "init_path");
-		free(path[i]);
-		path[i] = temp;
-		i++;
-	}
-	return (path);
-}
-
 static t_fork	*new_fork(t_fork *forks)
 {
 	t_fork	*new_fork;
@@ -71,7 +48,7 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WTERMSIG(status) + 128;
 }
 
-void	forked_command(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
+void	forked_cmd(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		fd;
@@ -88,30 +65,34 @@ void	forked_command(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 			*head = forks;
 			first_cmd = false;
 		}
-		fd = handle_forks(forks, cmd, vars, fd);
+		fd = exec_forked_cmd(forks, cmd, vars, fd);
 		cmd = cmd->next;
 	}
 }
 
-t_fork	*simple_command(t_cmd *cmd, t_mini_vars *vars)
+t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 
 	if (is_special_builtin(cmd->exec->cmd))
 	{
-		redirect_input(cmd->input, STDIN_FILENO);
-		redirect_output(cmd->output, STDOUT_FILENO);
+		if (redirect_input(cmd->input, STDIN_FILENO, vars))
+			return (NULL);
+		if (redirect_output(cmd->output, STDOUT_FILENO, vars))
+			return (NULL);
 		built_in(cmd, cmd->exec->cmd, vars);
 		return (NULL);
 	}
 	forks = new_fork(NULL);
 	forks->pid = fork();
 	if (forks->pid < 0)
-		exit_error(errno, "simple_command", NULL);
+		exit_error(errno, "simple_cmd", NULL);
 	else if (forks->pid == CHILD)
 	{
-		redirect_input(cmd->input, STDIN_FILENO);
-		redirect_output(cmd->output, STDOUT_FILENO);
+		if (redirect_input(cmd->input, STDIN_FILENO, vars))
+			exit(vars->last_pid);
+		if (redirect_output(cmd->output, STDOUT_FILENO, vars))
+			exit(vars->last_pid);
 		execute_cmd(cmd, cmd->exec, vars);
 	}
 	return (forks);
@@ -123,9 +104,9 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 
 	vars->paths = init_paths(vars->env);
 	if (!cmd->next)
-		forks = simple_command(cmd, vars);
+		forks = simple_cmd(cmd, vars);
 	else
-		forked_command(&forks, cmd, vars);
+		forked_cmd(&forks, cmd, vars);
 	if (forks)
 		waitpid_fork(forks, vars);
 	ft_free_char_array(vars->paths);
