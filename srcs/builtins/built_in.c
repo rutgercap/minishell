@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <executor.h>
+#include <builtins.h>
 
 static int mini_pwd(t_mini_vars *vars)
 {

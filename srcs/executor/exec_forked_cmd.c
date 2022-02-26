@@ -20,7 +20,7 @@ static void	cmd_not_found(char *cmd)
 	exit(127);
 }
 
-char	*get_full_cmd(char *command, char **paths)
+static char	*get_full_cmd(char *command, char **paths)
 {
 	char	*temp;
 	int		i;

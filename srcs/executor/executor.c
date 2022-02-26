@@ -48,7 +48,7 @@ static void	waitpid_fork(t_fork *forks, t_mini_vars *vars)
 		vars->last_pid = WTERMSIG(status) + 128;
 }
 
-void	forked_cmd(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
+static void	forked_cmd(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 	int		fd;
@@ -70,7 +70,7 @@ void	forked_cmd(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 	}
 }
 
-t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)
+static t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 

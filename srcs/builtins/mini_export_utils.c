@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include <builtins.h>
 
 void	error_message(char *arg, t_mini_vars *vars)
 {

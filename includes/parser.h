@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <utils.h>
 # include <tokens.h>
 
 # define SYNTAX_ERROR -1
