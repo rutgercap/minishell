@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/22 16:52:31 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:34:02 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ static int	home_path(char **env, t_mini_vars *vars, char *path)
 	char	*curr_pwd;
 
 	home_path_str = get_env_value(env, "HOME");
+	if (!home_path_str)
+	{
+		ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	curr_pwd = get_env_value(env, "PWD");
 	if (chdir(home_path_str) == -1)
 		return (file_error(path));
