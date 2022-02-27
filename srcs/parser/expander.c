@@ -19,7 +19,7 @@ static char	*find_var_in_env(char *text, char **env)
 
 	len = 0;
 	i = 0;
-	while (text[len] && !ft_strchr("\'\"$ ,.:/[{]}+=-*^%#@!~", text[len]))
+	while (text[len] && !ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", text[len]))
 		len++;
 	while (env[i])
 	{
@@ -77,7 +77,7 @@ static char	*get_rest(t_token *token, long i)
 		rest = ft_substr(token->text, i + 1, token->len - i + 1);
 	else
 	{
-		while (!ft_strchr("\'\"$ ,.:/[{]}+=-*^%#@!~", token->text[i]))
+		while (!ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i]))
 			i++;
 		rest = ft_substr(token->text, i, token->len - i);
 	}
@@ -121,7 +121,7 @@ int	expander(t_token *token, char **env, int last_pid, long i)
 	char	*rest;
 
 	i++;
-	if (!token->text[i] || ft_strchr("\'\"$ ,.:/[{]}+=-*^%#@!~", token->text[i]))
+	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i]))
 		return (NO_EXPAND);
 	start = ft_substr(token->text, 0, i - 1);
 	if (!start)

@@ -162,17 +162,14 @@ static void	trial_12()
 {
 	do_cmd("export daan= lorem ipsum", 0);
 	assert_find("daan=", true);
-	assert_find("lorem", true);
-	assert_find("ipsum", true);
+	assert_find("lorem", false);
+	assert_find("ipsum", false);
 }
 
 static void	trial_13()
 {
-	do_cmd("export daan= lorem ipsum", 0);
-	do_cmd("export daan= lorem ipsum", 0);
-	assert_find("daan=", true);
-	assert_find("lorem", true);
-	assert_find("ipsum", true);
+	do_cmd("export a=\nexport a=42\nexport", 0);
+	assert_find("a=42\nexport", true);
 }
 
 static void	trial_14()
@@ -233,6 +230,97 @@ static void	trial_23()
 	do_cmd("unset %", 1);
 }
 
+static void trial_24()
+{
+	do_cmd("export 3daan=hallo", 1);
+}
+
+static void trial_25()
+{
+	do_cmd("export d4aan=hallo", 0);
+	assert_find("d4aan=hallo", true);
+}
+
+static void trial_26()
+{
+	do_cmd("export _4daan=hallo", 0);
+	assert_find("_4daan=hallo", true);
+}
+
+static void trial_27()
+{
+	do_cmd("export _$env_var=hallo", 0);
+	assert_find("_blabla=hallo", true);
+}
+
+static void trial_28()
+{
+	do_cmd("export _hallo$USERja=daan", 0);
+	assert_find("_hallo=daan", true);
+}
+
+// Dit is een hele rare
+static void trial_29()
+{
+	do_cmd("export _=hallo", 0);
+	assert_find("_=hallo", false);
+}
+
+static void trial_30()
+{
+	do_cmd("unset hskjgdh#hs", 1);
+}
+
+static void trial_31()
+{
+	do_cmd("export _$env_var:hallo=hallo", 1);
+}
+
+static void trial_32()
+{
+	do_cmd("export _$44HALLO=hallo", 0);
+	assert_find("_4HALLO=hallo", true);
+}
+
+static void trial_33()
+{
+	do_cmd("export HALLO=hallo", 0);
+	assert_find("_4HALLO=hallo", true);
+}
+
+static void trial_34()
+{
+	do_cmd("export HALLO=hallo$env_var:hallo$env_var%hallo$env_var/hallo", 0);
+	assert_find("HALLO=halloblabla:halloblabla%halloblabla/hallo", true);
+}
+
+static void trial_35()
+{
+	do_cmd("export HALLO=hallo$env_var$", 0);
+	assert_find("HALLO=halloblabla$", true);
+}
+
+static void trial_36()
+{
+	do_cmd("export =", 1);
+}
+
+static void trial_37()
+{
+	do_cmd("export =10", 1);
+}
+
+static void trial_38()
+{
+	do_cmd("export A=bla\nexport A=$A-bloe\nexporto", 0);
+	assert_find("A=bla\nexport-bloe\nexport", true);
+}
+
+static void trial_39()
+{
+	do_cmd("export B=3\necho $A$B", 1);
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -265,6 +353,18 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_21);
 	RUN_TEST(trial_22);
 	RUN_TEST(trial_23);
+	RUN_TEST(trial_24);
+	RUN_TEST(trial_25);
+	RUN_TEST(trial_26);
+	RUN_TEST(trial_27);
+	RUN_TEST(trial_28);
+	RUN_TEST(trial_29);
+	RUN_TEST(trial_30);
+	RUN_TEST(trial_31);
+	RUN_TEST(trial_32);
+	RUN_TEST(trial_33);
+	RUN_TEST(trial_34);
+	RUN_TEST(trial_35);
 
 
 	// deze dubbelt error messages, vrij annoying

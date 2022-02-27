@@ -24,11 +24,11 @@ void	copy_line_env(char **new_env, char **env, int new_env_i, int env_i)
 
 static int	check_export_error(char *arg, int i)
 {
-	while (arg[i] && ft_strchr("\'\"$ ,.:/[{]}+=-*^%#@!~", arg[i]))
+	while (arg[i] && ft_strchr("\'\"\\$ ,.:/[{]}+=-?&*^%#@!~", arg[i]))
 		i++;
 	if (ft_isalpha(arg[i]) || ft_isalnum(arg[i]))
 		return (EXIT_SUCCESS);
-	else if (arg[i] == '\0')
+	else if (!arg[i])
 		return (EXIT_FAILURE);
 	else
 	{
@@ -42,12 +42,19 @@ int	check_for_error(char *arg, int type)
 	int	i;
 
 	i = 0;
-	while (arg[i] && !ft_strchr("\'\"$ ,.:/[{]}+=-*^%#@!~", arg[i]))
+	if (!ft_isalpha(arg[i]) && arg[i] != '_')
+		return (EXIT_FAILURE);
+	while (arg[i] && !ft_strchr("\'\"\\$ ,.:/[{]}+=-?&*^%#@!~", arg[i]))
 		i++;
 	if (arg[i] == '=' && type == EXPORT)
 	{
-		i++;
-		return (check_export_error(arg, i));
+		if (!arg[i + 1])
+			return (EXIT_SUCCESS);
+		else
+		{
+			i++;
+			return (check_export_error(arg, i));
+		}
 	}
 	if (arg[i] == '\0')
 		return (EXIT_SUCCESS);

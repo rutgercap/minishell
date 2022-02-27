@@ -2,7 +2,7 @@
 
 # echo
 ./minishell 'echo > output'
-./minishell 'echo "" >> output`'
+./minishell 'echo "" >> output'
 ./minishell 'echo < | >> output'
 ./minishell 'echo > | >> output'
 ./minishell 'echo << | >> output'
@@ -43,3 +43,24 @@
 
 #
 ./minishell "echo >> output"
+./minishell 'echo "*"'
+./minishell 'echo *bla'
+./minishell "echo '$PATH'"
+./minishell 'echo "$     a"'
+./minishell 'echo $'
+./minishell 'echo $9'
+./minishell 'echo $9a'
+./minishell 'echo $98a'
+./minishell 'echo $PA'
+./minishell 'echo $PA:'
+./minishell 'echo $HOME:'
+./minishell 'echo $HOME'
+./minishell 'echo "$HOME"'
+./minishell 'echo $HO"ME"'
+./minishell 'echo $"HOME"'
+./minishell 'echo $ "HOME"'
+./minishell 'echo '\''$"HOME"'
+./minishell 'echo bla $bla'
+./minishell 'echo bla $bla | cat -e'
+
+./minishell 'cat '"f'i'l"e"1"''

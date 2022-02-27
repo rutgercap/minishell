@@ -19,7 +19,7 @@ char	*find_in_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], "PATH=", 5))
+		if (!ft_strncmp(env[i], "PATH=", 5))
 			return (env[i]);
 		i++;
 	}

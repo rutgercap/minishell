@@ -14,10 +14,20 @@
 
 static void	cmd_not_found(char *cmd)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": No such file or directoyy", STDERR_FILENO);
-	exit(127);
+	if (ft_strchr(cmd, '/'))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": no such file or directory", 2);
+		exit(2);
+	}
+	else
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": command not found", 2);
+		exit(127);
+	}
 }
 
 static char	*get_full_cmd(char *command, char **paths)

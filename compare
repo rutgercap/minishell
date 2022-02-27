@@ -10,6 +10,26 @@ blablabla
 
 /Users/daanvanderplas/Documents/Github/Minishell
 /Users/daanvanderplas/Documents/Github/Minishell
+
+*
+*bla
+$PATH
+$     a
+$
+
+a
+8a
+
+:
+/Users/daanvanderplas:
+/Users/daanvanderplas
+ME
+HOME
+$ HOME
+\$"HOME"
+bla
+bla$
+
 # in terminal:
 minishell: syntax error near unexpected token '|'
 minishell: syntax error near unexpected token '|'
@@ -26,3 +46,4 @@ minishell: cd: /usr/bin\npwd: No such file or directory
 minishell: cd: /bla: No such file or directory
 minishell: cd: /\npwd: No such file or directory
 minishell: cd: ..\necho: No such file or directory
+cat: "fil"e"1": No such file or directory
