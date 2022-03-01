@@ -29,6 +29,8 @@ $ HOME
 \$"HOME"
 bla
 bla$
+hallo
+callo
 
 # in terminal:
 minishell: syntax error near unexpected token '|'
