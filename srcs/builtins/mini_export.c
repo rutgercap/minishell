@@ -38,7 +38,7 @@ static char **edit_env_export(char **env, char *args, int edit_row_nr, int size_
 	return (new_env);
 }
 
-int	search_in_env(char *args, char **env, t_mini_vars *vars)
+int	search_in_env(char *args, char **env, t_mini_vars *vars, char c)
 {
 	int		orig_len;
 	int		len;
@@ -46,7 +46,7 @@ int	search_in_env(char *args, char **env, t_mini_vars *vars)
 
 	len = 0;
 	orig_len = ft_strlen(args);
-	while (args[len] && args[len] != '=')
+	while (args[len] && args[len] != c)
 		len++;
 	i = 0;
 	while (env[i])
@@ -74,7 +74,7 @@ char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 	size_old_env = 0;
 	while (env[size_old_env])
 		size_old_env++;
-	edit_row_nr = search_in_env(arg, env, vars);
+	edit_row_nr = search_in_env(arg, env, vars, '=');
 	if (edit_row_nr == NOT_FOUND)
 		return (env);
 	else if (edit_row_nr == ADD_NEW)
@@ -97,7 +97,7 @@ int	mini_export(char **args, t_mini_vars *vars)
 	i = 1;
 	while (args[i])
 	{
-		if (check_for_error(args[i], EXPORT))
+		if (check_for_error(args[i], EXPORT, vars->env))
 			error_message(args[i], vars);
 		else
 			vars->env = ft_export(args[i], vars->env, vars);

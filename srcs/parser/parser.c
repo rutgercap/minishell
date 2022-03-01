@@ -12,7 +12,7 @@
 
 #include <parser.h>
 
-int	syntax_error(const t_type type)
+int	syntax_error(const t_type type, t_mini_vars *vars)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token \'", STDERR_FILENO);
@@ -25,6 +25,7 @@ int	syntax_error(const t_type type)
 	else
 		ft_putstr_fd("newline", STDERR_FILENO);
 	ft_putendl_fd("\'", STDERR_FILENO);
+	vars->last_pid = 258;
 	return (EXIT_FAILURE);
 }
 
@@ -48,20 +49,20 @@ static int	parse_pipes(t_cmd **cmd_list, t_token *tokens)
 	return (EXIT_SUCCESS);
 }
 
-t_cmd	*parser(t_token *tokens, char **env, int last_pid)
+t_cmd	*parser(t_token *tokens, char **env, t_mini_vars *vars)
 {
 	t_cmd	*cmd_list;
 	
 	if (tokens->type == TOKEN_EOF)
 		return (NULL);
 	cmd_list = NULL;
-	if (parse_quotes_and_expand(tokens, env, last_pid))
+	if (parse_quotes_and_expand(tokens, env, vars))
 		return (NULL);
 	if (parse_pipes(&cmd_list, tokens))
 		cmd_list = free_cmd_list(&cmd_list);
-	if (cmd_list && parse_redirects(cmd_list, &tokens))
+	if (cmd_list && parse_redirects(cmd_list, &tokens, vars))
 		cmd_list = free_cmd_list(&cmd_list);
-	if (cmd_list && parse_words(cmd_list, tokens))
+	if (cmd_list && parse_words(cmd_list, tokens, vars))
 		cmd_list = free_cmd_list(&cmd_list);
 	free_tokens(&tokens);
 	return (cmd_list);

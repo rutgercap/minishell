@@ -24,7 +24,10 @@ static char	*find_var_in_env(char *text, char **env)
 	while (env[i])
 	{
 		if (!ft_strncmp(text, env[i], len))
-			return (env[i]);
+		{
+			if (env[i][len] == '=')
+				return (env[i]);
+		}
 		i++;
 	}
 	return (NULL);
@@ -121,7 +124,7 @@ int	expander(t_token *token, char **env, int last_pid, long i)
 	char	*rest;
 
 	i++;
-	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i]))
+	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i])) // alleen $ denk ik, heeft daan misschien fout veranderd
 		return (NO_EXPAND);
 	start = ft_substr(token->text, 0, i - 1);
 	if (!start)

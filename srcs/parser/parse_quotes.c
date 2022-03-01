@@ -95,14 +95,14 @@ static int parse_quotes(t_token *token, char **env, int last_pid)
     return (EXIT_SUCCESS);
 }
 
-int parse_quotes_and_expand(t_token *token, char **env, int last_pid)
+int parse_quotes_and_expand(t_token *token, char **env, t_mini_vars *vars)
 {    
     while (token->type != TOKEN_EOF)
     {
         if (token->text)
         {
-            if (parse_quotes(token, env, last_pid))
-                return (syntax_error(7));
+            if (parse_quotes(token, env, vars->last_pid))
+                return (syntax_error(7, vars));
             remove_quotes(token);
         }
         token = token->next;

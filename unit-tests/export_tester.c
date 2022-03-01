@@ -40,7 +40,7 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	cmd = parser(tokens, vars->env, vars->last_pid);
+	cmd = parser(tokens, vars->env, vars);
 	if (!cmd)
 		return ;
 	executor(cmd, vars);
@@ -365,6 +365,10 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_33);
 	RUN_TEST(trial_34);
 	RUN_TEST(trial_35);
+	RUN_TEST(trial_36);
+	RUN_TEST(trial_37);
+	RUN_TEST(trial_38);
+	RUN_TEST(trial_39);
 
 
 	// deze dubbelt error messages, vrij annoying

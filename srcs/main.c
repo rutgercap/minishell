@@ -37,7 +37,7 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 	t_cmd	*cmd;
 	
 	tokens = tokenizer(raw_line);
-	cmd = parser(tokens, vars->env, vars->last_pid);
+	cmd = parser(tokens, vars->env, vars);
 	if (!cmd)
 		return ;
 	signal(SIGQUIT, sigquit_handler);

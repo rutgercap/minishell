@@ -73,7 +73,10 @@ void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 	if (cmd->next)
 		status = redirect_output(cmd->output, end[WRITE], vars);
 	else
+	{
+		close(end[WRITE]);
 		status = redirect_output(cmd->output, STDOUT_FILENO, vars);
+	}
 	if (status)
 		exit(vars->last_pid);
 	execute_cmd(cmd, cmd->exec, vars);
@@ -85,6 +88,9 @@ int	exec_forked_cmd(t_fork *forks, t_cmd *cmd, t_mini_vars *vars, int fd)
 
 	if (pipe(end) < 0)
 		exit_error(errno, "exec_forked_cmd", NULL);
+	for (size_t i = 0; i < sizeof(end) / sizeof(*end); i++) {
+		printf("END[%ld] = %d\n", i, end[i]);
+	}
 	forks->pid = fork();
 	if (forks->pid < 0)
 		exit_error(errno, "exec_forked_cmd", NULL);

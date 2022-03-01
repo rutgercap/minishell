@@ -68,6 +68,7 @@ static void	forked_cmd(t_fork **head, t_cmd *cmd, t_mini_vars *vars)
 		fd = exec_forked_cmd(forks, cmd, vars, fd);
 		cmd = cmd->next;
 	}
+	close(fd);
 }
 
 static t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)

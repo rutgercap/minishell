@@ -58,14 +58,14 @@ void	add_argument(t_exec *exec, t_token *token)
 	append_to_arguments(exec, new);
 }
 
-int	parse_words(t_cmd *cmd, t_token *tokens)
+int	parse_words(t_cmd *cmd, t_token *tokens, t_mini_vars *vars)
 {	
 	while (true)
 	{
 		if (tokens->type == TOKEN_EOF)
 		{
 			if (tokens->prev && tokens->prev->type != WORD)
-				return (syntax_error(tokens->prev->type));
+				return (syntax_error(tokens->prev->type, vars));
 			break;
 		}
 		if (tokens->type == PIPE)
@@ -74,7 +74,7 @@ int	parse_words(t_cmd *cmd, t_token *tokens)
 				cmd = cmd->next;
 			else
 			{
-				syntax_error(tokens->type);
+				syntax_error(tokens->type, vars);
 				return (EXIT_FAILURE);
 			}
 		}

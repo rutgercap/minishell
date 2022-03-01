@@ -26,7 +26,7 @@ static t_token	*delete_red_tokens(t_token **head, t_token *token)
 	return (next);
 }
 
-static int	add_redirect(t_red **dest, t_token *token)
+static int	add_redirect(t_red **dest, t_token *token, t_mini_vars *vars)
 {
 	t_red	*new;
 
@@ -36,7 +36,7 @@ static int	add_redirect(t_red **dest, t_token *token)
 	token = token->next;
 	if (token->type != WORD)
 	{
-		syntax_error(token->type);
+		syntax_error(token->type, vars);
 		return (EXIT_FAILURE);
 	}
 	new->file_name = ft_strdup(token->text);
@@ -46,28 +46,28 @@ static int	add_redirect(t_red **dest, t_token *token)
 	return (EXIT_SUCCESS);
 }
 
-static int	append_redirect(t_cmd *cmd, t_token *token)
+static int	append_redirect(t_cmd *cmd, t_token *token, t_mini_vars *vars)
 {
 	t_red	*dest;
 
 	if (token->type == OUTPUT_S || token->type == OUTPUT_D)
 	{
 		if (!cmd->output)
-			return (add_redirect(&cmd->output, token));
+			return (add_redirect(&cmd->output, token, vars));
 		dest = cmd->output;
 	}
 	else
 	{
 		if (!cmd->input)
-			return (add_redirect(&cmd->input, token));
+			return (add_redirect(&cmd->input, token, vars));
 		dest = cmd->input;
 	}
 	while (dest->next)
 		dest = dest->next;
-	return (add_redirect(&dest->next, token));
+	return (add_redirect(&dest->next, token, vars));
 }
 
-int	parse_redirects(t_cmd *cmds, t_token **tokens)
+int	parse_redirects(t_cmd *cmds, t_token **tokens, t_mini_vars *vars)
 {
 	t_token	*i;
 	
@@ -81,7 +81,7 @@ int	parse_redirects(t_cmd *cmds, t_token **tokens)
 		}
 		else if (i->type >= INPUT_S && i->type <= OUTPUT_D)
 		{
-			if (append_redirect(cmds, i))
+			if (append_redirect(cmds, i, vars))
 				return (EXIT_FAILURE);
 			i = delete_red_tokens(tokens, i);
 		}

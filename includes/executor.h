@@ -16,13 +16,6 @@
 */
 int	g_interactive;
 
-typedef struct s_mini_vars
-{
-	char	**paths;
-	char	**env;
-	int		last_pid;
-}	t_mini_vars;
-
 typedef struct	s_fork
 {
 	pid_t			pid;
