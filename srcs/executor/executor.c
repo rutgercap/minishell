@@ -81,7 +81,7 @@ static t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)
 			return (NULL);
 		if (redirect_output(cmd->output, STDOUT_FILENO, vars))
 			return (NULL);
-		built_in(cmd, cmd->exec->cmd, vars);
+		built_in(cmd, cmd->exec->cmd, vars); 
 		return (NULL);
 	}
 	forks = new_fork(NULL);

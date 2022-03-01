@@ -35,6 +35,8 @@ static char	*get_full_cmd(char *command, char **paths)
 	char	*temp;
 	int		i;
 
+	if (command && *command == '\0')
+		return (NULL);
 	if (!access(command, X_OK))
 		return (command);
 	i = 0;
@@ -63,7 +65,7 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 		exit_error(errno, "execute_cmd", NULL);
 }
 
-void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
+static void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
 {
 	int	status;
 
@@ -88,15 +90,16 @@ int	exec_forked_cmd(t_fork *forks, t_cmd *cmd, t_mini_vars *vars, int fd)
 
 	if (pipe(end) < 0)
 		exit_error(errno, "exec_forked_cmd", NULL);
-	for (size_t i = 0; i < sizeof(end) / sizeof(*end); i++) {
-		printf("END[%ld] = %d\n", i, end[i]);
-	}
 	forks->pid = fork();
 	if (forks->pid < 0)
 		exit_error(errno, "exec_forked_cmd", NULL);
 	else if (forks->pid == CHILD)
 		child_process(cmd, vars, end, fd);
 	else if (forks->pid > 0)
+	{
+		if (fd != 0)
+			close(fd);
 		close(end[WRITE]);
+	}
 	return (end[READ]);
 }
