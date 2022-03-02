@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 08:47:01 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 10:50:03 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 16:03:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,15 @@ void	add_argument(t_exec *exec, t_token *token)
 			exit_error(errno, "append argument", NULL);
 		}
 	}
-	new = ft_strdup(token->text);
-	if (!new)
+	new = NULL;
+	if (token->text)
 	{
-		errno = ENOMEM;
-		exit_error(errno, "append argument", NULL);
+		new = ft_strdup(token->text);
+		if (!new)
+		{
+			errno = ENOMEM;
+			exit_error(errno, "append argument", NULL);
+		}	
 	}
 	append_to_arguments(exec, new);
 }

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 12:45:31 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 12:53:48 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,6 +362,5 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_36);
 	RUN_TEST(trial_37);
 	RUN_TEST(trial_38);
-	RUN_TEST(trial_39);
     return (UNITY_END());
 }

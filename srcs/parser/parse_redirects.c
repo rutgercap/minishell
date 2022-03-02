@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:19:21 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 13:10:07 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 15:48:31 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ static int	add_redirect(t_red **dest, t_token *token, t_mini_vars *vars)
 		syntax_error(token->type, vars);
 		return (EXIT_FAILURE);
 	}
-	new->file_name = ft_strdup(token->text);
-	if (!new->file_name)
-		ft_check_malloc(new->file_name, "add_redirect");
+	if (token->text)
+	{
+		new->file_name = ft_strdup(token->text);
+		if (!new->file_name)
+			ft_check_malloc(new->file_name, "add_redirect");	
+	}
 	*dest = new;
 	return (EXIT_SUCCESS);
 }

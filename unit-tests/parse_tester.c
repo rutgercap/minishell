@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 11:50:06 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 15:59:55 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,6 +380,48 @@ static void	trial_35()
 	init_test("||| cat");
 }
 
+static void	trial_36()
+{
+	init_test("> $9");
+	assert_output(RED_OPUT, NULL);
+	next_cmd();
+}
+
+static void	trial_37()
+{
+	init_test(">> $9");
+	assert_output(RED_OPUT_A, NULL);
+	next_cmd();
+}
+
+static void	trial_38()
+{
+	init_test("<< $9");
+	assert_input(HERE_DOC, NULL);
+	next_cmd();
+}
+
+static void	trial_39()
+{
+	init_test("< $9");
+	assert_input(RED_IPUT, NULL);
+	next_cmd();
+}
+
+static void	trial_40()
+{
+	init_test("\"$ls\"l");
+	assert_exec("ls+-l");
+	next_cmd();
+}
+
+static void	trial_41()
+{
+	init_test("echo \"\" \"\" ");
+	assert_exec("echo+ ");
+	next_cmd();
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -426,5 +468,11 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_33);
 	RUN_TEST(trial_34);
 	RUN_TEST(trial_35);
+	RUN_TEST(trial_36);
+	RUN_TEST(trial_37);
+	RUN_TEST(trial_38);
+	RUN_TEST(trial_39);
+	RUN_TEST(trial_40);
+	RUN_TEST(trial_41);
     return (UNITY_END());
 }

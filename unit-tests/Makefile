@@ -24,7 +24,7 @@ BUILD_DIRS	:=	$(RES_DIR) $(OBJ_DIR)
 # Config
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 LIBS		:=	-lreadline -lhistory
-EXTENSION	:=	export.out
+EXTENSION	:=	.out
 
 test: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
 	@echo "success!"
@@ -46,7 +46,7 @@ $(OBJ_DIR)/%.o: $(notdir %.c)
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
 dtest: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
-	lldb $(OBJ_DIR)/expand_tester$(EXTENSION)
+	lldb $(OBJ_DIR)/parse_tester$(EXTENSION)
 
 $(RES_DIR):
 	@mkdir -p $(RES_DIR)

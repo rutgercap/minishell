@@ -18,8 +18,7 @@ typedef enum e_red_type {
 	RED_IPUT,
 	HERE_DOC,
 	RED_OPUT,
-	RED_OPUT_A,
-	AMBIGIOUS
+	RED_OPUT_A
 }   t_red_type;
 
 typedef struct s_red {
