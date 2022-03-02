@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:00:34 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/05 08:50:33 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 12:35:01 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ int parse_quotes_and_expand(t_token *token, char **env, t_mini_vars *vars)
             if (parse_quotes(token, env, vars->last_pid))
                 return (syntax_error(7, vars));
             remove_quotes(token);
+            if (ft_strlen(token->text) == 0)
+            {
+                free(token->text);
+                token->text = NULL;
+            }
         }
         token = token->next;
     }

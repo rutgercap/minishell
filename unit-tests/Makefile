@@ -46,7 +46,7 @@ $(OBJ_DIR)/%.o: $(notdir %.c)
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) -I$(UNITY_DIR)/src $(RL_INC) -o $@
 
 dtest: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
-	lldb $(OBJ_DIR)/export_tester$(EXTENSION)
+	lldb $(OBJ_DIR)/expand_tester$(EXTENSION)
 
 $(RES_DIR):
 	@mkdir -p $(RES_DIR)

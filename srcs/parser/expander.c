@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 10:33:52 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 12:44:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*find_var_in_env(char *text, char **env)
 
 	len = 0;
 	i = 0;
+	if (ft_isdigit(text[0]) || ft_strchr("\'\"\\$,.:/[{]}+=-&*^%#@!~", text[len]))
+		return (NULL);
 	while (text[len] && !ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", text[len]))
 		len++;
 	while (env[i])
@@ -69,6 +71,8 @@ static char	*get_var(t_token *token, char **env, int last_pid, long i)
 	}
 	env_location = find_var_in_env(token->text + i, env);
 	var = get_value(env_location);
+	if (ft_strlen(var) == 0)
+		return (NULL);
 	return (var);
 }
 
@@ -76,7 +80,7 @@ static char	*get_rest(t_token *token, long i)
 {
 	char	*rest;
 	
-	if (token->text[i] == '?')
+	if (ft_isdigit(token->text[i]) || ft_strchr("?\'\"\\$,.:/[{]}+=-&*^%#@!~", token->text[i]))
 		rest = ft_substr(token->text, i + 1, token->len - i + 1);
 	else
 	{
@@ -124,7 +128,7 @@ int	expander(t_token *token, char **env, int last_pid, long i)
 	char	*rest;
 
 	i++;
-	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i]))
+	if (!token->text[i] || ft_strchr(" \'\"", token->text[i]))
 		return (NO_EXPAND);
 	start = ft_substr(token->text, 0, i - 1);
 	if (!start)

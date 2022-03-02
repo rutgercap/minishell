@@ -11,7 +11,6 @@ typedef struct s_mini_vars
 {
 	char	**paths;
 	char	**env;
-	char	**errors;
 	int		last_pid;
 }	t_mini_vars;
 

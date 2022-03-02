@@ -6,18 +6,17 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 10:29:37 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 12:45:31 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testing.h"
 
-char	**g_env;
-t_token *tokens;
-t_token *i;
+t_token 	*tokens;
+t_token 	*i;
+t_mini_vars	*g_vars;
 int		g_ret_expected;
 int		g_ret_actual;
-int		g_last_pid;
 bool	skip_check;
 
 static void	init_test(char *line)
@@ -25,7 +24,7 @@ static void	init_test(char *line)
 	tokens = tokenizer(line);
 	TEST_ASSERT_NOT_NULL(tokens);
 	i = tokens;
-    g_ret_actual = parse_quotes_and_expand(i, g_env, g_last_pid);
+    g_ret_actual = parse_quotes_and_expand(i, g_vars->env, g_vars);
 }
 
 static void		assert_token(t_type type, char *text)
@@ -50,6 +49,7 @@ static void		assert_token(t_type type, char *text)
 
 void	setUp(void) {
     g_ret_expected = 0;
+	g_vars->last_pid = 42;
 	skip_check = false;
 }
 
@@ -228,7 +228,7 @@ static void	trial_24()
 static void	trial_25()
 {
 	init_test("\"  $$  \"");
-	assert_token(WORD, "  $$  ");
+	assert_token(WORD, "    ");
 }
 
 static void	trial_26()
@@ -294,12 +294,35 @@ static void trial_35()
 	assert_token(WORD, "a");
 }
 
+static void trial_36()
+{
+	init_test("echo $a9");
+	assert_token(WORD, "echo");
+	assert_token(WORD, "jup");
+}
+
+static void trial_37()
+{
+	init_test("echo $*");
+	assert_token(WORD, "echo");
+	assert_token(WORD, NULL);
+}
+
+static void trial_38()
+{
+	init_test("echo $$");
+	assert_token(WORD, "echo");
+	assert_token(WORD, NULL);
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
-	g_env = env;
-	g_last_pid = 42;
+	g_vars = ft_calloc(1, sizeof(t_mini_vars));
+	if (!g_vars)
+		exit(-1);
+	g_vars->env = env;
     UNITY_BEGIN();
 	RUN_TEST(trial_1);
     RUN_TEST(trial_2);
@@ -336,5 +359,9 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_33);
 	RUN_TEST(trial_34);
 	RUN_TEST(trial_35);
+	RUN_TEST(trial_36);
+	RUN_TEST(trial_37);
+	RUN_TEST(trial_38);
+	RUN_TEST(trial_39);
     return (UNITY_END());
 }

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/21 16:44:38 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 11:50:06 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@
 	dont forget to check for leaks every now and then
 */
 
-t_cmd   *cmd_list;
-t_cmd   *i;
-t_red	*i_input;
-t_red	*i_output;
-char	**g_env;
-int     g_last_pid;
+t_cmd   	*cmd_list;
+t_cmd  		*i;
+t_red		*i_input;
+t_red		*i_output;
+t_mini_vars	*g_vars;
 
 void	setUp(void) {
     i_input = NULL;
@@ -52,7 +51,7 @@ static void	init_test(char *line)
     
     tokens = tokenizer(line);
 	TEST_ASSERT_NOT_NULL_MESSAGE(tokens, "error making tokens");
-    cmd_list = parser(tokens, g_env, g_last_pid);
+    cmd_list = parser(tokens, g_vars->env, g_vars);
     i = cmd_list;
 	if (i) {
 		i_input = i->input;
@@ -385,8 +384,12 @@ int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
-    g_env = env;
-    g_last_pid = 42;
+	g_vars = ft_calloc(1, sizeof(t_mini_vars));
+	if (!g_vars)
+		exit(-1);
+	g_vars->last_pid = 42;
+	g_vars->env = env;
+	g_vars->paths = NULL;
     UNITY_BEGIN();
     RUN_TEST(trial_1);
     RUN_TEST(trial_2);
