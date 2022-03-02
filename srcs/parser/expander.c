@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/31 08:20:37 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/15 11:23:10 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   expander.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/02 10:33:52 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	expander(t_token *token, char **env, int last_pid, long i)
 	char	*rest;
 
 	i++;
-	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i])) // alleen $ denk ik, heeft daan misschien fout veranderd
+	if (!token->text[i] || ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", token->text[i]))
 		return (NO_EXPAND);
 	start = ft_substr(token->text, 0, i - 1);
 	if (!start)

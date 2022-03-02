@@ -11,6 +11,7 @@ typedef struct s_mini_vars
 {
 	char	**paths;
 	char	**env;
+	char	**errors;
 	int		last_pid;
 }	t_mini_vars;
 
@@ -19,6 +20,7 @@ typedef enum e_red_type {
 	HERE_DOC,
 	RED_OPUT,
 	RED_OPUT_A,
+	AMBIGIOUS
 }   t_red_type;
 
 typedef struct s_red {

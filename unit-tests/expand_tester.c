@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 11:15:15 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 10:41:33 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/02 10:29:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,13 @@ static void trial_34()
 	assert_token(WORD, "\"$USER\"");
 }
 
+static void trial_35()
+{
+	init_test("echo $9a");
+	assert_token(WORD, "echo");
+	assert_token(WORD, "a");
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -328,5 +335,6 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_32);
 	RUN_TEST(trial_33);
 	RUN_TEST(trial_34);
+	RUN_TEST(trial_35);
     return (UNITY_END());
 }
