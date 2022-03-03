@@ -22,6 +22,7 @@ export SRCS	:=	signals.c \
 				expander.c \
 				parser.c \
 				parse_redirects.c \
+				resplit_args.c \
 				parse_quotes.c \
 				parse_words.c \
 				redirect_utils.c \
@@ -113,6 +114,9 @@ $(OBJ_DIR):
 # used for unit tests
 export double_var	:=	$$env_var
 export env_var		:=	blabla
+export a9			:=	jup
+export ls			:=	ls -l
+export ls2			:=	ls    -l
 test: $(OBJ_DIR)
 	@$(MAKE) -C $(TEST_DIR) test
 

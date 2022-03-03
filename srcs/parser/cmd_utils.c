@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 08:26:32 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/14 10:39:10 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:05 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	free_exec(t_exec *exec)
 void	free_cmd(t_cmd **ref)
 {
 	t_cmd	*cmd;
-	
+
 	if (!ref || !*ref)
 	{
 		errno = ENODATA;

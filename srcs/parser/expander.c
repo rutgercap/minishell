@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/31 08:20:37 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 12:44:37 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:35:36 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 static char	*find_var_in_env(char *text, char **env)
 {
-	int len;
+	int	len;
 	int	i;
 
 	len = 0;
 	i = 0;
-	if (ft_isdigit(text[0]) || ft_strchr("\'\"\\$,.:/[{]}+=-&*^%#@!~", text[len]))
+	if (ft_isdigit(text[0]) || ft_strchr("\'\"\\$,.:/[{]}+=-&*^%#@!~", \
+		text[len]))
 		return (NULL);
-	while (text[len] && !ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", text[len]))
+	while (text[len] && !ft_strchr("\'\"\\$ ,.:/[{]}+=-&*^%#@!~", \
+		text[len]))
 		len++;
 	while (env[i])
 	{
@@ -58,7 +60,7 @@ static char	*get_var(t_token *token, char **env, int last_pid, long i)
 {
 	char	*env_location;
 	char	*var;
-	
+
 	if (token->text[i] == '?')
 	{
 		var = ft_itoa(last_pid);
@@ -79,8 +81,9 @@ static char	*get_var(t_token *token, char **env, int last_pid, long i)
 static char	*get_rest(t_token *token, long i)
 {
 	char	*rest;
-	
-	if (ft_isdigit(token->text[i]) || ft_strchr("?\'\"\\$,.:/[{]}+=-&*^%#@!~", token->text[i]))
+
+	if (ft_isdigit(token->text[i]) || \
+		ft_strchr("?\'\"\\$,.:/[{]}+=-&*^%#@!~", token->text[i]))
 		rest = ft_substr(token->text, i + 1, token->len - i + 1);
 	else
 	{

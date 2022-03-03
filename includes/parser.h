@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parser.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 13:41:43 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 13:42:01 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -19,7 +31,7 @@ typedef enum e_red_type {
 	HERE_DOC,
 	RED_OPUT,
 	RED_OPUT_A
-}   t_red_type;
+}	t_red_type;
 
 typedef struct s_red {
 	t_red_type		type;
@@ -38,7 +50,7 @@ typedef struct s_cmd {
 	t_red			*input;
 	t_red			*output;
 	struct s_cmd	*next;
-}   t_cmd;
+}	t_cmd;
 
 /*
 	command list utils
@@ -63,5 +75,6 @@ int		expander(t_token *token, char **env, int last_pid, long i);
 int		parse_words(t_cmd *cmd, t_token *tokens, t_mini_vars *vars);
 int		syntax_error(const t_type type, t_mini_vars *vars);
 t_cmd	*parser(t_token *tokens, char **env, t_mini_vars *vars);
+void	resplit_args(t_token *token);
 
 #endif

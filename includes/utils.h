@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dvan-der <dvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/11 10:32:16 by rcappend          #+#    #+#             */
-/*   Updated: 2022/02/17 10:33:34 by dvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   utils.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2020/11/11 10:32:16 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 13:43:10 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@
 char		*get_next_line(int fd);
 int			check_line(char *line);
 void		change_buffer(char *buffer, int buffer_size);
-void		make_newline(char *new_line, char *line, char *buffer, int buffer_size);
-char		*add_buffer(char *line, char *buffer, int buffer_size, int size_line);
+void		make_newline(char *new_line, char *line, \
+			char *buffer, int buffer_size);
+char		*add_buffer(char *line, char *buffer, \
+			int buffer_size, int size_line);
 int			check_buffer(char *buffer);
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);

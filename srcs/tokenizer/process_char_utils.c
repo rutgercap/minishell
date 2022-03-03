@@ -1,11 +1,16 @@
-#include <tokens.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   process_char_utils.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 12:20:07 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 12:20:42 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		in_string(bool s_quote, bool d_quote)
-{
-	if (!s_quote && !d_quote)
-		return (0);
-	return (1);
-}
+#include <tokens.h>
 
 char	peek_char(t_line *line)
 {
@@ -29,7 +34,7 @@ char	current_char(t_line *line)
 	return (line->text[line->position]);
 }
 
-int		skip_white_spaces(t_line *line)
+int	skip_white_spaces(t_line *line)
 {
 	while (ft_isspace(peek_char(line)))
 		line->position++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   executor.h                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 13:40:41 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 13:41:34 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
@@ -10,20 +22,21 @@
 # define NO_PIPE -1
 
 /*
-	Global variable that indicates if a sub-process is running
+	Global variable that indicates if a sub-process is running å
 	Starts at 1
 	is set to 0 if a sub-process is running
 */
 int	g_interactive;
 
-typedef struct	s_fork
+typedef struct s_fork
 {
 	pid_t			pid;
 	struct s_fork	*next;
 }	t_fork;
 
 void		executor(t_cmd *cmd, t_mini_vars *vars);
-int			exec_forked_cmd(t_fork *new_fork, t_cmd *cmd, t_mini_vars *vars, int fd);
+int			exec_forked_cmd(t_fork *new_fork, t_cmd *cmd, \
+			t_mini_vars *vars, int fd);
 void		execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars);
 char		**init_paths(char **env);
 int			here_doc(char *delim);

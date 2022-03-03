@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 08:47:01 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 16:03:10 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 12:22:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	append_to_arguments(t_exec *exec, char	*new_arg)
 void	add_argument(t_exec *exec, t_token *token)
 {
 	char	*new;
-	
+
 	if (!exec->args)
 	{
 		exec->args = ft_calloc(1, sizeof(char *));
@@ -70,7 +70,7 @@ int	parse_words(t_cmd *cmd, t_token *tokens, t_mini_vars *vars)
 		{
 			if (tokens->prev && tokens->prev->type != WORD)
 				return (syntax_error(tokens->prev->type, vars));
-			break;
+			break ;
 		}
 		if (tokens->type == PIPE)
 		{

@@ -6,13 +6,13 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/25 10:52:27 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:36:08 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <builtins.h>
 
-static char **edit_env_export(char **env, char *args, int edit_row_nr, int size_old_env)
+static char	**edit_env_export(char **env, char *args, int edit_row_nr, int size_old_env)
 {
 	char	**new_env;
 	int		i;
@@ -91,7 +91,7 @@ char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 int	mini_export(char **args, t_mini_vars *vars)
 {
 	int	i;
-	
+
 	if (!args[1])
 		mini_single_export(vars->env);
 	i = 1;

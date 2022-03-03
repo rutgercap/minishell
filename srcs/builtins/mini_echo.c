@@ -6,23 +6,23 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/21 11:02:06 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:37:19 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <builtins.h>
 
-static void mini_echo_args(char **arg, bool newline, int i)
+static void	mini_echo_args(char **arg, bool newline, int i)
 {
-    while (arg[i])
-    {
-        ft_putstr_fd(arg[i], STDOUT_FILENO);
+	while (arg[i])
+	{
+		ft_putstr_fd(arg[i], STDOUT_FILENO);
 		if (arg[i + 1])
-        	ft_putchar_fd(' ', STDOUT_FILENO);
-        i++;
-    }
-    if (newline == true)
-        ft_putchar_fd('\n', STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		i++;
+	}
+	if (newline == true)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
 static int	check_for_flag(char **arg, char c, bool *newline)
@@ -38,7 +38,7 @@ static int	check_for_flag(char **arg, char c, bool *newline)
 			j++;
 		if (arg[i][j] == '\0')
 		{
-        	*newline = false;
+			*newline = false;
 			i++;
 		}
 		else
@@ -61,7 +61,7 @@ int	mini_echo(char **arg, t_mini_vars *vars)
 	}
 	if (!ft_strncmp(arg[1], "-n", 2))
 		i = check_for_flag(arg, arg[1][1], &new_line);
-    mini_echo_args(arg, new_line, i);
+	mini_echo_args(arg, new_line, i);
 	vars->last_pid = 0;
-    return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/14 13:55:14 by dvan-der      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:34:02 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:40:04 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	oldpwd_path(char **env, t_mini_vars *vars, char *path)
 {
 	char	*old_pwd;
 	char	*curr_pwd;
-	
+
 	old_pwd = get_env_value(env, "OLDPWD");
 	ft_check_malloc(old_pwd, "oldpwd_path");
 	curr_pwd = get_env_value(env, "PWD");
@@ -83,5 +83,5 @@ int	mini_cd(char **args, t_mini_vars *vars)
 		vars->last_pid = absolute_path(vars->env, vars, args[1]);
 	else
 		vars->last_pid = relative_path(vars, args[1]);
-	return (EXIT_SUCCESS);	
+	return (EXIT_SUCCESS);
 }

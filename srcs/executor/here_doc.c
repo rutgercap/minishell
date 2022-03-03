@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 10:34:08 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:33 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*make_text(char *delim)
 
 int	here_doc(char *delim)
 {
-	char 	*text;
+	char	*text;
 	int		end[2];
 
 	if (pipe(end) < 0)

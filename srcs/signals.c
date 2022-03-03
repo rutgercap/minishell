@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   signals.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 13:38:59 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 13:39:43 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static void	sigint_handler(int signum)
 {
 	(void)signum;
-
 	rl_replace_line("", 0);
 	ft_putchar_fd('\n', 2);
 	if (g_interactive)

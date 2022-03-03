@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:31:59 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:34:38 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*get_full_cmd(char *command, char **paths)
 void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 {
 	char	*full_cmd;
-	
+
 	if (!built_in(cmd, exec->cmd, vars))
 		exit(vars->last_pid);
 	full_cmd = get_full_cmd(exec->cmd, vars->paths);

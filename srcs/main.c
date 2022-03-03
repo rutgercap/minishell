@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:45:09 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/21 11:42:50 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:39:33 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	process_cmd(char *raw_line, t_mini_vars *vars)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
-	
+
 	tokens = tokenizer(raw_line);
 	cmd = parser(tokens, vars->env, vars);
 	if (!cmd)
@@ -65,11 +65,11 @@ static char	*get_line(void)
 	}
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_mini_vars	vars;
 	char		*line;
-	
+
 	vars.env = init_env(env);
 	vars.last_pid = 0;
 	vars.paths = NULL;
@@ -82,7 +82,7 @@ int main(int argc, char **argv, char **env)
 	{
 		g_interactive = INTERACT;
 		line = get_line();
-		process_cmd(line, &vars);	
+		process_cmd(line, &vars);
 		free(line);
 	}
 }

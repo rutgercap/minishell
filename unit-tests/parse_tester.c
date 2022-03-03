@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/05 06:04:49 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/02 15:59:55 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 12:15:04 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,14 +411,43 @@ static void	trial_39()
 static void	trial_40()
 {
 	init_test("\"$ls\"l");
-	assert_exec("ls+-l");
+	assert_exec("ls -ll");
 	next_cmd();
 }
+
 
 static void	trial_41()
 {
 	init_test("echo \"\" \"\" ");
 	assert_exec("echo+ ");
+	next_cmd();
+}
+
+static void	trial_42()
+{
+	init_test("$ls");
+	assert_exec("ls+-l");
+	next_cmd();
+}
+
+static void	trial_43()
+{
+	init_test("\'$ls\'");
+	assert_exec("$ls");
+	next_cmd();
+}
+
+static void	trial_44()
+{
+	init_test("\"$ls\"");
+	assert_exec("ls -l");
+	next_cmd();
+}
+
+static void	trial_45()
+{
+	init_test("$ls2");
+	assert_exec("ls+-l");
 	next_cmd();
 }
 
@@ -474,5 +503,9 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_39);
 	RUN_TEST(trial_40);
 	RUN_TEST(trial_41);
+	RUN_TEST(trial_42);
+	RUN_TEST(trial_43);
+	RUN_TEST(trial_44);
+	RUN_TEST(trial_45);
     return (UNITY_END());
 }

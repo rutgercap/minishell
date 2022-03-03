@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 13:08:59 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:53:12 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 11:55:25 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ static void trial_32()
 static void trial_33()
 {
 	do_cmd("export HALLO=hallo", 0);
-	assert_find("_4HALLO=hallo", true);
+	assert_find("_4HALLO=hallo", false);
 }
 
 static void trial_34()
@@ -318,7 +318,9 @@ static void trial_38()
 
 static void trial_39()
 {
-	do_cmd("export B=3\necho $A$B", 1);
+	do_cmd("export B=3", 0);
+	do_cmd("echo $A$B", 0);
+	
 }
 
 int main(int argc, char **argv, char **env)

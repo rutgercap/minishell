@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   exit_error.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 12:19:21 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 12:19:27 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <utils.h>
 
 /*
@@ -37,8 +49,6 @@ void	write_custom_msg(const char *func, const char *msg)
 
 void	exit_error(const int code, const char *func, const char *msg)
 {
-	// if (code == errno)
-	// 	perror(func);
 	if (func || msg)
 		write_custom_msg(func, msg);
 	exit(code);

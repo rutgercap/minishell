@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/22 16:11:57 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:35:45 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_fork	*new_fork(t_fork *forks)
 {
 	t_fork	*new_fork;
-	
+
 	new_fork = (t_fork *)malloc(sizeof(t_fork));
 	ft_check_malloc(new_fork, "new_fork");
 	new_fork->next = NULL;
@@ -81,7 +81,7 @@ static t_fork	*simple_cmd(t_cmd *cmd, t_mini_vars *vars)
 			return (NULL);
 		if (redirect_output(cmd->output, STDOUT_FILENO, vars))
 			return (NULL);
-		built_in(cmd, cmd->exec->cmd, vars); 
+		built_in(cmd, cmd->exec->cmd, vars);
 		return (NULL);
 	}
 	forks = new_fork(NULL);

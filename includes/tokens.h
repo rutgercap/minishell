@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   tokens.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/03/03 13:42:05 by rcappend      #+#    #+#                 */
+/*   Updated: 2022/03/03 13:42:55 by rcappend      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TOKENS_H
 # define TOKENS_H
 
@@ -18,9 +30,9 @@ typedef enum e_type {
 }	t_type;
 
 typedef struct s_token {
-	t_type	type;
-	char	*text;
-	long	len;
+	t_type			type;
+	char			*text;
+	long			len;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -40,13 +52,12 @@ void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
 void	delete_token(t_token **ref);
 void	free_tokens(t_token **ref);
-int		in_string(bool s_quote, bool d_quote);
-// int	check_char(char *line, int i, t_token *tokens, t_flag *flag);
 
 /*
 	special characters
 */
-void	process_char(t_token *token, t_line *line, bool *s_quote, bool *d_quote);
+void	process_char(t_token *token, t_line *line, \
+		bool *s_quote, bool *d_quote);
 
 /*
 	lexing
