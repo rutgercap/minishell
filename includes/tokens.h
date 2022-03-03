@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:42:05 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:42:55 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:45:28 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ char	next_char(t_line *line);
 char	current_char(t_line *line);
 int		skip_white_spaces(t_line *line);
 char	peek_char(t_line *line);
+
+int	in_string(bool s_quote, bool d_quote);
 
 #endif

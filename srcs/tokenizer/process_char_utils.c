@@ -6,11 +6,18 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 12:20:07 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 12:20:42 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/03 13:45:00 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <tokens.h>
+
+int	in_string(bool s_quote, bool d_quote)
+{
+	if (!s_quote && !d_quote)
+		return (0);
+	return (1);
+}
 
 char	peek_char(t_line *line)
 {
