@@ -104,6 +104,7 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	t_fork	*forks;
 
 	vars->paths = init_paths(vars->env);
+	init_heredoc(cmd);
 	if (!cmd->next)
 		forks = simple_cmd(cmd, vars);
 	else

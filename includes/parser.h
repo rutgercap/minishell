@@ -36,6 +36,7 @@ typedef enum e_red_type {
 typedef struct s_red {
 	t_red_type		type;
 	char			*file_name;
+	int				heredoc;
 	struct s_red	*next;
 }	t_red;
 

@@ -65,12 +65,12 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 		exit_error(errno, "execute_cmd", NULL);
 }
 
-static void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)
+static void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int fd)
 {
 	int	status;
 
 	close(end[READ]);
-	if (redirect_input(cmd->input, input_fd, vars))
+	if (redirect_input(cmd->input, fd, vars))
 		exit(vars->last_pid);
 	if (cmd->next)
 		status = redirect_output(cmd->output, end[WRITE], vars);

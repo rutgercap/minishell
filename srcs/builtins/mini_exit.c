@@ -16,7 +16,7 @@
 	Bash overflowt met exit codes vanaf 255
 	if no arguments > exit with last pid
 */
-void	error(char *arg, char *error, int code, t_mini_vars *vars)
+static void	error(char *arg, char *error, int code, t_mini_vars *vars)
 {
 	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 	if (arg)
@@ -25,7 +25,7 @@ void	error(char *arg, char *error, int code, t_mini_vars *vars)
 	vars->last_pid = code;
 }
 
-bool	find_numeric_arg(t_exec *exec)
+static bool	find_numeric_arg(t_exec *exec)
 {
 	int	i;
 
@@ -39,6 +39,26 @@ bool	find_numeric_arg(t_exec *exec)
 	return (false);
 }
 
+static bool	help_mini_exit(t_exec *exec, t_mini_vars *vars)
+{
+	if (!ft_strcheck(exec->args[1], ft_isdigit))
+	{
+		if (exec->len > 2)
+		{
+			error(NULL, "too many arguments", 1, vars);
+			return (false);
+		}
+		else
+			vars->last_pid = ft_atoi(exec->args[1]);
+	}
+	else
+	{
+		error(exec->args[1], ": numeric argument required", 255, vars);
+		return (find_numeric_arg(exec));
+	}
+	return (true);
+}
+
 int	mini_exit(t_exec *exec, t_mini_vars *vars)
 {
 	bool	should_exit;
@@ -46,23 +66,7 @@ int	mini_exit(t_exec *exec, t_mini_vars *vars)
 	ft_putendl_fd("exit", STDERR_FILENO);
 	should_exit = true;
 	if (exec->len > 1)
-	{
-		if (!ft_strcheck(exec->args[1], ft_isdigit))
-		{
-			if (exec->len > 2)
-			{
-				should_exit = false;
-				error(NULL, "too many arguments", 1, vars);
-			}
-			else
-				vars->last_pid = ft_atoi(exec->args[1]);
-		}
-		else
-		{
-			error(exec->args[1], ": numeric argument required", 255, vars);
-			should_exit = find_numeric_arg(exec);
-		}
-	}
+		should_exit = help_mini_exit(exec, vars);
 	if (should_exit)
 	{
 		system("leaks minishell");
