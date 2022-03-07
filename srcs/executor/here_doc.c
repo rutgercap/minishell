@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 11:20:20 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 13:15:43 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	delim_in_line(char *line, char *delim, int len)
 	return (0);
 }
 
-static char	*make_text(char *delim)
+static char	*get_text(char *delim)
 {
 	char	*line;
 	char	*text;
@@ -32,7 +32,7 @@ static char	*make_text(char *delim)
 
 	text = NULL;
 	len = ft_strlen(delim);
-	while (g_state == HERE_DOC)
+	while (true)
 	{
 		ft_putstr_fd("> ", 2);
 		line = get_next_line(STDIN_FILENO);
@@ -46,18 +46,39 @@ static char	*make_text(char *delim)
 	return (text);
 }
 
-int	here_doc(char *delim)
+static void	child_process(int end[2], char *delim)
 {
 	char	*text;
+	
+	signal(SIGINT, SIG_DFL);
+	text = get_text(delim);
+	ft_putstr_fd(text, end[WRITE]);
+	free(text);
+	close(end[WRITE]);
+	exit(EXIT_SUCCESS);
+}
+
+int	here_doc(char *delim)
+{
 	int		end[2];
+	int		pid;
+	int		status;
 
 	if (pipe(end) < 0)
 		exit_error(errno, "here_doc", NULL);
-	g_state = HERE_DOC;
-	text = make_text(delim);
-	ft_putstr_fd(text, end[1]);
-	free(text);
-	close(end[1]);
+	g_state = HEREDOC_INPUT;
+	pid = fork();
+	if (pid < 0)
+		exit_error(errno, "here_doc", NULL);
+	else if (pid == CHILD)
+		child_process(end, delim);
+	close(end[WRITE]);
+	waitpid(pid, &status, 0);
 	g_state = EXECUTING;
-	return (end[0]);
+	if (WIFSIGNALED(status))
+	{
+		close(end[READ]);
+		return (-1);
+	}
+	return (end[READ]);
 }

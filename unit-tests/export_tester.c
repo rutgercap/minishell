@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 13:08:59 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 11:34:03 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:40:46 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,9 +357,5 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_36);
 	RUN_TEST(trial_37);
 	RUN_TEST(trial_38);
-
-
-	// deze dubbelt error messages, vrij annoying
-	RUN_TEST(last_test);
 	return (UNITY_END());
 }

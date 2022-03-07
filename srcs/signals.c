@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:38:59 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 11:30:10 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 13:13:37 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static void	sigint_handler(int signum)
 {
 	(void)signum;
 	rl_replace_line("", 0);
-	if (g_state != HERE_DOC)
-		ft_putchar_fd('\n', 2);
-	if (g_state)
+	ft_putchar_fd('\n', 2);
+	if (g_state == COMMAND)
 	{
 		rl_on_new_line();
 		rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:40:41 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 11:19:14 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 12:45:50 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 int	g_state;
 # define EXECUTING 0
 # define COMMAND 1
-# define HEREDOC 2
+# define HEREDOC_INPUT 2
 
 typedef struct s_fork
 {
@@ -40,7 +40,7 @@ int			exec_forked_cmd(t_fork *new_fork, t_cmd *cmd, \
 			t_mini_vars *vars, int fd);
 void		execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars);
 char		**init_paths(char **env);
-void		init_heredoc(t_cmd *cmd);
+int			init_heredoc(t_cmd *cmd);
 int			here_doc(char *delim);
 int			redirect_input(t_red *input, int fd, t_mini_vars *vars);
 int			redirect_output(t_red *output, int fd, t_mini_vars *vars);

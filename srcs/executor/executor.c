@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:35:45 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 12:47:06 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,12 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 {
 	t_fork	*forks;
 
+	if (init_heredoc(cmd))
+	{
+		vars->last_pid = 1;
+		return ;
+	}
 	vars->paths = init_paths(vars->env);
-	init_heredoc(cmd);
 	if (!cmd->next)
 		forks = simple_cmd(cmd, vars);
 	else
