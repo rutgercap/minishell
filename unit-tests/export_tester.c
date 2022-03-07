@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 13:08:59 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 10:43:19 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:34:03 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,11 +252,11 @@ static void trial_28()
 	assert_find("_hallo=daan", true);
 }
 
-// Dit is een hele rare
+// Dit is een hele rare, maar we skotten hem
 static void trial_29()
 {
 	do_cmd("export _=hallo", 0);
-	assert_find("_=hallo", false);
+	assert_find("_=hallo", true);
 }
 
 static void trial_30()
@@ -305,9 +305,9 @@ static void trial_37()
 
 static void trial_38()
 {
-	do_cmd("export B=3", 0);
-	do_cmd("echo $A$B", 0);
-	
+	do_cmd("export A=bla", 0);
+	do_cmd("export A=$A-bloe", 0);
+	assert_find("A=bla-bloe", true);
 }
 
 int main(int argc, char **argv, char **env)

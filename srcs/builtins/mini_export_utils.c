@@ -42,7 +42,7 @@ static void	print_w_first_quote(char *line)
 	while (*line && *line != '=')
 	{
 		ft_putchar_fd(*line, STDOUT_FILENO);
-		line++;	
+		line++;
 	}
 	ft_putchar_fd(*line, STDOUT_FILENO);
 	ft_putchar_fd('\"', STDOUT_FILENO);

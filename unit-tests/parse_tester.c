@@ -451,6 +451,13 @@ static void	trial_45()
 	next_cmd();
 }
 
+static void	trial_46()
+{
+	init_test("export HALLO=hallo$env_var:hallo$env_var%hallo$env_var/hallo");
+	assert_exec("export+export HALLO=halloblabla:halloblabla%halloblabla/hallo");
+	next_cmd();
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
@@ -507,5 +514,6 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_43);
 	RUN_TEST(trial_44);
 	RUN_TEST(trial_45);
+	RUN_TEST(trial_46);
     return (UNITY_END());
 }

@@ -12,6 +12,24 @@
 
 #include <executor.h>
 
+void	init_heredoc(t_cmd *cmd)
+{
+	t_red	*i;
+
+	while (cmd)
+	{
+		i = cmd->input;
+		while (i)
+		{
+			if (i->type == HERE_DOC)
+				i->heredoc = here_doc(i->file_name);
+			i = i->next;
+		}
+		cmd = cmd->next;
+	}
+	return ;
+}
+
 char	*find_in_env(char **env)
 {
 	int		i;

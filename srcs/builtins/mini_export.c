@@ -12,23 +12,23 @@
 
 #include <builtins.h>
 
-static char	**edit_env_export(char **env, char *args, int edit_row_nr, int size_old_env)
+static char	**edit_env_export(char **env, char *args, int row_nr, int size_env)
 {
 	char	**new_env;
 	int		i;
 
-	new_env = (char **)malloc((size_old_env + 1) * sizeof(char *));
+	new_env = (char **)malloc((size_env + 1) * sizeof(char *));
 	ft_check_malloc(new_env, "edit_env_export");
 	i = 0;
 	while (env[i])
 	{
-		if (i == edit_row_nr)
+		if (i == row_nr)
 			copy_line_env(new_env, &args, i, 0);
 		else
 			copy_line_env(new_env, env, i, i);
 		i++;
 	}
-	if (i == edit_row_nr)
+	if (i == row_nr)
 	{
 		copy_line_env(new_env, &args, i, 0);
 		i++;
@@ -67,22 +67,22 @@ int	search_in_env(char *args, char **env, t_mini_vars *vars, char c)
 
 char	**ft_export(char *arg, char **env, t_mini_vars *vars)
 {
-	int		edit_row_nr;
-	int		size_old_env;
+	int		row_nr;
+	int		size_env;
 	char	**new_env;
 
-	size_old_env = 0;
-	while (env[size_old_env])
-		size_old_env++;
-	edit_row_nr = search_in_env(arg, env, vars, '=');
-	if (edit_row_nr == NOT_FOUND)
+	size_env = 0;
+	while (env[size_env])
+		size_env++;
+	row_nr = search_in_env(arg, env, vars, '=');
+	if (row_nr == NOT_FOUND)
 		return (env);
-	else if (edit_row_nr == ADD_NEW)
+	else if (row_nr == ADD_NEW)
 	{
-		size_old_env++;
-		edit_row_nr = size_old_env - 1;
+		size_env++;
+		row_nr = size_env - 1;
 	}
-	new_env = edit_env_export(env, arg, edit_row_nr, size_old_env);
+	new_env = edit_env_export(env, arg, row_nr, size_env);
 	ft_check_malloc(new_env, "ft_export");
 	vars->last_pid = 0;
 	return (new_env);

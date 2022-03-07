@@ -40,6 +40,7 @@ int			exec_forked_cmd(t_fork *new_fork, t_cmd *cmd, \
 			t_mini_vars *vars, int fd);
 void		execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars);
 char		**init_paths(char **env);
+void		init_heredoc(t_cmd *cmd);
 int			here_doc(char *delim);
 int			redirect_input(t_red *input, int fd, t_mini_vars *vars);
 int			redirect_output(t_red *output, int fd, t_mini_vars *vars);
