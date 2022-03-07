@@ -17,7 +17,6 @@ ALL_OBJS	:=	$(TEST_OBJS) $(MINI_OBJS) $(UNITY_OBJ)
 
 # results
 RES_DIR		:=	results
-EX_DIR		:=	executor
 RESULTS		:=	$(patsubst %.c,$(RES_DIR)/%.txt,$(TEST_SRCS))
 BUILD_DIRS	:=	$(RES_DIR) $(OBJ_DIR)
 
@@ -50,7 +49,6 @@ dtest: $(BUILD_DIRS) $(ALL_OBJS) $(RESULTS)
 
 $(RES_DIR):
 	@mkdir -p $(RES_DIR)
-	@mkdir -p $(RES_DIR)/$(EX_DIR)
 
 test2: $(OBJ_DIR)
 

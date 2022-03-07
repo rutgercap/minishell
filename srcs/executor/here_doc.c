@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:34:33 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:20:20 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*make_text(char *delim)
 
 	text = NULL;
 	len = ft_strlen(delim);
-	while (1)
+	while (g_state == HERE_DOC)
 	{
 		ft_putstr_fd("> ", 2);
 		line = get_next_line(STDIN_FILENO);
@@ -53,9 +53,11 @@ int	here_doc(char *delim)
 
 	if (pipe(end) < 0)
 		exit_error(errno, "here_doc", NULL);
+	g_state = HERE_DOC;
 	text = make_text(delim);
 	ft_putstr_fd(text, end[1]);
 	free(text);
 	close(end[1]);
+	g_state = EXECUTING;
 	return (end[0]);
 }

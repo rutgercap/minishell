@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:41:39 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:41:39 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:18:35 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-
-/*
-	Defines and typedefs
-*/
-# define CTRL_D 64
-# define INTERACT 1
-# define NO_INTERACT 0
 
 /*
 	functions

@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/10 08:20:35 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:34:38 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 10:55:35 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	execute_cmd(t_cmd *cmd, t_exec *exec, t_mini_vars *vars)
 	if (!full_cmd)
 		cmd_not_found(exec->cmd);
 	if (execve(full_cmd, exec->args, vars->env) < 0)
-		exit_error(errno, "execute_cmd", NULL);
+		exit_error(errno, "minishell", " : No such file or directory");
 }
 
 static void	child_process(t_cmd *cmd, t_mini_vars *vars, int end[2], int input_fd)

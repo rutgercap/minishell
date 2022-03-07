@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:40:41 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:41:34 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:19:14 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 # define NO_PIPE -1
 
 /*
-	Global variable that indicates if a sub-process is running å
-	Starts at 1
-	is set to 0 if a sub-process is running
+	Global variable that indicates what minishell is currently doing
 */
-int	g_interactive;
+int	g_state;
+# define EXECUTING 0
+# define COMMAND 1
+# define HEREDOC 2
 
 typedef struct s_fork
 {

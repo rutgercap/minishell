@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:42:05 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 13:45:28 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:08:23 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token	*new_token(t_token *last, t_type type);
 void	make_tokens(t_token *token, t_line *line);
 void	append_to_tokens(t_token *last, t_type type);
 void	delete_token(t_token **ref);
-void	free_tokens(t_token **ref);
+void	*free_tokens(t_token **ref);
 
 /*
 	special characters
@@ -67,6 +67,6 @@ char	current_char(t_line *line);
 int		skip_white_spaces(t_line *line);
 char	peek_char(t_line *line);
 
-int	in_string(bool s_quote, bool d_quote);
+int		in_string(bool s_quote, bool d_quote);
 
 #endif

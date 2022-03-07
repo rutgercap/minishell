@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 12:19:21 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 12:19:27 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 10:54:15 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	write_custom_msg(const char *func, const char *msg)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 void	exit_error(const int code, const char *func, const char *msg)

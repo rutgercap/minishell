@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 13:08:59 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 11:55:25 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 10:43:19 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,13 @@ static void	assert_find(char *line, bool find) {
 		}
 		i++;
 	}
-	TEST_ASSERT(found == find);
+	TEST_ASSERT_MESSAGE(found == find, "assert_find");
 }
 
 // does not work correctly with pipes
 static void    do_cmd(char *line, int expected_pid) {
     process_cmd(line, g_vars);
 	TEST_ASSERT_EQUAL_INT16(expected_pid, g_vars->last_pid);
-}
-
-// deze moet altijd als laatste ivm forken
-static void	last_test()
-{
-	do_cmd("unset PATH", 0);
-	do_cmd("ls > results/blabla", 127);
 }
 
 static void	trial_1()
@@ -312,12 +305,6 @@ static void trial_37()
 
 static void trial_38()
 {
-	do_cmd("export A=bla\nexport A=$A-bloe\nexporto", 0);
-	assert_find("A=bla\nexport-bloe\nexport", true);
-}
-
-static void trial_39()
-{
 	do_cmd("export B=3", 0);
 	do_cmd("echo $A$B", 0);
 	
@@ -370,7 +357,6 @@ int main(int argc, char **argv, char **env)
 	RUN_TEST(trial_36);
 	RUN_TEST(trial_37);
 	RUN_TEST(trial_38);
-	RUN_TEST(trial_39);
 
 
 	// deze dubbelt error messages, vrij annoying

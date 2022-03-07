@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 11:56:29 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/03 12:21:16 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 11:08:00 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_cmd	*parser(t_token *tokens, char **env, t_mini_vars *vars)
 		return (NULL);
 	cmd_list = NULL;
 	if (parse_quotes_and_expand(tokens, env, vars))
-		return (NULL);
+		return (free_tokens(&tokens));
 	if (parse_pipes(&cmd_list, tokens))
 		cmd_list = free_cmd_list(&cmd_list);
 	if (cmd_list && parse_redirects(cmd_list, &tokens, vars))
