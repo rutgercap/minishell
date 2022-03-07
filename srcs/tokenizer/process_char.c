@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@codam.student.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/01 07:48:56 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/02/01 08:49:51 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 09:41:34 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	append_to_text(t_token *token, char c)
 {
 	char	*new;
 
-	if (token->len + 1 % BUFF_SIZE == 1)
+	if ((token->len + 1) % BUFF_SIZE == 1)
 	{
 		new = ft_calloc(token->len + BUFF_SIZE + 1, 1);
 		if (!new)
