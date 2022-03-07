@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 13:15:43 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:18:27 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_text(char *delim)
 static void	child_process(int end[2], char *delim)
 {
 	char	*text;
-	
+
 	signal(SIGINT, SIG_DFL);
 	text = get_text(delim);
 	ft_putstr_fd(text, end[WRITE]);

@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:40:41 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 12:45:50 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:16:32 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int			file_error(const char *filename);
 
 int			built_in(t_cmd *cmds, char *cmd, t_mini_vars *vars);
 int			is_special_builtin(char *cmd);
+
+void		sigquit_handler(int signum);
 
 #endif

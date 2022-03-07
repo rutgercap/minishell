@@ -6,7 +6,7 @@
 /*   By: rcappend <rcappend@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/03 13:41:39 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 11:18:35 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:16:54 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@
 # include <readline/readline.h>
 # include <signal.h>
 
-/*
-	functions
-*/
 void	init_signals(void);
-void	sigquit_handler(int signum);
 
 #endif

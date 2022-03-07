@@ -6,7 +6,7 @@
 /*   By: dvan-der <dvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 09:26:10 by rcappend      #+#    #+#                 */
-/*   Updated: 2022/03/07 14:08:16 by rcappend      ########   odam.nl         */
+/*   Updated: 2022/03/07 14:10:41 by rcappend      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	executor(t_cmd *cmd, t_mini_vars *vars)
 	}
 	if (!cmd->exec->cmd)
 		return ;
+	signal(SIGQUIT, sigquit_handler);
 	vars->paths = init_paths(vars->env);
 	if (!cmd->next)
 		forks = simple_cmd(cmd, vars);
