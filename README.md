@@ -1,11 +1,19 @@
 # Minishell
-Rebuilding a simple shell program
+Rebuilding a simple shell program. 
 
-## To do
+This project was built by [Daan van Der Plas](www.github.com) and [Rutger Cappendijk](https://github.com/Daanvdplas)
 
-- Badges
+## Learning goals
 
-#### Required
+- Extensive parsing
+
+- Building a large application
+
+- Extensive knowledge of the working of bash
+
+- Working together on a large project
+
+### How to run
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.
 
@@ -30,14 +38,49 @@ Add these to the makefile
 
 ![Adjust this](https://user-images.githubusercontent.com/2053650/150352709-ebf59ce0-e609-44da-9351-1c9ffdd1b445.png "Adjust this in makefile")
 
+To run minishell:
+
+```console
+
+make run
+
+```
+
+### Builtin functionality
+
+- Does not interpret unclosed quotes or special characters like \ or ;
+
+- Has a working history
+
+- Searches and launches the right executable (based on PATH)
+
+- Ignores interpretation of string
+
+- Supports the redirections: <, <<, >, >>
+
+- Supports pipes
+
+- Environment variables, expanded through $
+
+- The signals: ctrl-C, ctrl-D and ctrl-\
+
+- Has the following builtin functions:
+
+	- echo with option -n
+	- cd with relative or absolute path
+	- pwd
+	- export
+	- unset
+	- env
+	- exit
 
 #### Sources
 
-build linux parser:
+Build linux parser:
 
 https://blog.devgenius.io/lets-build-a-linux-shell-part-i-954c95911501
 
-bash prompts:
+Bash prompts:
 
 https://wiki.archlinux.org/title/Bash/Prompt_customization
 
@@ -49,10 +92,5 @@ Redirects:
 
 https://www.gnu.org/software/bash/manual/html_node/Redirections.html
 
-Hilmi tips:
-
-http://www.throwtheswitch.org/unity
-https://cs61.seas.harvard.edu/site/2021/Section10/
-
-bash parser:
+Bash parser:
 https://mywiki.wooledge.org/BashParser
