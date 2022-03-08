@@ -1,7 +1,7 @@
 # Minishell
 Rebuilding a simple shell program. 
 
-This project was built by [Daan van Der Plas](https://github.com/Daanvdplas) and [Rutger Cappendijk](https://github.com/Daanvdplas)
+This project was built by [Daan van Der Plas](https://github.com/Daanvdplas) and [Rutger Cappendijk](https://github.com/rutgercap)
 
 ## Learning goals
 
