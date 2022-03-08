@@ -84,10 +84,6 @@ Bash prompts:
 
 https://wiki.archlinux.org/title/Bash/Prompt_customization
 
-AST example:
-
-https://stackoverflow.com/questions/52666511/create-an-ast-from-bash-in-c/52667521
-
 Redirects:
 
 https://www.gnu.org/software/bash/manual/html_node/Redirections.html
