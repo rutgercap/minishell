@@ -5,13 +5,13 @@ This project was built by [Daan van Der Plas](https://github.com/Daanvdplas) and
 
 ## Learning goals
 
-- Extensive parsing
+- Parsing input into an abstract syntax tree
 
-- Building a large application
+- Building and maintaining a large application in a team
 
-- Extensive knowledge of the working of bash
+- Extensive knowledge of the workings of bash
 
-- Working together on a large project
+- Managing forked processes and pipes
 
 ### How to run
 
