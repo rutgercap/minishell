@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/rcappend/Documents/homebrew/opt/readline/lib
-export RL_INC	:=	-I/Users/rcappend/Documents/homebrew/opt/readline/include
+export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
+export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -81,7 +81,7 @@ CC			:=	gcc
 ifdef debug
 FLAGS		:=	-Wall -Wextra -fsanitize=address -g
 else
-FLAGS		:=	-Wall -Wextra -g
+FLAGS		:=	-Wall -Wextra -Werror -g
 endif
 LIBS		:=	-lreadline -lhistory
 

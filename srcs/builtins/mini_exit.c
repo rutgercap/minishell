@@ -68,9 +68,6 @@ int	mini_exit(t_exec *exec, t_mini_vars *vars)
 	if (exec->len > 1)
 		should_exit = help_mini_exit(exec, vars);
 	if (should_exit)
-	{
-		system("leaks minishell");
 		exit((unsigned char)vars->last_pid);
-	}
 	return (vars->last_pid);
 }

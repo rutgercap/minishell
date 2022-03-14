@@ -13,6 +13,8 @@ This project was built by [Daan van Der Plas](https://github.com/Daanvdplas) and
 
 - Managing forked processes and pipes
 
+- Applying test driven development with the unity tester
+
 ### How to run
 
 GNU readline library is required to run this. Correct path to readline must be included in the makefile.
