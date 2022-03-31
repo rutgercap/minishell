@@ -1,8 +1,8 @@
 NAME		:=	minishell
 
 # Readline -- adjust this for your machine
-export RL_LIB	:=	-L/Users/dvan-der/.brew/opt/readline/lib
-export RL_INC	:=	-I/Users/dvan-der/.brew/opt/readline/include
+export RL_LIB	:=	-L/Users/rcappend/Documents/homebrew/opt/readline/lib
+export RL_INC	:=	-I/Users/rcappend/Documents/homebrew/opt/readline/include
 
 # Directories
 INCL_DIR	:=	includes
@@ -92,8 +92,9 @@ $(NAME):	$(OBJ_DIR) $(OBJS)
 	@echo success!
 
 $(OBJ_DIR)/%.o: $(notdir %.c)
-	@echo "compiling $(notdir $(basename $@))"
+	@printf "compiling $(notdir $(basename $@))\r"
 	@$(CC) $(FLAGS) -c $< -I$(INCL_DIR) $(RL_INC) -o $@
+	@printf "\33[2K\r"
 
 run: all
 	./$(NAME)
